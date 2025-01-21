@@ -86,9 +86,9 @@ public class UserDAO {
     // fast test to check if the UserDAO works
     public static void main(String[] args) {
         Dotenv dotenv = Dotenv.load();
-        System.setProperty("JDBC_URL", dotenv.get("TEST_JDBC_URL"));
-        System.setProperty("JDBC_USER", dotenv.get("TEST_JDBC_USER"));
-        System.setProperty("JDBC_PASSWORD", dotenv.get("TEST_JDBC_PASSWORD"));
+        System.setProperty("JDBC_URL", dotenv.get("JDBC_URL"));
+        System.setProperty("JDBC_USER", dotenv.get("JDBC_USER"));
+        System.setProperty("JDBC_PASSWORD", dotenv.get("JDBC_PASSWORD"));
 
         UserDAO userDAO = new UserDAO();
 
