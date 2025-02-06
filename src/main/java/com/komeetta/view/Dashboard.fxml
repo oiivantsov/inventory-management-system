@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="YourController">
+    <!-- Left Sidebar -->
+    <left>
+        <VBox style="-fx-background-color: #333333; -fx-pref-width: 200; -fx-padding: 10;">
+            <Label style="-fx-text-fill: #FFFFFF; -fx-font-size: 18px; -fx-font-weight: bold;" text="MENU" />
+            <Separator style="-fx-background-color: #444444;" />
+
+            <Button style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Products" />
+            <Button style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Current Stock" />
+            <Button style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Customers" />
+            <Button style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Suppliers" />
+            <Button style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Sales" />
+            <Button style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Purchase" />
+        </VBox>
+    </left>
+
+    <!-- Right Panel -->
+    <right>
+        <VBox style="-fx-padding: 10; -fx-background-color: #222222;">
+            <Label style="-fx-text-fill: #FFFFFF; -fx-font-size: 16px; -fx-font-weight: bold;" text="Enter Product Details" />
+
+            <ComboBox fx:id="supplierComboBox" style="-fx-pref-width: 150;" />
+            <Button style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 12px;" text="Click to add a New Supplier" />
+
+            <TextField fx:id="productCodeField" promptText="Product Code" />
+            <TextField fx:id="productNameField" promptText="Product Name" />
+            <DatePicker fx:id="datePicker" />
+            <TextField fx:id="quantityField" promptText="Quantity" />
+            <TextField fx:id="costPriceField" promptText="Cost Price" />
+            <TextField fx:id="sellPriceField" promptText="Selling Price" />
+            <TextField fx:id="brandField" promptText="Brand" />
+
+            <HBox style="-fx-spacing: 5;">
+                <Button style="-fx-pref-width: 60;" text="Add" />
+                <Button style="-fx-pref-width: 60;" text="Edit" />
+                <Button style="-fx-pref-width: 60;" text="Delete" />
+            </HBox>
+
+            <Button style="-fx-background-color: #444444; -fx-text-fill: #FFFFFF;" text="CLEAR" />
+        </VBox>
+    </right>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <StackPane prefHeight="320.0" prefWidth="477.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefWidth="221.0" style="-fx-padding: 10;">
+               <children>
+                  <HBox style="-fx-spacing: 10; -fx-alignment: center-left;">
+                     <children>
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="PRODUCTS" />
+                     </children>
+                  </HBox>
+                  <TableView fx:id="productTable" style="-fx-pref-height: 300; -fx-padding: 10;">
+                     <columns>
+                        <TableColumn text="PRODUCT CODE" />
+                        <TableColumn text="PRODUCT NAME" />
+                        <TableColumn text="COST PRICE" />
+                        <TableColumn text="SELL PRICE" />
+                        <TableColumn text="BRAND" />
+                     </columns>
+                  </TableView>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>
