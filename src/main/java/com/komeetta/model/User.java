@@ -1,9 +1,6 @@
 package com.komeetta.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 /**
  *
@@ -18,8 +15,9 @@ public class User {
     private String username;
     @Column(name = "password")
     private String password;
-    @Column(name = "role")
-    private String role; // e.g., "ADMIN", "USER"
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false, columnDefinition = "ENUM('ADMIN', 'USER', DEFAULT 'USER')")
+    private UserRole role; // e.g., "ADMIN", "USER"
 
     /**
      * Default constructor for the Distribution class.
@@ -53,11 +51,11 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 }
