@@ -61,7 +61,7 @@ public class SignupController {
         		// Send to Dashboard here
         		try {
                     // Load the new FXML file
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/komeetta/view/Dashboard.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Dashboard.fxml"));
                     Parent root = loader.load();
 
                     // Get the current stage (window)
