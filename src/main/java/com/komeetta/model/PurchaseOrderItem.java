@@ -2,6 +2,8 @@ package com.komeetta.model;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 /**
  * Represents an item in a purchase order
  * It has the following attributes:
@@ -14,15 +16,22 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "PurchaseOrderItems")
+@IdClass(OrderItemId.class)
 public class PurchaseOrderItem {
     @Id
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private PurchaseOrder purchaseOrder;
+    @Column(name = "order_id")
+    private int orderId;
 
     @Id
+    @Column(name = "product_id")
+    private int productId;
+
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "order_id", insertable = false, updatable = false)
+    private PurchaseOrder purchaseOrder;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private Product product;
 
     @Column(name = "quantity", nullable = false)
@@ -126,4 +135,17 @@ public class PurchaseOrderItem {
         this.sale = sale;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PurchaseOrderItem that = (PurchaseOrderItem) o;
+        return orderId == that.orderId && productId == that.productId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderId, productId);
+    }
 }

@@ -6,6 +6,16 @@ package com.komeetta.model;
  */
 
 public enum UserRole {
-    ADMIN,
-    USER
+    ADMIN {
+        @Override
+        public String toString() {
+            return "Admin";
+        }
+    },
+    USER {
+        @Override
+        public String toString() {
+            return "User";
+        }
+    }
 }

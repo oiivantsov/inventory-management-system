@@ -2,6 +2,8 @@ package com.komeetta.model;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 /**
  * Represents an item in a sales order
  * It has the following attributes:
@@ -13,15 +15,23 @@ import jakarta.persistence.*;
  */
 @Entity
 @Table(name = "SalesOrderItems")
+@IdClass(OrderItemId.class)
 public class SalesOrderItem {
     @Id
+    @Column(name = "order_id")
+    private int orderId;
+
+    @Id
+    @Column(name = "product_id")
+    private int productId;
+
     @ManyToOne
-    @JoinColumn(name = "order")
+    @JoinColumn(name = "order_id", insertable = false, updatable = false)
     private SalesOrder salesOrder;
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "product")
+    @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private Product product;
 
     @Column(name = "quantity", nullable = false)
@@ -56,14 +66,15 @@ public class SalesOrderItem {
     }
 
     // Getters and Setters
-    /** get sales order that the item belongs to
+
+    /** get sales order to which the item belongs
      * @return the sales order
      */
     public SalesOrder getSalesOrder() {
         return salesOrder;
     }
 
-    /** set sales order that the item belongs to
+    /** set sales order to which the item belongs
      * @param salesOrder the sales order
      */
     public void setSalesOrder(SalesOrder salesOrder) {
@@ -126,5 +137,22 @@ public class SalesOrderItem {
         this.sale = sale;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SalesOrderItem that = (SalesOrderItem) o;
+        return orderId == that.orderId &&
+                productId == that.productId &&
+                quantity == that.quantity &&
+                Double.compare(that.unitPrice, unitPrice) == 0 &&
+                Objects.equals(salesOrder, that.salesOrder) &&
+                Objects.equals(product, that.product);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderId, productId, salesOrder, product, quantity, unitPrice);
+    }
 
 }

@@ -16,7 +16,7 @@ public class User {
     @Column(name = "password")
     private String password;
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false, columnDefinition = "ENUM('ADMIN', 'USER', DEFAULT 'USER')")
+    @Column(name = "role", nullable = false, columnDefinition = "ENUM('ADMIN', 'USER') DEFAULT 'USER'")
     private UserRole role; // e.g., "ADMIN", "USER"
 
     /**
@@ -33,6 +33,19 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        this.role = UserRole.USER;
+    }
+
+    /**
+     * Parameterized constructor
+     * @param username
+     * @param password
+     * @param role
+     */
+    public User(String username, String password, UserRole role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 
     public String getUsername() {
