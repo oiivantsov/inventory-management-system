@@ -2,7 +2,9 @@ package com.komeetta.dao;
 
 import com.komeetta.datasource.MariaDbJpaConnection;
 import com.komeetta.model.Product;
+import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,13 +18,20 @@ class ProductDAOTest {
 
     @BeforeAll
     static void setUp() {
+        Dotenv dotenv = Dotenv.load();
+        System.setProperty("JDBC_URL", dotenv.get("TEST_JDBC_URL"));
+        System.setProperty("JDBC_USER", dotenv.get("TEST_JDBC_USER"));
+        System.setProperty("JDBC_PASSWORD", dotenv.get("TEST_JDBC_PASSWORD"));
         entityManager = MariaDbJpaConnection.getInstance();
         productDAO = new ProductDAO();
     }
 
     @BeforeEach
     void cleanUp() {
-        productDAO.deleteAll();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.createQuery("DELETE FROM Product").executeUpdate();
+        transaction.commit();
     }
 
     @Test

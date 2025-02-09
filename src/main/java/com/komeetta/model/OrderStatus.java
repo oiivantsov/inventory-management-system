@@ -8,7 +8,22 @@ package com.komeetta.model;
  */
 
 public enum OrderStatus {
-    PENDING,
-    IN_PROGRESS,
-    COMPLETED
+    PENDING{
+        @Override
+        public String toString() {
+            return "pending";
+        }
+    },
+    IN_PROGRESS{
+        @Override
+        public String toString() {
+            return "in progress";
+        }
+    },
+    COMPLETED{
+        @Override
+        public String toString() {
+            return "completed";
+        }
+    }
 }
