@@ -42,6 +42,22 @@ public class LoginController {
         	System.out.println("login sucsessful");
         	user = uDAO.getUser(username);
         	//Send to Dashboard here
+            try {
+                // Load the new FXML file
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Dashboard.fxml"));
+                Parent root = loader.load();
+
+                // Get the current stage (window)
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                // Set the new scene
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setTitle("Dashboard");
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }else {
         	System.out.println("Wrong credentials");
         	showAlert(Alert.AlertType.INFORMATION, "Sign in failed", "Wrong credentials.");
@@ -54,7 +70,7 @@ public class LoginController {
         System.out.println("Redirecting to the registration page...");
         try {
             // Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/komeetta/view/Signup.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Signup.fxml"));
             Parent root = loader.load();
 
             // Get the current stage (window)
