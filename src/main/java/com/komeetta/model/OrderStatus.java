@@ -17,7 +17,7 @@ public enum OrderStatus {
     IN_PROGRESS{
         @Override
         public String toString() {
-            return "in progress";
+            return "in_progress";
         }
     },
     COMPLETED{

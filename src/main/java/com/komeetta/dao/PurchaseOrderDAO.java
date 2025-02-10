@@ -3,7 +3,8 @@ package com.komeetta.dao;
 import com.komeetta.datasource.MariaDbJpaConnection;
 import com.komeetta.model.PurchaseOrder;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
+
+import java.util.List;
 
 /**
  * Data Access Object for PurchaseOrder
@@ -39,6 +40,11 @@ public class PurchaseOrderDAO {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
             return em.find(PurchaseOrder.class, purchaseOrderId);
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to fetch purchases order with items", e);
         } finally {
             em.close();
         }
@@ -65,28 +71,71 @@ public class PurchaseOrderDAO {
     }
 
     /**
-     * Fetches a purchase order by its ID along with its items.
-     * @param orderId The ID of the purchase order.
-     * @return The purchase order with its items.
+     * Deletes a purchase order from the database
+     * @param purchaseOrder Purchase order to delete
      */
-    public PurchaseOrder getPurchaseOrderWithItems(int orderId) {
+
+    public void deletePurchaseOrder(PurchaseOrder purchaseOrder) {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
-            TypedQuery<PurchaseOrder> query = em.createQuery(
-                    "SELECT p FROM PurchaseOrder p JOIN FETCH p.items WHERE p.orderId = :orderId",
-                    PurchaseOrder.class
-            );
-            query.setParameter("orderId", orderId);
-            return query.getSingleResult();
+            em.getTransaction().begin();
+
+            // Check if the order is managed by the entity manager
+            PurchaseOrder managedOrder = em.find(PurchaseOrder.class, purchaseOrder.getOrderId());
+            if (managedOrder != null) {
+                em.remove(managedOrder);
+            }
+
+            em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw new RuntimeException("Failed to fetch purchase order with items", e);
+            throw new RuntimeException("Failed to delete purchase order", e);
+        } finally {
+            em.close();
         }
-        finally {
+
+    }
+
+    /**
+     * Deletes all sales orders (for testing purposes)
+     */
+    public void deleteAll() {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM PurchaseOrder").executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to delete purchases orders", e);
+        } finally {
             em.close();
         }
     }
+
+    /**
+     * Fetches all sales orders from the database
+     * @return List of sales orders
+     */
+    public List<PurchaseOrder> getPurchaseOrders() {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            return em.createQuery("SELECT s FROM PurchaseOrder s", PurchaseOrder.class).getResultList();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to retrieve sales orders", e);
+        } finally {
+            em.close();
+        }
+
+    }
+
+
 
 }

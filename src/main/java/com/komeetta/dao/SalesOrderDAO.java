@@ -4,6 +4,8 @@ import com.komeetta.datasource.MariaDbJpaConnection;
 import com.komeetta.model.SalesOrder;
 import jakarta.persistence.EntityManager;
 
+import java.util.List;
+
 /**
  * Data Access Object for SalesOrder
  */
@@ -30,7 +32,7 @@ public class SalesOrderDAO {
     }
 
     /**
-     * Fetches a sales order by sales order ID
+     * Fetches a sales order by sales order ID with items (use getItems() to fetch items)
      * @param salesOrderId Sales order ID
      * @return Sales order object
      */
@@ -38,6 +40,11 @@ public class SalesOrderDAO {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
             return em.find(SalesOrder.class, salesOrderId);
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to fetch sales order with items", e);
         } finally {
             em.close();
         }
@@ -71,7 +78,13 @@ public class SalesOrderDAO {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
             em.getTransaction().begin();
-            em.remove(salesOrder);
+
+            // Check if the order is managed by the entity manager
+            SalesOrder managedOrder = em.find(SalesOrder.class, salesOrder.getOrderId());
+            if (managedOrder != null) {
+                em.remove(managedOrder);
+            }
+
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -82,6 +95,7 @@ public class SalesOrderDAO {
             em.close();
         }
     }
+
 
     /**
      * Deletes all sales orders (for testing purposes)
@@ -103,24 +117,22 @@ public class SalesOrderDAO {
     }
 
     /**
-     * Fetches a sales order by its ID along with its items.
-     * @param orderId The ID of the sales order.
-     * @return The sales order with its items.
+     * Fetches all sales orders from the database
+     * @return List of sales orders
      */
-    public SalesOrder getSalesOrderWithItems(int orderId) {
+    public List<SalesOrder> getSalesOrders() {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
-            return em.createQuery("SELECT s FROM SalesOrder s JOIN FETCH s.items WHERE s.orderId = :orderId", SalesOrder.class)
-                    .setParameter("orderId", orderId)
-                    .getSingleResult();
+            return em.createQuery("SELECT s FROM SalesOrder s", SalesOrder.class).getResultList();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw new RuntimeException("Failed to fetch sales order with items", e);
+            throw new RuntimeException("Failed to retrieve sales orders", e);
         } finally {
             em.close();
         }
+
     }
 
 }

@@ -31,13 +31,13 @@ public class SalesOrder {
     private Date orderDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", columnDefinition = "ENUM('pending', 'in_progress', 'completed') DEFAULT 'pending'")
+    @Column(name = "status", columnDefinition = "VARCHAR(20) DEFAULT 'completed'")
     private OrderStatus status;
 
     @Column(name = "order_total", columnDefinition = "DOUBLE DEFAULT 0")
     private double orderTotal;
 
-    @OneToMany(mappedBy = "salesOrder")
+    @OneToMany(mappedBy = "salesOrder", fetch = FetchType.EAGER)
     private List<SalesOrderItem> items;
 
     //Constructors
@@ -57,6 +57,17 @@ public class SalesOrder {
         this.orderDate = orderDate;
         this.status = orderStatus;
         this.orderTotal = orderTotal;
+    }
+
+    /** Parameterized constructor
+     * @param customer: the customer who placed the order
+     * @param orderTotal: the total amount of the order
+     */
+    public SalesOrder(Customer customer, double orderTotal) {
+        this.customer = customer;
+        this.orderDate = new Date();
+        this.orderTotal = orderTotal;
+        this.status = OrderStatus.COMPLETED;
     }
 
     // Getters and setters
@@ -124,5 +135,12 @@ public class SalesOrder {
      */
     public void setOrderTotal(double order_total) {
         this.orderTotal = order_total;
+    }
+
+    /** Get the list of items in the order
+     * @return items
+     */
+    public List<SalesOrderItem> getItems() {
+        return items;
     }
 }

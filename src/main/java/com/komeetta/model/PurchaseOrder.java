@@ -32,13 +32,13 @@ public class PurchaseOrder {
     private Date orderDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", columnDefinition = "ENUM('pending', 'in_progress', 'completed') DEFAULT 'pending'")
+    @Column(name = "status", columnDefinition = "VARCHAR(20) DEFAULT 'completed'")
     private OrderStatus status;
 
-    @Column(name = "total_price", columnDefinition = "DOUBLE DEFAULT 0")
-    private double totalPrice;
+    @Column(name = "order_total", columnDefinition = "DOUBLE DEFAULT 0")
+    private double orderTotal;
 
-    @OneToMany(mappedBy = "purchaseOrder")
+    @OneToMany(mappedBy = "purchaseOrder", fetch = FetchType.EAGER) // to auto-fetch items when loading the order
     private List<PurchaseOrderItem> items;
 
     /** Default constructor required by JPA */
@@ -51,11 +51,22 @@ public class PurchaseOrder {
      * param: status the status of the order
      * param: totalPrice the total price of the order
      */
-    public PurchaseOrder(Supplier supplier, Date orderDate, OrderStatus status, double totalPrice) {
+    public PurchaseOrder(Supplier supplier, Date orderDate, OrderStatus status, double orderTotal) {
         this.supplier = supplier;
         this.orderDate = orderDate;
         this.status = status;
-        this.totalPrice = totalPrice;
+        this.orderTotal = orderTotal;
+    }
+
+    /** Parameterized constructor
+     * @param supplier: the customer who placed the order
+     * @param orderTotal: the total amount of the order
+     */
+    public PurchaseOrder(Supplier supplier, double orderTotal) {
+        this.supplier = supplier;
+        this.orderDate = new Date();
+        this.orderTotal = orderTotal;
+        this.status = OrderStatus.COMPLETED;
     }
 
     /** Get the unique identifier of the order.
@@ -120,13 +131,20 @@ public class PurchaseOrder {
      * return: the total price
      */
     public double getOrderTotal() {
-        return totalPrice;
+        return orderTotal;
     }
 
     /** Set the total price of the order.
      * param: orderTotal the total price
      */
     public void setOrderTotal(double orderTotal) {
-        this.totalPrice = orderTotal;
+        this.orderTotal = orderTotal;
+    }
+
+    /** Get the list of items in the order.
+     * return: the list of items
+     */
+    public List<PurchaseOrderItem> getItems() {
+        return items;
     }
 }
