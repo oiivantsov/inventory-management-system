@@ -33,8 +33,8 @@ public class Product {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "quantity", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int quantity;
+    @Column(name = "stock_level ", nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int stock_level ;
 
     // Constructors
     /** Default constructor (required by JPA). */
@@ -47,14 +47,22 @@ public class Product {
      * @param category The category of the product.
      * @param brand The brand of the product.
      * @param description The description of the product.
-     * @param quantity The quantity of the product in stock.
+     * @param stock_level  The quantity of the product in stock.
      */
-    public Product(String name, String category, String brand, String description, int quantity) {
+    public Product(String name, String category, String brand, String description, int stock_level ) {
         this.name = name;
         this.category = category;
         this.brand = brand;
         this.description = description;
-        this.quantity = quantity;
+        this.stock_level  = stock_level ;
+    }
+
+    public Product(String name, String category, String brand, String description) {
+        this.name = name;
+        this.category = category;
+        this.brand = brand;
+        this.description = description;
+        this.stock_level  = 0;
     }
 
     // Getters and Setters
@@ -147,16 +155,16 @@ public class Product {
      *
      * @return The quantity of the product in stock.
      */
-    public int getQuantity() {
-        return quantity;
+    public int getStockQuantity() {
+        return stock_level;
     }
 
     /**
      * Sets the quantity of the product in stock.
      *
-     * @param quantity The quantity of the product in stock.
+     * @param stock_level The quantity of the product in stock.
      */
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setStockQuantity(int stock_level) {
+        this.stock_level = stock_level;
     }
 }

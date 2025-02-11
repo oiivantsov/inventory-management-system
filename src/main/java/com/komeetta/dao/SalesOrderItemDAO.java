@@ -19,6 +19,11 @@ public class SalesOrderItemDAO {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
             em.getTransaction().begin();
+
+            // Ensure PurchaseOrder and Product are managed before persisting PurchaseOrderItem
+            salesOrderItem.setSalesOrder(em.merge(salesOrderItem.getSalesOrder()));
+            salesOrderItem.setProduct(em.merge(salesOrderItem.getProduct()));
+
             em.persist(salesOrderItem);
             em.getTransaction().commit();
         } catch (Exception e) {

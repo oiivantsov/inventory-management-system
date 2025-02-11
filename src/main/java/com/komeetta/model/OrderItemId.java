@@ -1,22 +1,19 @@
 package com.komeetta.model;
 
+import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Represents a composite primary key for the SalesOrderItem entity.
- * It consists of the Order and product IDs.
- * Used for both the SalesOrderItem and PurchaseOrderItem entities.
- * Used to uniquely identify an item in a sales or purchase order.
+ * Composite primary key for PurchaseOrderItem
  */
+@Embeddable
 public class OrderItemId implements Serializable {
     /** The unique identifier of the order */
     private int orderId;
     private int productId;
 
-    /** Default constructor
-     * (required by JPA)
-     * */
+    // Default constructor (required by JPA)
     public OrderItemId() {}
 
     /** Parameterized constructor

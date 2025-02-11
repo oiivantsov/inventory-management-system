@@ -15,23 +15,18 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "SalesOrderItems")
-@IdClass(OrderItemId.class)
 public class SalesOrderItem {
-    @Id
-    @Column(name = "order_id")
-    private int orderId;
-
-    @Id
-    @Column(name = "product_id")
-    private int productId;
+    @EmbeddedId
+    private OrderItemId id;
 
     @ManyToOne
-    @JoinColumn(name = "order_id", insertable = false, updatable = false)
+    @MapsId("orderId") // Links orderId from OrderItemId
+    @JoinColumn(name = "order_id")
     private SalesOrder salesOrder;
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "product_id", insertable = false, updatable = false)
+    @MapsId("productId") // Links productId from OrderItemId
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @Column(name = "quantity", nullable = false)
@@ -58,12 +53,21 @@ public class SalesOrderItem {
      * @param sale the sale percentage of the product
      */
     public SalesOrderItem(SalesOrder salesOrder, Product product, int quantity, double unitPrice, double sale) {
+        if (salesOrder.getOrderId() == 0) {
+            throw new IllegalStateException("SalesOrder must be persisted before creating SalesOrderItem");
+        }
+        if (product.getProductId() == 0) {
+            throw new IllegalStateException("Product must be persisted before creating SalesOrderItem");
+        }
+
+        this.id = new OrderItemId(salesOrder.getOrderId(), product.getProductId());
         this.salesOrder = salesOrder;
         this.product = product;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.sale = sale;
     }
+
 
     // Getters and Setters
 
@@ -142,17 +146,12 @@ public class SalesOrderItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SalesOrderItem that = (SalesOrderItem) o;
-        return orderId == that.orderId &&
-                productId == that.productId &&
-                quantity == that.quantity &&
-                Double.compare(that.unitPrice, unitPrice) == 0 &&
-                Objects.equals(salesOrder, that.salesOrder) &&
-                Objects.equals(product, that.product);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, productId, salesOrder, product, quantity, unitPrice);
+        return Objects.hash(id);
     }
 
 }

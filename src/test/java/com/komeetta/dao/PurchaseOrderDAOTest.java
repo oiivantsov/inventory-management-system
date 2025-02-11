@@ -56,13 +56,12 @@ class PurchaseOrderDAOTest {
     void testAddPurchaseOrder() {
         Supplier supplier = supplierDAO.getSuppliers().get(0);
 
-        PurchaseOrder purchaseOrder = new PurchaseOrder(supplier, 200.00);
+        PurchaseOrder purchaseOrder = new PurchaseOrder(supplier);
         purchaseOrderDAO.addPurchaseOrder(purchaseOrder);
 
         PurchaseOrder fetchedOrder = purchaseOrderDAO.getPurchaseOrder(purchaseOrder.getOrderId());
 
         assertNotNull(fetchedOrder);
-        assertEquals(200.00, fetchedOrder.getOrderTotal());
     }
 
     @Test
@@ -88,7 +87,7 @@ class PurchaseOrderDAOTest {
     void testDeletePurchaseOrder() {
         Supplier supplier = supplierDAO.getSuppliers().get(0);
 
-        PurchaseOrder purchaseOrder = new PurchaseOrder(supplier, 75.00);
+        PurchaseOrder purchaseOrder = new PurchaseOrder(supplier);
         purchaseOrderDAO.addPurchaseOrder(purchaseOrder);
 
         // Fetch the managed entity before deleting
@@ -104,7 +103,7 @@ class PurchaseOrderDAOTest {
     void testGetPurchaseOrderWithItems() {
         Supplier supplier = supplierDAO.getSuppliers().get(0);
 
-        PurchaseOrder purchaseOrder = new PurchaseOrder(supplier, 180.00);
+        PurchaseOrder purchaseOrder = new PurchaseOrder(supplier);
         purchaseOrderDAO.addPurchaseOrder(purchaseOrder);
 
         PurchaseOrder fetchedOrder = purchaseOrderDAO.getPurchaseOrder(purchaseOrder.getOrderId());
@@ -112,7 +111,6 @@ class PurchaseOrderDAOTest {
         List<PurchaseOrderItem> items = purchaseOrder.getItems();
 
         assertNotNull(fetchedOrder);
-        assertEquals(180.00, fetchedOrder.getOrderTotal());
         assertNotNull(fetchedOrder.getItems()); // Ensure items are fetched
     }
 

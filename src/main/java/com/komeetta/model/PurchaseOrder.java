@@ -28,7 +28,7 @@ public class PurchaseOrder {
     private Supplier supplier;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "order_date", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "order_date", nullable = false, updatable = false)
     private Date orderDate;
 
     @Enumerated(EnumType.STRING)
@@ -60,12 +60,11 @@ public class PurchaseOrder {
 
     /** Parameterized constructor
      * @param supplier: the customer who placed the order
-     * @param orderTotal: the total amount of the order
      */
-    public PurchaseOrder(Supplier supplier, double orderTotal) {
+    public PurchaseOrder(Supplier supplier) {
         this.supplier = supplier;
         this.orderDate = new Date();
-        this.orderTotal = orderTotal;
+        this.orderTotal = 0;
         this.status = OrderStatus.COMPLETED;
     }
 

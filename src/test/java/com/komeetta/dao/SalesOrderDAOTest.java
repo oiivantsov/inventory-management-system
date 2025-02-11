@@ -57,14 +57,13 @@ class SalesOrderDAOTest {
 
         Customer customer = customerDAO.getCustomers().get(0);
 
-        SalesOrder salesOrder = new SalesOrder(customer, 150.00);
+        SalesOrder salesOrder = new SalesOrder(customer);
         salesOrderDAO.addSalesOrder(salesOrder);
 
         SalesOrder fetchedOrder = salesOrderDAO.getSalesOrder(salesOrder.getOrderId());
 
         assertNotNull(fetchedOrder);
         assertEquals(OrderStatus.COMPLETED, fetchedOrder.getOrderStatus());
-        assertEquals(150.00, fetchedOrder.getOrderTotal());
     }
 
     @Test
@@ -90,7 +89,7 @@ class SalesOrderDAOTest {
     void testDeleteSalesOrder() {
         Customer customer = customerDAO.getCustomers().get(0);
 
-        SalesOrder salesOrder = new SalesOrder(customer, 50.00);
+        SalesOrder salesOrder = new SalesOrder(customer);
         salesOrderDAO.addSalesOrder(salesOrder);
 
         // Fetch the managed entity before deleting
@@ -107,7 +106,7 @@ class SalesOrderDAOTest {
     void testGetSalesOrderWithItems() {
         Customer customer = customerDAO.getCustomers().get(0);
 
-        SalesOrder salesOrder = new SalesOrder(customer, 120.00);
+        SalesOrder salesOrder = new SalesOrder(customer);
         salesOrderDAO.addSalesOrder(salesOrder);
 
         SalesOrder fetchedOrder = salesOrderDAO.getSalesOrder(salesOrder.getOrderId());
@@ -115,7 +114,6 @@ class SalesOrderDAOTest {
         List<SalesOrderItem> items = salesOrder.getItems();
 
         assertNotNull(fetchedOrder);
-        assertEquals(120.00, fetchedOrder.getOrderTotal());
         assertNotNull(fetchedOrder.getItems()); // Ensure items are fetched
     }
 

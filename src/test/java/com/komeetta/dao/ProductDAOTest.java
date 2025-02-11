@@ -42,43 +42,43 @@ class ProductDAOTest {
 
         productDAO.addProduct(product);
 
-        Product fetchedProduct = productDAO.getProduct(product.getProductId());
+        Product fetchedProduct = productDAO.getProductById(product.getProductId());
         assertNotNull(fetchedProduct);
         assertEquals("Test Product", fetchedProduct.getName());
         assertEquals("Test Brand", fetchedProduct.getBrand());
-        assertEquals(0, fetchedProduct.getQuantity());
+        assertEquals(0, fetchedProduct.getStockQuantity());
     }
 
     @Test
     void getProduct() {
         Product product = new Product();
         product.setName("Test Product");
-        product.setQuantity(50);
+        product.setStockQuantity(50);
 
         productDAO.addProduct(product);
 
-        Product fetchedProduct = productDAO.getProduct(product.getProductId());
+        Product fetchedProduct = productDAO.getProductById(product.getProductId());
         assertNotNull(fetchedProduct);
         assertEquals("Test Product", fetchedProduct.getName());
-        assertEquals(50, fetchedProduct.getQuantity());
+        assertEquals(50, fetchedProduct.getStockQuantity());
     }
 
     @Test
     void updateProduct() {
         Product product = new Product();
         product.setName("Test Product");
-        product.setQuantity(50);
+        product.setStockQuantity(50);
 
         productDAO.addProduct(product);
 
         product.setName("Updated Product");
-        product.setQuantity(150);
+        product.setStockQuantity(150);
         productDAO.updateProduct(product);
 
-        Product updatedProduct = productDAO.getProduct(product.getProductId());
+        Product updatedProduct = productDAO.getProductById(product.getProductId());
         assertNotNull(updatedProduct);
         assertEquals("Updated Product", updatedProduct.getName());
-        assertEquals(150, updatedProduct.getQuantity());
+        assertEquals(150, updatedProduct.getStockQuantity());
     }
 
     @Test
@@ -89,7 +89,7 @@ class ProductDAOTest {
         productDAO.addProduct(product);
         productDAO.deleteProduct(product.getProductId());
 
-        Product deletedProduct = productDAO.getProduct(product.getProductId());
+        Product deletedProduct = productDAO.getProductById(product.getProductId());
         assertNull(deletedProduct);
     }
 
@@ -97,19 +97,19 @@ class ProductDAOTest {
     void deleteAll() {
         Product product1 = new Product();
         product1.setName("Test Product 1");
-        product1.setQuantity(100);
+        product1.setStockQuantity(100);
 
         Product product2 = new Product();
         product2.setName("Test Product 2");
-        product2.setQuantity(200);
+        product2.setStockQuantity(200);
 
         productDAO.addProduct(product1);
         productDAO.addProduct(product2);
 
         productDAO.deleteAll();
 
-        assertNull(productDAO.getProduct(product1.getProductId()));
-        assertNull(productDAO.getProduct(product2.getProductId()));
+        assertNull(productDAO.getProductById(product1.getProductId()));
+        assertNull(productDAO.getProductById(product2.getProductId()));
     }
 
     @AfterAll

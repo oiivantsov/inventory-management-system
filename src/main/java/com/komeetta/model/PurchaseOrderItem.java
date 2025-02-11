@@ -16,22 +16,18 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "PurchaseOrderItems")
-@IdClass(OrderItemId.class)
 public class PurchaseOrderItem {
-    @Id
-    @Column(name = "order_id")
-    private int orderId;
-
-    @Id
-    @Column(name = "product_id")
-    private int productId;
+    @EmbeddedId
+    private OrderItemId id;
 
     @ManyToOne
-    @JoinColumn(name = "order_id", insertable = false, updatable = false)
+    @MapsId("orderId") // Links orderId from OrderItemId
+    @JoinColumn(name = "order_id")
     private PurchaseOrder purchaseOrder;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", insertable = false, updatable = false)
+    @MapsId("productId") // Links productId from OrderItemId
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @Column(name = "quantity", nullable = false)
@@ -57,12 +53,21 @@ public class PurchaseOrderItem {
      * @param sale the sale percentage of the product
      */
     public PurchaseOrderItem(PurchaseOrder purchaseOrder, Product product, int quantity, double unitPrice, double sale) {
+        if (purchaseOrder.getOrderId() == 0) {
+            throw new IllegalStateException("PurchaseOrder must be persisted before creating PurchaseOrderItem");
+        }
+        if (product.getProductId() == 0) {
+            throw new IllegalStateException("Product must be persisted before creating PurchaseOrderItem");
+        }
+
+        this.id = new OrderItemId(purchaseOrder.getOrderId(), product.getProductId());
         this.purchaseOrder = purchaseOrder;
         this.product = product;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.sale = sale;
     }
+
 
     // Getters and Setters
     /** get purchase order that the item belongs to
@@ -141,11 +146,11 @@ public class PurchaseOrderItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PurchaseOrderItem that = (PurchaseOrderItem) o;
-        return orderId == that.orderId && productId == that.productId;
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, productId);
+        return Objects.hash(id);
     }
 }

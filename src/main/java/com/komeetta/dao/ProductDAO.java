@@ -36,7 +36,7 @@ public class ProductDAO {
      * @param productId Product ID
      * @return Product object
      */
-    public Product getProduct(int productId) {
+    public Product getProductById(int productId) {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
             return em.find(Product.class, productId);
