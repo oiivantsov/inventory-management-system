@@ -4,6 +4,8 @@ import com.komeetta.datasource.MariaDbJpaConnection;
 import com.komeetta.model.Product;
 import jakarta.persistence.EntityManager;
 
+import java.util.List;
+
 /**
  * Data Access Object for Product
  */
@@ -64,6 +66,27 @@ public class ProductDAO {
             em.close();
         }
 
+    }
+
+    /**
+     * Fetches all products
+     * @return List of products
+     */
+    public List<Product> getProducts() {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            em.getTransaction().begin();
+            List<Product> products = em.createQuery("SELECT p FROM Product p", Product.class).getResultList();
+            em.getTransaction().commit();
+            return products;
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to retrieve products", e);
+        } finally {
+            em.close();
+        }
     }
 
     /**

@@ -22,8 +22,6 @@ public class AppTest {
         ProductDAO productDAO = new ProductDAO();
         PurchaseOrderDAO purchaseOrderDAO = new PurchaseOrderDAO();
         SalesOrderDAO salesOrderDAO = new SalesOrderDAO();
-        PurchaseOrderItemDAO purchaseOrderItemDAO = new PurchaseOrderItemDAO();
-        SalesOrderItemDAO salesOrderItemDAO = new SalesOrderItemDAO();
         PurchaseService purchaseService = new PurchaseService();
         SalesService salesService = new SalesService();
 
@@ -84,5 +82,52 @@ public class AppTest {
 
         // Process sales order
         salesService.processSalesOrder(salesOrder, List.of(saleItem1, saleItem2));
+
+        // show all suppliers
+        System.out.println("Suppliers:");
+        supplierDAO.getSuppliers().forEach(System.out::println);
+
+        // show suppliers' names
+        System.out.println("Suppliers' names:");
+        supplierDAO.getSuppliers().forEach(supplier1 -> System.out.println(supplier1.getName()));
+
+        // show all customers (objects)
+        System.out.println("Customers:");
+        customerDAO.getCustomers().forEach(System.out::println);
+
+        // show customers' names
+        System.out.println("Customers' names:");
+        customerDAO.getCustomers().forEach(customer1 -> System.out.println(customer1.getName()));
+
+        // show all products
+        System.out.println("Products:");
+        productDAO.getProducts().forEach(System.out::println);
+
+        // show all products' names
+        System.out.println("Products' names:");
+        productDAO.getProducts().forEach(product -> System.out.println(product.getName()));
+
+        // show all purchase orders
+        System.out.println("Purchase Orders:");
+        purchaseOrderDAO.getPurchaseOrders().forEach(System.out::println);
+
+        // show all sales orders
+        System.out.println("Sales Orders:");
+        salesOrderDAO.getSalesOrders().forEach(System.out::println);
+
+        // show items in purchase order
+        System.out.println("Items in Purchase Order with id 1:");
+        purchaseOrderDAO.getPurchaseOrder(1).getItems().forEach(System.out::println);
+
+        // show items in sales order
+        System.out.println("Items in Sales Order with id 1:");
+        salesOrderDAO.getSalesOrder(1).getItems().forEach(System.out::println);
+
+        // sum of all purchase orders
+        System.out.println("Sum of all purchase orders: " + purchaseOrderDAO.getTotalPurchaseOrders());
+
+        // sum of all sales orders
+        System.out.println("Sum of all sales orders: " + salesOrderDAO.getTotalSaleOrders());
+
     }
 }

@@ -136,6 +136,44 @@ public class PurchaseOrderDAO {
 
     }
 
+    /**
+     * Sum of all purchase orders
+     * @return Total purchase orders
+     */
+    public double getTotalPurchaseOrders() {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            return em.createQuery("SELECT SUM(s.orderTotal) FROM PurchaseOrder s", Double.class).getSingleResult();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to retrieve total purchase orders", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Sum of all purchase orders for a specific supplier
+     * @param supplierId Supplier ID
+     * @return Total purchase orders
+     */
+    public double getTotalPurchaseOrdersBySupplier(int supplierId) {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            return em.createQuery("SELECT SUM(s.orderTotal) FROM PurchaseOrder s WHERE s.supplier.supplierId = :supplierId", Double.class)
+                    .setParameter("supplierId", supplierId)
+                    .getSingleResult();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to retrieve total purchase orders by supplier", e);
+        } finally {
+            em.close();
+        }
+    }
 
 
 }

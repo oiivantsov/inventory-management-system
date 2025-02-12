@@ -135,4 +135,21 @@ public class SalesOrderDAO {
 
     }
 
+    /**
+     * Sum of all sales orders
+     */
+    public double getTotalSaleOrders() {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            return em.createQuery("SELECT SUM(s.orderTotal) FROM SalesOrder s", Double.class).getSingleResult();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to sum sales orders", e);
+        } finally {
+            em.close();
+        }
+    }
+
 }
