@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 public class LoginGUI extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws Exception {    // change this to the correct path when needed
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Dashboard.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root, 600, 400);
