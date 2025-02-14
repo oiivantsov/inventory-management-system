@@ -12,38 +12,38 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.komeetta.controller.DashboardController">
    <center>
         <VBox alignment="CENTER" prefHeight="413.0" prefWidth="458.0" style="-fx-padding: 10; -fx-background-color: #222222;" BorderPane.alignment="CENTER">
-            <Label style="-fx-text-fill: lightblue; -fx-font-size: 23px; -fx-font-weight: bold;" text="Enter entity details">
+            <Label fx:id="headlineLabel" style="-fx-text-fill: lightblue; -fx-font-size: 23px; -fx-font-weight: bold;" text="Enter entity details">
             <font>
                <Font size="20.0" />
             </font>
             <VBox.margin>
                <Insets bottom="10.0" />
             </VBox.margin></Label>
-            <TextField fx:id="productNameField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" prefWidth="210.0" promptText="Name">
+            <TextField fx:id="entityNameField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" prefWidth="210.0" promptText="Name">
             <VBox.margin>
                <Insets bottom="5.0" />
             </VBox.margin></TextField>
-            <TextField fx:id="quantityField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" prefWidth="210.0" promptText="Email">
+            <TextField fx:id="entityEmailField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" prefWidth="210.0" promptText="Email">
             <VBox.margin>
                <Insets bottom="5.0" />
             </VBox.margin></TextField>
-            <TextField fx:id="costPriceField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" prefWidth="210.0" promptText="Phone number">
+            <TextField fx:id="entityPhoneField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" prefWidth="210.0" promptText="Phone number">
             <VBox.margin>
                <Insets bottom="5.0" />
             </VBox.margin></TextField>
-            <TextField fx:id="sellPriceField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" prefWidth="210.0" promptText="Address">
+            <TextField fx:id="entityAddressField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" prefWidth="210.0" promptText="Address">
             <VBox.margin>
                <Insets bottom="5.0" />
             </VBox.margin></TextField>
 
             <HBox alignment="CENTER" style="-fx-spacing: 8;">
-            <Button prefHeight="28.0" prefWidth="60.0" style="-fx-background-color: lightblue; -fx-background-radius: 7px;" text="Add">
+            <Button fx:id="addButton" prefHeight="28.0" prefWidth="60.0" style="-fx-background-color: lightblue; -fx-background-radius: 7px;" text="Add">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
    
-               <Button prefHeight="28.0" prefWidth="60.0" style="-fx-background-color: #444444; -fx-text-fill: #FFFFFF; -fx-background-radius: 7px; -fx-font-weight: bold;" text="Cancel" />
+               <Button fx:id="cancelButton" prefHeight="28.0" prefWidth="60.0" style="-fx-background-color: #444444; -fx-text-fill: #FFFFFF; -fx-background-radius: 7px; -fx-font-weight: bold;" text="Cancel" />
             <VBox.margin>
                <Insets bottom="10.0" top="10.0" />
             </VBox.margin>

@@ -17,8 +17,8 @@ public class EditProductGUI {
             // Set modality to block interactions with other windows
             window.initModality(Modality.APPLICATION_MODAL);
 
-            // Ensure a NEW instance of Options.fxml is loaded
-            FXMLLoader loader = new FXMLLoader(EditProductGUI.class.getResource("/Scenes/Options.fxml"));
+            // Ensure a NEW instance of ProductForm.fxml is loaded
+            FXMLLoader loader = new FXMLLoader(EditProductGUI.class.getResource("/Scenes/ProductForm.fxml"));
             Parent newWindow = loader.load();
 
             Scene scene = new Scene(newWindow, 600, 400);
@@ -28,7 +28,7 @@ public class EditProductGUI {
             window.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Failed to load Options.fxml. Check the file path.");
+            System.err.println("Failed to load ProductForm.fxml. Check the file path.");
         }
     }
 }
