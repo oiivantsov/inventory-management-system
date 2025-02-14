@@ -2,6 +2,7 @@ package com.komeetta.dao;
 
 import com.komeetta.datasource.MariaDbJpaConnection;
 import com.komeetta.model.Customer;
+import com.komeetta.model.Supplier;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.EntityManager;
 
@@ -41,6 +42,71 @@ public class CustomerDAO {
             em.close();
         }
     }
+
+
+    public Customer getCustomer(int customerId) {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            return em.find(Customer.class, customerId);
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to fetch customer", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    public void updateCustomer(Customer customer) {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            em.getTransaction().begin();
+            em.merge(customer);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to update customer", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    public void deleteCustomer(Customer customer) {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            em.getTransaction().begin();
+            em.remove(customer);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to delete customer", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    public void deleteAll() {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM Customer").executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to delete customers", e);
+        } finally {
+            em.close();
+        }
+    }
+
+
 
     public static void main(String[] args) {
         Dotenv dotenv = Dotenv.load();

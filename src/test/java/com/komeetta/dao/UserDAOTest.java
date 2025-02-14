@@ -1,6 +1,7 @@
 package com.komeetta.dao;
 
 import com.komeetta.model.User;
+import com.komeetta.model.UserRole;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -41,6 +42,7 @@ class UserDAOTest {
         assertNotNull(fetchedUser);
         assertEquals("testUser", fetchedUser.getUsername());
         assertEquals("testPassword", fetchedUser.getPassword());
+        assertEquals(UserRole.USER, fetchedUser.getRole());
     }
 
     @AfterAll
