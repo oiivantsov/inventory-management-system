@@ -75,7 +75,7 @@
                <children>
                   <HBox prefHeight="17.0" prefWidth="457.0" style="-fx-spacing: 10; -fx-alignment: center-left;">
                      <children>
-                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="PRODUCT" textFill="WHITE" />
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="PRODUCTS" textFill="WHITE" />
                      </children>
                   </HBox>
                   <TableView fx:id="productTable" prefHeight="322.0" prefWidth="457.0" style="-fx-pref-height: 300; -fx-padding: 10;" VBox.vgrow="SOMETIMES">
@@ -83,8 +83,8 @@
                         <TableColumn style="-fx-background-color: lightblue;" text="PRODUCT ID" />
                         <TableColumn style="-fx-background-color: lightblue;" text="Name" />
                         <TableColumn style="-fx-background-color: lightblue;" text="Category" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="brand" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="description" />
+                        <TableColumn style="-fx-background-color: lightblue;" text="Brand" />
+                        <TableColumn style="-fx-background-color: lightblue;" text="Description" />
                         <TableColumn style="-fx-background-color: lightblue;" text="Quantity" />
                      </columns>
                      <columnResizePolicy>
@@ -100,14 +100,14 @@
                <children>
                   <HBox prefHeight="17.0" prefWidth="457.0" style="-fx-spacing: 10; -fx-alignment: center-left;">
                      <children>
-                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Customers" textFill="WHITE" />
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="CUSTOMERS" textFill="WHITE" />
                      </children>
                   </HBox>
                   <TableView fx:id="customerTable" prefHeight="322.0" prefWidth="457.0" style="-fx-pref-height: 300; -fx-padding: 10;" VBox.vgrow="SOMETIMES">
                      <columns>
                         <TableColumn style="-fx-background-color: lightblue;" text="CUSTOMER ID" />
                         <TableColumn style="-fx-background-color: lightblue;" text="Name" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="EMail" />
+                        <TableColumn style="-fx-background-color: lightblue;" text="Email" />
                         <TableColumn style="-fx-background-color: lightblue;" text="Phone Number" />
                         <TableColumn style="-fx-background-color: lightblue;" text="Address" />
                      </columns>
@@ -124,14 +124,14 @@
                <children>
                   <HBox prefHeight="17.0" prefWidth="457.0" style="-fx-spacing: 10; -fx-alignment: center-left;">
                      <children>
-                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Suppliers" textFill="WHITE" />
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="SUPPLIERS" textFill="WHITE" />
                      </children>
                   </HBox>
                   <TableView fx:id="supplierTable" prefHeight="322.0" prefWidth="457.0" style="-fx-pref-height: 300; -fx-padding: 10;" VBox.vgrow="SOMETIMES">
                      <columns>
                         <TableColumn style="-fx-background-color: lightblue;" text="SUPPLIER ID" />
                         <TableColumn style="-fx-background-color: lightblue;" text="Name" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="EMail" />
+                        <TableColumn style="-fx-background-color: lightblue;" text="Email" />
                         <TableColumn style="-fx-background-color: lightblue;" text="Phone Number" />
                         <TableColumn style="-fx-background-color: lightblue;" text="Address" />
                      </columns>

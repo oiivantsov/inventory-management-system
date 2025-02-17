@@ -51,12 +51,20 @@ public class DashboardController {
 
     @FXML
     private void handleEditButtonAction() {
-        EditProductGUI.display();
+        if (productVBox.isVisible()) { // If the product view is visible, edit the selected product
+            // method for the editing of the product
+        } else if (customerVBox.isVisible() || SupplierVBox.isVisible()) { // If the customer or supplier view is visible, edit the selected entity
+            // method for the editing of the entity
+        }
     }
 
     @FXML
     private void handleAddButtonAction() {
-        AddEntityGUI.display();
+        if (productVBox.isVisible()) { // If the product view is visible, add a new product
+            EditProductGUI.display();
+        } else if (customerVBox.isVisible() || SupplierVBox.isVisible()) { // If the customer or supplier view is visible, add a new entity
+            AddEntityGUI.display();
+        }
     }
 
     @FXML
@@ -66,11 +74,13 @@ public class DashboardController {
 
     @FXML
     private void handleCustomerButtonAction() {
+        EntityController.setIsCustomer(true); // Set the entity type to Customer
         showView(customerVBox);
     }
 
     @FXML
     private void handleSupplierButtonAction() {
+        EntityController.setIsCustomer(false); // Set the entity type to Supplier
         showView(SupplierVBox);
     }
 

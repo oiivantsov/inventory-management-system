@@ -15,10 +15,8 @@ public class InventoryManager{
         System.setProperty("JDBC_USER", dotenv.get("JDBC_USER"));
         System.setProperty("JDBC_PASSWORD", dotenv.get("JDBC_PASSWORD"));
 
-
         // Launch the GUI
         Application.launch(LoginGUI.class);
-
 
 
 

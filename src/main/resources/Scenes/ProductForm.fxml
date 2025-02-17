@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="414.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.komeetta.controller.DashboardController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="414.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.komeetta.controller.ProductController">
    <center>
         <VBox alignment="CENTER" prefHeight="307.0" prefWidth="415.0" style="-fx-padding: 10; -fx-background-color: #222222;" BorderPane.alignment="CENTER">
             <Label fx:id="headlineLabel" style="-fx-text-fill: #FFFFFF; -fx-font-size: 16px; -fx-font-weight: bold;" text="Enter Product Details" />
@@ -41,8 +41,8 @@
 
             <HBox alignment="CENTER" style="-fx-spacing: 8;">
    
-               <Button fx:id="addButton" prefHeight="28.0" prefWidth="60.0" style="-fx-background-color: lightblue; -fx-text-fill: black; -fx-background-radius: 7px; -fx-font-weight: bold;" text="ADD" />
-            <Button fx:id="cancelButton" prefHeight="28.0" prefWidth="60.0" style="-fx-background-color: #444444; -fx-text-fill: #FFFFFF; -fx-background-radius: 7px; -fx-font-weight: bold;" text="Cancel" />
+               <Button fx:id="addButton" onAction="#handleAddProduct" prefHeight="28.0" prefWidth="60.0" style="-fx-background-color: lightblue; -fx-text-fill: black; -fx-background-radius: 7px; -fx-font-weight: bold;" text="ADD" />
+            <Button fx:id="cancelButton" onAction="#handleCancelProduct" prefHeight="28.0" prefWidth="60.0" style="-fx-background-color: #444444; -fx-text-fill: #FFFFFF; -fx-background-radius: 7px; -fx-font-weight: bold;" text="Cancel" />
             <VBox.margin>
                <Insets bottom="10.0" top="10.0" />
             </VBox.margin>
