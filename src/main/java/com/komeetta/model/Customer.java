@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "customer_id")
     private Integer customerId;
 
     @Column(nullable = false)

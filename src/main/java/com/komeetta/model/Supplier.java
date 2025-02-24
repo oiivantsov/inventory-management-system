@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "supplier_id")
     private Integer supplierId;
 
     @Column(nullable = false)

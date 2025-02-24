@@ -42,6 +42,68 @@ public class SupplierDAO {
         }
     }
 
+    public Supplier getSupplier(int supplierId) {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            return em.find(Supplier.class, supplierId);
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to fetch supplier", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    public void updateSupplier(Supplier supplier) {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            em.getTransaction().begin();
+            em.merge(supplier);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to update supplier", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    public void deleteSupplier(Supplier supplier) {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            em.getTransaction().begin();
+            em.remove(supplier);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to delete supplier", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    public void deleteAll() {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM Supplier").executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to delete suppliers", e);
+        } finally {
+            em.close();
+        }
+    }
+
     public static void main(String[] args) {
         Dotenv dotenv = Dotenv.load();
         System.setProperty("JDBC_URL", dotenv.get("JDBC_URL"));
