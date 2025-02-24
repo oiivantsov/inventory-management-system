@@ -93,6 +93,8 @@ public class DashboardController {
     @FXML
     private TableColumn<Product, String> colProductDescription;
 
+    private Object selectedItem;
+
     @FXML
     public void initialize() {
 
@@ -118,8 +120,27 @@ public class DashboardController {
         colProductStock.setCellValueFactory(new PropertyValueFactory<>("stock_level "));
         colProductDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
 
+        // Add selection listeners for each table
+        productTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedItem = newSelection;
+                System.out.println("Selected Product: " + newSelection);
+            }
+        });
 
+        customerTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedItem = newSelection;
+                System.out.println("Selected Customer: " + newSelection);
+            }
+        });
 
+        supplierTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedItem = newSelection;
+                System.out.println("Selected Supplier: " + newSelection);
+            }
+        });
 
         // Ensure only one view is visible at a time
         showView(HomeVBox);
