@@ -111,12 +111,12 @@
                   </HBox>
                   <TableView fx:id="productTable" prefHeight="322.0" prefWidth="457.0" style="-fx-pref-height: 300; -fx-padding: 10;" VBox.vgrow="SOMETIMES">
                      <columns>
-                        <TableColumn style="-fx-background-color: lightblue;" text="PRODUCT ID" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="Name" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="Category" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="brand" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="description" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="Quantity" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colProductID" text="PRODUCT ID" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colProductName" text="Name" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colProductCategory" text="Category" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colProductBrand" text="brand" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colProductDescription" text="description" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colProductStock" text="Stock" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -136,11 +136,11 @@
                   </HBox>
                   <TableView fx:id="customerTable" prefHeight="322.0" prefWidth="457.0" style="-fx-pref-height: 300; -fx-padding: 10;" VBox.vgrow="SOMETIMES">
                      <columns>
-                        <TableColumn style="-fx-background-color: lightblue;" text="CUSTOMER ID" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="Name" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="EMail" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="Phone Number" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="Address" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colCustomerID" text="CUSTOMER ID" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colCustomerName" text="Name" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colCustomerMail" text="EMail" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colCustomerNum" text="Phone Number" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colCustomerAddr" text="Address" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -151,7 +151,7 @@
                   </TableView>
                </children>
             </VBox>
-            <VBox fx:id="SupplierVBox" layoutX="10.0" layoutY="10.0" prefHeight="430.0" prefWidth="477.0" style="-fx-padding: 10;" visible="false">
+            <VBox fx:id="supplierVBox" layoutX="10.0" layoutY="10.0" prefHeight="430.0" prefWidth="477.0" style="-fx-padding: 10;" visible="false">
                <children>
                   <HBox prefHeight="17.0" prefWidth="457.0" style="-fx-spacing: 10; -fx-alignment: center-left;">
                      <children>
@@ -160,11 +160,11 @@
                   </HBox>
                   <TableView fx:id="supplierTable" prefHeight="322.0" prefWidth="457.0" style="-fx-pref-height: 300; -fx-padding: 10;" VBox.vgrow="SOMETIMES">
                      <columns>
-                        <TableColumn style="-fx-background-color: lightblue;" text="SUPPLIER ID" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="Name" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="EMail" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="Phone Number" />
-                        <TableColumn style="-fx-background-color: lightblue;" text="Address" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colSupplierID" text="SUPPLIER ID" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colSupplierName" text="Name" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colSupplierMail" text="EMail" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colSupplierNum" text="Phone Number" />
+                        <TableColumn style="-fx-background-color: lightblue;" fx:id="colSupplierAddr" text="Address" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
