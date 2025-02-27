@@ -47,6 +47,10 @@ public class LoginController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Dashboard.fxml"));
                 Parent root = loader.load();
 
+                // Send User variable to the next view
+                DashboardController controller = loader.getController();
+                controller.setInitialView(user);
+
                 // Get the current stage (window)
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 

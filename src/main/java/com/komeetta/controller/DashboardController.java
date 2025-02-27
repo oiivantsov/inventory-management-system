@@ -1,26 +1,28 @@
 package com.komeetta.controller;
 
-import com.komeetta.dao.ProductDAO;
-import com.komeetta.dao.SupplierDAO;
-import com.komeetta.model.Customer;
-import com.komeetta.model.Product;
-import com.komeetta.model.Supplier;
-import com.komeetta.dao.CustomerDAO;
+import com.komeetta.dao.*;
+import com.komeetta.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.Node;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.util.Date;
 import java.util.List;
 
 
 public class DashboardController {
 
+    //  Middle StackPane and VBoxes
     @FXML
     private StackPane contentArea;
 
@@ -34,8 +36,15 @@ public class DashboardController {
     private VBox supplierVBox;
 
     @FXML
+    private VBox purchaseVBox;
+
+    @FXML
+    private VBox saleVBox;
+
+    @FXML
     private VBox HomeVBox;
 
+    //  Customer Table and Columns
     @FXML
     private TableView<Customer> customerTable;
 
@@ -54,6 +63,7 @@ public class DashboardController {
     @FXML
     private TableColumn<Customer, String> colCustomerAddr;
 
+    //  Supplier Table and Columns
     @FXML
     private TableView<Supplier> supplierTable;
 
@@ -72,6 +82,7 @@ public class DashboardController {
     @FXML
     private TableColumn<Supplier, String> colSupplierAddr;
 
+    //  Product Table and Columns
     @FXML
     private TableView<Product> productTable;
 
@@ -93,7 +104,49 @@ public class DashboardController {
     @FXML
     private TableColumn<Product, String> colProductDescription;
 
+    //  PurchaseOrder Table and Columns
+    @FXML
+    private TableView<PurchaseOrder> purchaseOrderTable;
+
+    @FXML
+    private TableColumn<PurchaseOrder, Integer> colPurchaseID;
+
+    @FXML
+    private TableColumn<PurchaseOrder, Integer> colPurchaseSupplierID;
+
+    @FXML
+    private TableColumn<PurchaseOrder, Date> colPurchaseDate;
+
+    @FXML
+    private TableColumn<PurchaseOrder, OrderStatus> colPurchaseState;
+
+    @FXML
+    private TableColumn<PurchaseOrder, Integer> colPurchaseTotalPrice;
+
+    //  SalesOrder Table and Columns
+    @FXML
+    private TableView<SalesOrder> salesOrderTable;
+
+    @FXML
+    private TableColumn<SalesOrder, Integer> colSaleID;
+
+    @FXML
+    private TableColumn<SalesOrder, Integer> colSaleCustomerID;
+
+    @FXML
+    private TableColumn<SalesOrder, Date> colSaleDate;
+
+    @FXML
+    private TableColumn<SalesOrder, OrderStatus> colSaleState;
+
+    @FXML
+    private TableColumn<SalesOrder, Integer> colSaleTotalPrice;
+
+    @FXML
+    private Label greetingLabel;
+
     private Object selectedItem;
+    private User user;
 
     @FXML
     public void initialize() {
@@ -120,6 +173,20 @@ public class DashboardController {
         colProductStock.setCellValueFactory(new PropertyValueFactory<>("stock_level "));
         colProductDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
 
+        //initialize columns in purchaseOrderTable.
+        colPurchaseID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
+        colPurchaseSupplierID.setCellValueFactory(new PropertyValueFactory<>("supplier"));
+        colPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
+        colPurchaseState.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colPurchaseTotalPrice.setCellValueFactory(new PropertyValueFactory<>("orderTotal"));
+
+        //initialize columns in saleOrderTable.
+        colSaleID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
+        colSaleCustomerID.setCellValueFactory(new PropertyValueFactory<>("customer"));
+        colSaleDate.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
+        colSaleState.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colSaleTotalPrice.setCellValueFactory(new PropertyValueFactory<>("orderTotal"));
+
         // Add selection listeners for each table
         productTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -142,10 +209,22 @@ public class DashboardController {
             }
         });
 
-        // Ensure only one view is visible at a time
-        showView(HomeVBox);
+        salesOrderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedItem = newSelection;
+                System.out.println("Selected Supplier: " + newSelection);
+            }
+        });
+
+        purchaseOrderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedItem = newSelection;
+                System.out.println("Selected Supplier: " + newSelection);
+            }
+        });
     }
 
+    // onAction methods for view selection buttons
     @FXML
     private void handleProductButtonAction() {
         showView(productVBox);
@@ -161,12 +240,34 @@ public class DashboardController {
         showView(supplierVBox);
     }
 
-    /* Currently unused
     @FXML
-    private void handleHomeButtonAction() {
-        showView(HomeVBox);
+    private void handlePurchaseButtonAction() {
+        showView(purchaseVBox);
     }
-    */
+
+    @FXML
+    private void handleSaleButtonAction() {
+        showView(saleVBox);
+    }
+
+    @FXML
+    public void handleLogoutButtonAction() {
+        this.user = null;
+
+        //Close current window
+        Stage stage = (Stage) greetingLabel.getScene().getWindow();
+        stage.close();
+
+        try{
+            // Open login screen
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Login.fxml"));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(loader.load()));
+            newStage.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     //Shows corresponding View to passed variable
     private void showView(VBox view) {
@@ -179,9 +280,24 @@ public class DashboardController {
                 refreshSupplierView();
             } else if (view == productVBox) {
                 refreshProductView();
+            } else if(view == purchaseVBox){
+                refreshPurchaseView();
+            } else if (view == saleVBox) {
+                refreshSaleView();
             }
         }
     }
+
+    public void setInitialView(User user) {
+        this.user = user;
+
+        greetingLabel.setText("Welcome, " + user.getUsername() + "\n" +
+                "Use the buttons on the left to manage your company inventory.");
+
+        // Show initial view
+        showView(HomeVBox);
+    }
+
     public void refreshProductView() {
 
         productTable.getItems().clear();
@@ -214,6 +330,26 @@ public class DashboardController {
         ObservableList<Supplier> suppliers = FXCollections.observableArrayList(supplierList);
 
         supplierTable.setItems(suppliers);
+    }
+
+    public void refreshPurchaseView() {
+        //Load data from a database
+        purchaseOrderTable.getItems().clear();
+
+        PurchaseOrderDAO purchaseOrderDAO = new PurchaseOrderDAO();
+        List<PurchaseOrder> purchaseOrderList = purchaseOrderDAO.getPurchaseOrders();
+        ObservableList<PurchaseOrder> purchaseOrders = FXCollections.observableArrayList(purchaseOrderList);
+        purchaseOrderTable.setItems(purchaseOrders);
+    }
+
+    public void refreshSaleView() {
+        //Load data from a database
+        salesOrderTable.getItems().clear();
+
+        SalesOrderDAO salesOrderDAO = new SalesOrderDAO();
+        List<SalesOrder> salesOrderList = salesOrderDAO.getSalesOrders();
+        ObservableList<SalesOrder> salesOrders = FXCollections.observableArrayList(salesOrderList);
+        salesOrderTable.setItems(salesOrders);
     }
 }
 
