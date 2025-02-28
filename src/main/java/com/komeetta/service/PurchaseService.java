@@ -11,6 +11,7 @@ public class PurchaseService {
 
     private final PurchaseOrderItemDAO purchaseOrderItemDAO = new PurchaseOrderItemDAO();
     private final ProductDAO productDAO = new ProductDAO();
+    private final PurchaseOrderDAO purchaseOrderDAO = new PurchaseOrderDAO();
 
     public void processPurchaseOrder(PurchaseOrder purchaseOrder, List<PurchaseOrderItem> items) {
 
@@ -27,6 +28,7 @@ public class PurchaseService {
             // step 3: update order total
             double newTotal = purchaseOrder.getOrderTotal() + (item.getUnitPrice() * item.getQuantity() * (1 - item.getSale()));
             purchaseOrder.setOrderTotal(newTotal);
+            purchaseOrderDAO.updatePurchaseOrder(purchaseOrder);
         }
 
         System.out.println("Purchase order processed successfully!");
