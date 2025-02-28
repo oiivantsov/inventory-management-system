@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="347.0" prefWidth="406.0" style="-fx-background-color: #222222;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="347.0" prefWidth="406.0" style="-fx-background-color: #222222;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.komeetta.controller.StockController">
    <center>
       <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="357.0" BorderPane.alignment="CENTER">
          <children>
@@ -55,12 +55,12 @@
             </TextField>
             <HBox fx:id="buttonBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="saveButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" style="-fx-background-color: lightblue;" text="Proceed">
+                  <Button fx:id="saveButton" onAction="#handleSave" mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" style="-fx-background-color: lightblue;" text="Proceed">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="cancelButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" style="-fx-background-color: #FFFFFF;" text="Cancel">
+                  <Button fx:id="cancelButton" onAction="#handleCancel" mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" style="-fx-background-color: #FFFFFF;" text="Cancel">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
                      </HBox.margin>

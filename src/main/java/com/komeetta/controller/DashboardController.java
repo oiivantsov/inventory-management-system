@@ -91,6 +91,8 @@ public class DashboardController {
     }
     */
 
+    // TODO: Implement methods for opening sales/purchase GUI (don't forget to use the isSaleTest variable)
+
     // Shows corresponding View to passed variable
     private void showView(VBox view) {
         if (contentArea == null) {

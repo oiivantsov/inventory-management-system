@@ -1,6 +1,7 @@
 package com.komeetta.application;
 
 import com.komeetta.view.LoginGUI;
+import com.komeetta.view.SalesPurchaseGUI;
 import io.github.cdimascio.dotenv.Dotenv;
 import javafx.application.Application;
 
@@ -17,6 +18,7 @@ public class InventoryManager{
 
         // Launch the GUI
         Application.launch(LoginGUI.class);
+//        Application.launch(SalesPurchaseGUI.class);
 
 
 
