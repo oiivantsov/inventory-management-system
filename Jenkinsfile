@@ -1,5 +1,13 @@
 pipeline {
     agent any
+    environment {
+        JDBC_URL = credentials('JDBC_URL')
+        JDBC_USER = credentials('JDBC_USER')
+        JDBC_PASSWORD = credentials('JDBC_PASSWORD')
+        TEST_JDBC_URL = credentials('TEST_JDBC_URL')
+        TEST_JDBC_USER = credentials('TEST_JDBC_USER')
+        TEST_JDBC_PASSWORD = credentials('TEST_JDBC_PASSWORD')
+    }
     stages {
         stage('Checkout') {
             steps {
