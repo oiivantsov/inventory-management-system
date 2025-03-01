@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'jenkins_pipeline', url: 'https://github.com/oiivantsov/inventory-management-system.git'
+                git branch: 'main', url: 'https://github.com/oiivantsov/inventory-management-system.git'
             }
         }
         stage('Prepare .env') {
