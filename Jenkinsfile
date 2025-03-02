@@ -7,6 +7,13 @@ pipeline {
         TEST_JDBC_URL = credentials('TEST_JDBC_URL')
         TEST_JDBC_USER = credentials('TEST_JDBC_USER')
         TEST_JDBC_PASSWORD = credentials('TEST_JDBC_PASSWORD')
+
+        // Define Docker Hub credentials ID
+        DOCKERHUB_CREDENTIALS_ID = 'Docker_Hub'
+        // Define Docker Hub repository name
+        DOCKERHUB_REPO = 'aoiivantsov/inventory-management-system'
+        // Define Docker image tag
+        DOCKER_IMAGE_TAG = 'latest_v1'
     }
     stages {
         stage('Checkout') {
@@ -51,5 +58,26 @@ pipeline {
                 jacoco()
             }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                // Build Docker image
+                script {
+                    docker.build("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}")
+                }
+            }
+        }
+
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                // Push Docker image to Docker Hub
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS_ID) {
+                        docker.image("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}").push()
+                    }
+                }
+            }
+        }
+
     }
 }
