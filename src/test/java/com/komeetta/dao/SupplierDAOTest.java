@@ -3,7 +3,9 @@ package com.komeetta.dao;
 import com.komeetta.model.Supplier;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +16,7 @@ class SupplierDAOTest {
 
     private static SupplierDAO supplierDAO;
     private static EntityManager entityManager;
+    private static EntityManagerFactory emf;
 
     @BeforeAll
     static void setUp() {
@@ -22,7 +25,8 @@ class SupplierDAOTest {
         System.setProperty("JDBC_USER", dotenv.get("TEST_JDBC_USER"));
         System.setProperty("JDBC_PASSWORD", dotenv.get("TEST_JDBC_PASSWORD"));
         supplierDAO = new SupplierDAO();
-        entityManager = com.komeetta.datasource.MariaDbJpaConnection.getInstance();
+        emf = Persistence.createEntityManagerFactory("CompanyMariaDbUnitTesting");
+        entityManager = emf.createEntityManager();
     }
 
     @BeforeEach

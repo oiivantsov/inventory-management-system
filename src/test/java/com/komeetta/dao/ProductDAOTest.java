@@ -4,7 +4,9 @@ import com.komeetta.datasource.MariaDbJpaConnection;
 import com.komeetta.model.Product;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ProductDAOTest {
     private static EntityManager entityManager;
+    private static EntityManagerFactory emf;
     private static ProductDAO productDAO;
 
     @BeforeAll
@@ -22,7 +25,8 @@ class ProductDAOTest {
         System.setProperty("JDBC_URL", dotenv.get("TEST_JDBC_URL"));
         System.setProperty("JDBC_USER", dotenv.get("TEST_JDBC_USER"));
         System.setProperty("JDBC_PASSWORD", dotenv.get("TEST_JDBC_PASSWORD"));
-        entityManager = MariaDbJpaConnection.getInstance();
+        emf = Persistence.createEntityManagerFactory("CompanyMariaDbUnitTesting");
+        entityManager = emf.createEntityManager();
         productDAO = new ProductDAO();
     }
 

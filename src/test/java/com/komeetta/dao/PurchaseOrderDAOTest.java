@@ -7,7 +7,9 @@ import com.komeetta.model.PurchaseOrderItem;
 import com.komeetta.model.Supplier;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.*;
 
 import java.util.Date;
@@ -20,6 +22,7 @@ class PurchaseOrderDAOTest {
     private static PurchaseOrderDAO purchaseOrderDAO;
     private static SupplierDAO supplierDAO;
     private static EntityManager entityManager;
+    private static EntityManagerFactory emf;
 
     @BeforeAll
     static void setUp() {
@@ -31,7 +34,8 @@ class PurchaseOrderDAOTest {
 
         purchaseOrderDAO = new PurchaseOrderDAO();
         supplierDAO = new SupplierDAO();
-        entityManager = MariaDbJpaConnection.getInstance();
+        emf = Persistence.createEntityManagerFactory("CompanyMariaDbUnitTesting");
+        entityManager = emf.createEntityManager();
 
         Supplier supplier = new Supplier();
 
