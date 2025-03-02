@@ -11,7 +11,7 @@ pipeline {
         // Define Docker Hub credentials ID
         DOCKERHUB_CREDENTIALS_ID = 'Docker_Hub'
         // Define Docker Hub repository name
-        DOCKERHUB_REPO = 'aoiivantsov/inventory-management-system'
+        DOCKERHUB_REPO = 'komeetta/inventory-management-system'
         // Define Docker image tag
         DOCKER_IMAGE_TAG = 'latest_v1'
     }
@@ -35,7 +35,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                bat 'mvn clean install'
+                bat 'mvn clean install -DskipTests'
             }
         }
         stage('Test') {
@@ -63,7 +63,7 @@ pipeline {
             steps {
                 // Build Docker image
                 script {
-                    docker.build("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}")
+                    docker.build("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}", ".")
                 }
             }
         }
