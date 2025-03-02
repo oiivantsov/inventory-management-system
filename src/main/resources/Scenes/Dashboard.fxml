@@ -46,17 +46,15 @@
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor></Button>
-            <Button style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Purchase">
+            <Button onAction="#handlePurchaseButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Purchase">
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor></Button>
-            <Button onAction="#handleProductButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Product" />
-            <Button style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Current Stock" />
-            <Button onAction="#handleCustomerButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Customers" />
-            <Button onAction="#handleSupplierButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Suppliers" />
-            <Button onAction="#handlePurchaseButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Sales" />
-            <Button onAction="#handleSupplierButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Purchase" />
-            <Button onAction="#handleLogoutButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Logout" />
+            <Button onAction="#handleLogoutButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Logout">
+                <cursor>
+                <Cursor fx:constant="HAND" />
+                </cursor>
+            </Button>
         </VBox>
     </left>
 

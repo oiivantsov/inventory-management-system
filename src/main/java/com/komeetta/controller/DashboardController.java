@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 import java.util.Date;
 import java.util.List;
 
-import com.komeetta.view.EditProductGUI;
+import com.komeetta.view.EditObjectGUI;
 
 public class DashboardController {
 
@@ -154,7 +154,7 @@ public class DashboardController {
     @FXML
     private Label greetingLabel;
 
-    private Object selectedItem;
+    private Object selectedItem = null;
     private User user;
 
     @FXML
@@ -179,7 +179,7 @@ public class DashboardController {
         colProductName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colProductCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         colProductBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
-        colProductStock.setCellValueFactory(new PropertyValueFactory<>("stock_level "));
+        colProductStock.setCellValueFactory(new PropertyValueFactory<>("stock_level"));
         colProductDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         //initialize columns in purchaseOrderTable.
@@ -200,6 +200,7 @@ public class DashboardController {
         productTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 selectedItem = newSelection;
+                buttonEdit.setDisable(false);
                 System.out.println("Selected Product: " + newSelection);
             }
         });
@@ -207,38 +208,15 @@ public class DashboardController {
         customerTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 selectedItem = newSelection;
+                buttonEdit.setDisable(false);
                 System.out.println("Selected Customer: " + newSelection);
             }
         });
-        // Ensure only one view is visible at a time
-        showView(HomeVBox);
-
-        // Debugging: Check if buttonEdit is null
-        if (buttonEdit == null) {
-            System.err.println("ERROR: buttonEdit is NULL! Check fx:id in Dashboard.fxml.");
-        } else {
-            buttonEdit.setOnAction(event -> handleEditButtonAction());
-        }
-
-        // Debugging: Check if contentArea is null
-        if (contentArea == null) {
-            System.err.println("ERROR: contentArea is NULL! Check fx:id in Dashboard.fxml.");
-        }
-    }
-
-    @FXML
-    private void handleEditButtonAction() {
-        EditProductGUI.display();
-    }
-
-    @FXML
-    private void handleAddButtonAction() {
-        AddEntityGUI.display();
-    }
 
         supplierTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 selectedItem = newSelection;
+                buttonEdit.setDisable(false);
                 System.out.println("Selected Supplier: " + newSelection);
             }
         });
@@ -256,7 +234,37 @@ public class DashboardController {
                 System.out.println("Selected Supplier: " + newSelection);
             }
         });
+
+        // Debugging: Check if buttonEdit is null
+        if (buttonEdit == null) {
+            System.err.println("ERROR: buttonEdit is NULL! Check fx:id in Dashboard.fxml.");
+        } else {
+            buttonEdit.setOnAction(event -> handleEditButtonAction());
+        }
+
+        // Debugging: Check if contentArea is null
+        if (contentArea == null) {
+            System.err.println("ERROR: contentArea is NULL! Check fx:id in Dashboard.fxml.");
+        }
     }
+
+    @FXML
+    private void handleEditButtonAction() {
+        EditObjectGUI.display(selectedItem);
+        if (selectedItem instanceof Product) {
+            refreshProductView();
+        } else if (selectedItem instanceof Customer) {
+            refreshCustomerView();
+        } else if (selectedItem instanceof Supplier) {
+            refreshSupplierView();
+        }
+    }
+
+    @FXML
+    private void handleAddButtonAction() {
+        AddEntityGUI.display();
+    }
+
 
     // onAction methods for view selection buttons
     @FXML
@@ -333,6 +341,8 @@ public class DashboardController {
         greetingLabel.setText("Welcome, " + user.getUsername() + "\n" +
                 "Use the buttons on the left to manage your company inventory.");
 
+        buttonEdit.setDisable(true);
+
         // Show initial view
         showView(HomeVBox);
     }
@@ -347,6 +357,8 @@ public class DashboardController {
         ObservableList<Product> products = FXCollections.observableArrayList(productList);
 
         productTable.setItems(products);
+
+        buttonEdit.setDisable(true);
     }
     public void refreshCustomerView() {
 
@@ -359,6 +371,7 @@ public class DashboardController {
 
         customerTable.setItems(customers);
 
+        buttonEdit.setDisable(true);
     }
     public void refreshSupplierView() {
         // load data from a database
@@ -369,6 +382,8 @@ public class DashboardController {
         ObservableList<Supplier> suppliers = FXCollections.observableArrayList(supplierList);
 
         supplierTable.setItems(suppliers);
+
+        buttonEdit.setDisable(true);
     }
 
     public void refreshPurchaseView() {
