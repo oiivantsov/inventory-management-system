@@ -12,6 +12,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static com.komeetta.dao.ProductDAO.bulkUploadFromCsv;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductDAOTest {
@@ -43,6 +46,9 @@ class ProductDAOTest {
         Product product = new Product();
         product.setName("Test Product");
         product.setBrand("Test Brand");
+        product.setDescription("Test Description");
+        product.setCategory("Test Category");
+        product.setStockQuantity(0);
 
         productDAO.addProduct(product);
 
@@ -51,6 +57,13 @@ class ProductDAOTest {
         assertEquals("Test Product", fetchedProduct.getName());
         assertEquals("Test Brand", fetchedProduct.getBrand());
         assertEquals(0, fetchedProduct.getStockQuantity());
+    }
+
+    @Test
+    void bulkUploadFromCsv() {
+        productDAO.bulkUploadFromCsv("src/main/resources/BulkTest.csv");
+        List<Product> products = productDAO.getProducts(); // to see if there is that many products indeed
+        assertEquals(36, products.size()); // 36 products in the csv file
     }
 
     @Test

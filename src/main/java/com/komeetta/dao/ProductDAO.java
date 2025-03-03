@@ -3,7 +3,13 @@ package com.komeetta.dao;
 import com.komeetta.datasource.MariaDbJpaConnection;
 import com.komeetta.model.Product;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import java.io.FileReader;
+import java.io.IOException;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -126,6 +132,65 @@ public class ProductDAO {
             throw new RuntimeException("Failed to delete all products", e);
         } finally {
             em.close();
+        }
+    }
+
+    /**
+     * Bulk upload products from a CSV file
+     * @param filePath Path to the CSV file
+     */
+
+    public static void bulkUploadFromCsv(String filePath) {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        EntityTransaction transaction = em.getTransaction();
+
+        try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
+            transaction.begin(); // Start transaction
+
+            String[] data;
+            int batchSize = 30; // Adjust based on performance testing
+            int count = 0;
+
+            reader.readNext(); // Skip header if present
+
+            while ((data = reader.readNext()) != null) {
+                // osassa csv filejä mitä tein oli ; eikä , joten muutetaan kaikki ; -> ,
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = data[i].replace(';', ',');
+                }
+
+                data = String.join(",", data).split(",");
+
+                if (data.length < 5) {
+                    System.err.println("Skipping line due to insufficient data: " + Arrays.toString(data));
+                    continue;
+                }
+
+                Product product = new Product();
+                product.setName(data[0].trim());
+                product.setCategory(data[1].trim());
+                product.setBrand(data[2].trim());
+                product.setStockQuantity(Integer.parseInt(data[3].trim()));
+                product.setDescription(data[4].trim());
+
+                em.persist(product); // Persist entity
+
+                if (++count % batchSize == 0) {
+                    em.flush();  // Flush changes to database
+                    em.clear();  // Clear the persistence context
+                }
+            }
+
+            transaction.commit(); // Commit transaction
+            System.out.println("CSV file data uploaded successfully!");
+
+        } catch (IOException | CsvValidationException e) {
+            if (transaction.isActive()) {
+                transaction.rollback(); // Rollback only if the transaction is active
+            }
+            e.printStackTrace();
+        } finally {
+            em.close(); // Close EntityManager
         }
     }
 
