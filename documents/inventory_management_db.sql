@@ -5,7 +5,7 @@ USE InventoryManager;
 CREATE TABLE IF NOT EXISTS User (
   username varchar(255) NOT NULL,
   password varchar(255) DEFAULT NULL,
-  role ENUM('admin', 'user') DEFAULT 'user',
+  role ENUM('ADMIN', 'USER') DEFAULT 'USER',
   PRIMARY KEY (username)
 );
 
@@ -57,7 +57,7 @@ CREATE TABLE SalesOrder (
     order_id INT PRIMARY KEY AUTO_INCREMENT, 
     customer_id   INT,
     order_date    DATETIME DEFAULT CURRENT_TIMESTAMP,
-    state        ENUM('pending', 'in_progress', 'completed') DEFAULT 'pending',
+    state        ENUM('PENDING', 'IN_PROGRESS', 'COMPLETED') DEFAULT 'PENDING',
     total_price  DOUBLE DEFAULT 0,
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );
