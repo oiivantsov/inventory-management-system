@@ -213,6 +213,7 @@
                   </HBox>
                   <Separator prefWidth="200.0" />
                   <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Propably some text greeting the user and prompting them to navigate to the views on the left" textFill="WHITE" fx:id="greetingLabel" />
+                   <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Reporting here" textFill="WHITE"/>
                </children>
             </VBox>
          </children>
