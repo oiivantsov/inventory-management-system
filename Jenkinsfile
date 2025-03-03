@@ -9,7 +9,7 @@ pipeline {
         TEST_JDBC_PASSWORD = credentials('TEST_JDBC_PASSWORD')
 
         // Define Docker Hub credentials ID
-        DOCKERHUB_CREDENTIALS_ID = 'Docker_Hub'
+        DOCKERHUB_CREDENTIALS_ID = '20b8aca5-01eb-4cd6-bc9e-7395f88da57b' // use your own credentials ID
         // Define Docker Hub repository name
         DOCKERHUB_REPO = 'komeetta/inventory-management-system'
         // Define Docker image tag
