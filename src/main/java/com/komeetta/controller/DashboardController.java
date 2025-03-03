@@ -1,15 +1,31 @@
 package com.komeetta.controller;
 
+import com.komeetta.dao.*;
+import com.komeetta.model.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import com.komeetta.view.AddEntityGUI;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.Node;
-import com.komeetta.view.EditProductGUI;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+
+import java.util.Date;
+import java.util.List;
+
+import com.komeetta.view.EditObjectGUI;
 
 public class DashboardController {
 
+    //  Middle StackPane and VBoxes
     @FXML
     private StackPane contentArea;
 
@@ -20,7 +36,13 @@ public class DashboardController {
     private VBox customerVBox;
 
     @FXML
-    private VBox SupplierVBox;
+    private VBox supplierVBox;
+
+    @FXML
+    private VBox purchaseVBox;
+
+    @FXML
+    private VBox saleVBox;
 
     @FXML
     private VBox HomeVBox;
@@ -31,10 +53,187 @@ public class DashboardController {
     @FXML
     private Button buttonAdd;
 
+    //  Customer Table and Columns
+    @FXML
+    private TableView<Customer> customerTable;
+
+    @FXML
+    private TableColumn<Customer, Integer> colCustomerID;
+
+    @FXML
+    private TableColumn<Customer, String> colCustomerName;
+
+    @FXML
+    private TableColumn<Customer, String> colCustomerMail;
+
+    @FXML
+    private TableColumn<Customer, Integer> colCustomerNum;
+
+    @FXML
+    private TableColumn<Customer, String> colCustomerAddr;
+
+    //  Supplier Table and Columns
+    @FXML
+    private TableView<Supplier> supplierTable;
+
+    @FXML
+    private TableColumn<Supplier, Integer> colSupplierID;
+
+    @FXML
+    private TableColumn<Supplier, String> colSupplierName;
+
+    @FXML
+    private TableColumn<Supplier, String> colSupplierMail;
+
+    @FXML
+    private TableColumn<Supplier, Integer> colSupplierNum;
+
+    @FXML
+    private TableColumn<Supplier, String> colSupplierAddr;
+
+    //  Product Table and Columns
+    @FXML
+    private TableView<Product> productTable;
+
+    @FXML
+    private TableColumn<Product, Integer> colProductID;
+
+    @FXML
+    private TableColumn<Product, String> colProductName;
+
+    @FXML
+    private TableColumn<Product, String> colProductCategory;
+
+    @FXML
+    private TableColumn<Product, String> colProductBrand;
+
+    @FXML
+    private TableColumn<Product, Integer> colProductStock;
+
+    @FXML
+    private TableColumn<Product, String> colProductDescription;
+
+    //  PurchaseOrder Table and Columns
+    @FXML
+    private TableView<PurchaseOrder> purchaseOrderTable;
+
+    @FXML
+    private TableColumn<PurchaseOrder, Integer> colPurchaseID;
+
+    @FXML
+    private TableColumn<PurchaseOrder, Integer> colPurchaseSupplierID;
+
+    @FXML
+    private TableColumn<PurchaseOrder, Date> colPurchaseDate;
+
+    @FXML
+    private TableColumn<PurchaseOrder, OrderStatus> colPurchaseState;
+
+    @FXML
+    private TableColumn<PurchaseOrder, Integer> colPurchaseTotalPrice;
+
+    //  SalesOrder Table and Columns
+    @FXML
+    private TableView<SalesOrder> salesOrderTable;
+
+    @FXML
+    private TableColumn<SalesOrder, Integer> colSaleID;
+
+    @FXML
+    private TableColumn<SalesOrder, Integer> colSaleCustomerID;
+
+    @FXML
+    private TableColumn<SalesOrder, Date> colSaleDate;
+
+    @FXML
+    private TableColumn<SalesOrder, OrderStatus> colSaleState;
+
+    @FXML
+    private TableColumn<SalesOrder, Integer> colSaleTotalPrice;
+
+    @FXML
+    private Label greetingLabel;
+
+    private Object selectedItem = null;
+    private User user;
+
     @FXML
     public void initialize() {
-        // Ensure only one view is visible at a time
-        showView(HomeVBox);
+
+        //initialize columns in customerTable.
+        colCustomerName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        colCustomerMail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colCustomerNum.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        colCustomerAddr.setCellValueFactory(new PropertyValueFactory<>("address"));
+
+        //initialize columns in supplierTable.
+        colSupplierName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colSupplierID.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
+        colSupplierMail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colSupplierNum.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        colSupplierAddr.setCellValueFactory(new PropertyValueFactory<>("address"));
+
+        //initialize columns in productTable.
+        colProductID.setCellValueFactory(new PropertyValueFactory<>("productId"));
+        colProductName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colProductCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        colProductBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        colProductStock.setCellValueFactory(new PropertyValueFactory<>("stock_level"));
+        colProductDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        //initialize columns in purchaseOrderTable.
+        colPurchaseID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
+        colPurchaseSupplierID.setCellValueFactory(new PropertyValueFactory<>("supplier"));
+        colPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
+        colPurchaseState.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colPurchaseTotalPrice.setCellValueFactory(new PropertyValueFactory<>("orderTotal"));
+
+        //initialize columns in saleOrderTable.
+        colSaleID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
+        colSaleCustomerID.setCellValueFactory(new PropertyValueFactory<>("customer"));
+        colSaleDate.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
+        colSaleState.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colSaleTotalPrice.setCellValueFactory(new PropertyValueFactory<>("orderTotal"));
+
+        // Add selection listeners for each table
+        productTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedItem = newSelection;
+                buttonEdit.setDisable(false);
+                System.out.println("Selected Product: " + newSelection);
+            }
+        });
+
+        customerTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedItem = newSelection;
+                buttonEdit.setDisable(false);
+                System.out.println("Selected Customer: " + newSelection);
+            }
+        });
+
+        supplierTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedItem = newSelection;
+                buttonEdit.setDisable(false);
+                System.out.println("Selected Supplier: " + newSelection);
+            }
+        });
+
+        salesOrderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedItem = newSelection;
+                System.out.println("Selected Supplier: " + newSelection);
+            }
+        });
+
+        purchaseOrderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedItem = newSelection;
+                System.out.println("Selected Supplier: " + newSelection);
+            }
+        });
 
         // Debugging: Check if buttonEdit is null
         if (buttonEdit == null) {
@@ -51,22 +250,23 @@ public class DashboardController {
 
     @FXML
     private void handleEditButtonAction() {
-        if (productVBox.isVisible()) { // If the product view is visible, edit the selected product
-            // method for the editing of the product
-        } else if (customerVBox.isVisible() || SupplierVBox.isVisible()) { // If the customer or supplier view is visible, edit the selected entity
-            // method for the editing of the entity
+        EditObjectGUI.display(selectedItem);
+        if (selectedItem instanceof Product) {
+            refreshProductView();
+        } else if (selectedItem instanceof Customer) {
+            refreshCustomerView();
+        } else if (selectedItem instanceof Supplier) {
+            refreshSupplierView();
         }
     }
 
     @FXML
     private void handleAddButtonAction() {
-        if (productVBox.isVisible()) { // If the product view is visible, add a new product
-            EditProductGUI.display();
-        } else if (customerVBox.isVisible() || SupplierVBox.isVisible()) { // If the customer or supplier view is visible, add a new entity
-            AddEntityGUI.display();
-        }
+        AddEntityGUI.display();
     }
 
+
+    // onAction methods for view selection buttons
     @FXML
     private void handleProductButtonAction() {
         showView(productVBox);
@@ -74,24 +274,42 @@ public class DashboardController {
 
     @FXML
     private void handleCustomerButtonAction() {
-        EntityController.setIsCustomer(true); // Set the entity type to Customer
         showView(customerVBox);
     }
 
     @FXML
     private void handleSupplierButtonAction() {
-        EntityController.setIsCustomer(false); // Set the entity type to Supplier
-        showView(SupplierVBox);
+        showView(supplierVBox);
     }
 
-    /* Currently unused
     @FXML
-    private void handleHomeButtonAction() {
-        showView(HomeVBox);
+    private void handlePurchaseButtonAction() {
+        showView(purchaseVBox);
     }
-    */
 
-    // TODO: Implement methods for opening sales/purchase GUI (don't forget to use the isSaleTest variable)
+    @FXML
+    private void handleSaleButtonAction() {
+        showView(saleVBox);
+    }
+
+    @FXML
+    public void handleLogoutButtonAction() {
+        this.user = null;
+
+        //Close current window
+        Stage stage = (Stage) greetingLabel.getScene().getWindow();
+        stage.close();
+
+        try{
+            // Open login screen
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Login.fxml"));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(loader.load()));
+            newStage.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     // Shows corresponding View to passed variable
     private void showView(VBox view) {
@@ -103,6 +321,88 @@ public class DashboardController {
         for (Node node : contentArea.getChildren()) {
             node.setVisible(node == view);
             node.setManaged(node == view);
+            if(view == customerVBox){
+                refreshCustomerView();
+            } else if (view == supplierVBox) {
+                refreshSupplierView();
+            } else if (view == productVBox) {
+                refreshProductView();
+            } else if(view == purchaseVBox){
+                refreshPurchaseView();
+            } else if (view == saleVBox) {
+                refreshSaleView();
+            }
         }
+    }
+
+    public void setInitialView(User user) {
+        this.user = user;
+
+        greetingLabel.setText("Welcome, " + user.getUsername() + "\n" +
+                "Use the buttons on the left to manage your company inventory.");
+
+        buttonEdit.setDisable(true);
+
+        // Show initial view
+        showView(HomeVBox);
+    }
+
+    public void refreshProductView() {
+
+        productTable.getItems().clear();
+
+        // load data from a database
+        ProductDAO productDAO = new ProductDAO();
+        List<Product> productList = productDAO.getProducts();
+        ObservableList<Product> products = FXCollections.observableArrayList(productList);
+
+        productTable.setItems(products);
+
+        buttonEdit.setDisable(true);
+    }
+    public void refreshCustomerView() {
+
+        customerTable.getItems().clear();
+
+        // load data from a database
+        CustomerDAO customerDAO = new CustomerDAO();
+        List<Customer> customerList = customerDAO.getCustomers();
+        ObservableList<Customer> customers = FXCollections.observableArrayList(customerList);
+
+        customerTable.setItems(customers);
+
+        buttonEdit.setDisable(true);
+    }
+    public void refreshSupplierView() {
+        // load data from a database
+        supplierTable.getItems().clear();
+
+        SupplierDAO supplierDAO = new SupplierDAO();
+        List<Supplier> supplierList = supplierDAO.getSuppliers();
+        ObservableList<Supplier> suppliers = FXCollections.observableArrayList(supplierList);
+
+        supplierTable.setItems(suppliers);
+
+        buttonEdit.setDisable(true);
+    }
+
+    public void refreshPurchaseView() {
+        //Load data from a database
+        purchaseOrderTable.getItems().clear();
+
+        PurchaseOrderDAO purchaseOrderDAO = new PurchaseOrderDAO();
+        List<PurchaseOrder> purchaseOrderList = purchaseOrderDAO.getPurchaseOrders();
+        ObservableList<PurchaseOrder> purchaseOrders = FXCollections.observableArrayList(purchaseOrderList);
+        purchaseOrderTable.setItems(purchaseOrders);
+    }
+
+    public void refreshSaleView() {
+        //Load data from a database
+        salesOrderTable.getItems().clear();
+
+        SalesOrderDAO salesOrderDAO = new SalesOrderDAO();
+        List<SalesOrder> salesOrderList = salesOrderDAO.getSalesOrders();
+        ObservableList<SalesOrder> salesOrders = FXCollections.observableArrayList(salesOrderList);
+        salesOrderTable.setItems(salesOrders);
     }
 }
