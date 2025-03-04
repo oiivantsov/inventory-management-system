@@ -26,7 +26,11 @@
             </VBox.margin></Label>
             <Separator style="-fx-background-color: Wht;" />
 
-            <Button fx:id="buttonProduct" onAction="#handleProductButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Product">
+            <Button onAction="#handleHomeButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Home">
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor></Button>
+            <Button fx:id="buttonProduct" onAction="#handleProductButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Products">
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor></Button>
@@ -38,15 +42,15 @@
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor></Button>
-            <Button fx:id="buttonSupplier" onAction="#handleSupplierButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Suppliers">
+            <Button onAction="#handleSupplierButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Suppliers">
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor></Button>
-            <Button style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Sales">
+            <Button onAction="#handleSaleButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Sales">
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor></Button>
-            <Button onAction="#handlePurchaseButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Purchase">
+            <Button onAction="#handlePurchaseButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Purchases">
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor></Button>

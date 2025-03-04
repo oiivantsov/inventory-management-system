@@ -170,7 +170,7 @@ public class ProductDAO {
                 product.setName(data[0].trim());
                 product.setCategory(data[1].trim());
                 product.setBrand(data[2].trim());
-                product.setStockQuantity(Integer.parseInt(data[3].trim()));
+                product.setQuantity(Integer.parseInt(data[3].trim()));
                 product.setDescription(data[4].trim());
 
                 em.persist(product); // Persist entity

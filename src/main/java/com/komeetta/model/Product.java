@@ -155,7 +155,7 @@ public class Product {
      *
      * @return The quantity of the product in stock.
      */
-    public int getStockQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
@@ -164,7 +164,7 @@ public class Product {
      *
      * @param quantity The quantity of the product in stock.
      */
-    public void setStockQuantity(int quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 }

@@ -1,10 +1,8 @@
 package com.komeetta.dao;
-import com.komeetta.datasource.MariaDbJpaConnection;
 import com.komeetta.model.*;
 import com.komeetta.service.PurchaseService;
 import com.komeetta.service.SalesService;
 import io.github.cdimascio.dotenv.Dotenv;
-import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
@@ -38,14 +36,14 @@ public class AppTest {
         laptop.setName("Laptop");
         laptop.setBrand("Dell");
         laptop.setCategory("Electronics");
-        laptop.setStockQuantity(0); // Initial stock is 0
+        laptop.setQuantity(0); // Initial stock is 0
         productDAO.addProduct(laptop);
 
         Product phone = new Product();
         phone.setName("Phone");
         phone.setBrand("Apple");
         phone.setCategory("Electronics");
-        phone.setStockQuantity(0); // Initial stock is 0
+        phone.setQuantity(0); // Initial stock is 0
         productDAO.addProduct(phone);
 
         // Create a purchase order
@@ -69,9 +67,9 @@ public class AppTest {
 
         // Select products for sale
         laptop = productDAO.getProductById(1);
-        System.out.println("Stock level for product " + laptop.getName() + ": " + laptop.getStockQuantity());
+        System.out.println("Stock level for product " + laptop.getName() + ": " + laptop.getQuantity());
         phone = productDAO.getProductById(2);
-        System.out.println("Stock level for product " + phone.getName() + ": " + phone.getStockQuantity());
+        System.out.println("Stock level for product " + phone.getName() + ": " + phone.getQuantity());
 
         // Create a sales order
         SalesOrder salesOrder = new SalesOrder(customer);

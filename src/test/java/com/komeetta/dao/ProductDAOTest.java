@@ -1,6 +1,5 @@
 package com.komeetta.dao;
 
-import com.komeetta.datasource.MariaDbJpaConnection;
 import com.komeetta.model.Product;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.EntityManager;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static com.komeetta.dao.ProductDAO.bulkUploadFromCsv;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductDAOTest {
@@ -48,7 +46,7 @@ class ProductDAOTest {
         product.setBrand("Test Brand");
         product.setDescription("Test Description");
         product.setCategory("Test Category");
-        product.setStockQuantity(0);
+        product.setQuantity(0);
 
         productDAO.addProduct(product);
 
@@ -56,7 +54,7 @@ class ProductDAOTest {
         assertNotNull(fetchedProduct);
         assertEquals("Test Product", fetchedProduct.getName());
         assertEquals("Test Brand", fetchedProduct.getBrand());
-        assertEquals(0, fetchedProduct.getStockQuantity());
+        assertEquals(0, fetchedProduct.getQuantity());
     }
 
     @Test
@@ -70,32 +68,32 @@ class ProductDAOTest {
     void getProduct() {
         Product product = new Product();
         product.setName("Test Product");
-        product.setStockQuantity(50);
+        product.setQuantity(50);
 
         productDAO.addProduct(product);
 
         Product fetchedProduct = productDAO.getProductById(product.getProductId());
         assertNotNull(fetchedProduct);
         assertEquals("Test Product", fetchedProduct.getName());
-        assertEquals(50, fetchedProduct.getStockQuantity());
+        assertEquals(50, fetchedProduct.getQuantity());
     }
 
     @Test
     void updateProduct() {
         Product product = new Product();
         product.setName("Test Product");
-        product.setStockQuantity(50);
+        product.setQuantity(50);
 
         productDAO.addProduct(product);
 
         product.setName("Updated Product");
-        product.setStockQuantity(150);
+        product.setQuantity(150);
         productDAO.updateProduct(product);
 
         Product updatedProduct = productDAO.getProductById(product.getProductId());
         assertNotNull(updatedProduct);
         assertEquals("Updated Product", updatedProduct.getName());
-        assertEquals(150, updatedProduct.getStockQuantity());
+        assertEquals(150, updatedProduct.getQuantity());
     }
 
     @Test
@@ -114,11 +112,11 @@ class ProductDAOTest {
     void deleteAll() {
         Product product1 = new Product();
         product1.setName("Test Product 1");
-        product1.setStockQuantity(100);
+        product1.setQuantity(100);
 
         Product product2 = new Product();
         product2.setName("Test Product 2");
-        product2.setStockQuantity(200);
+        product2.setQuantity(200);
 
         productDAO.addProduct(product1);
         productDAO.addProduct(product2);

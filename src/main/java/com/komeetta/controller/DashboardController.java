@@ -5,6 +5,7 @@ import com.komeetta.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import com.komeetta.view.AddEntityGUI;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -155,6 +156,7 @@ public class DashboardController {
     private Label greetingLabel;
 
     private Object selectedItem = null;
+
     private User user;
 
     @FXML
@@ -179,7 +181,7 @@ public class DashboardController {
         colProductName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colProductCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         colProductBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
-        colProductStock.setCellValueFactory(new PropertyValueFactory<>("stock_level"));
+        colProductStock.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colProductDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         //initialize columns in purchaseOrderTable.
@@ -249,6 +251,11 @@ public class DashboardController {
     }
 
     @FXML
+    private void handleHomeButtonAction(ActionEvent event) {
+        showView(HomeVBox);
+    }
+
+    @FXML
     private void handleEditButtonAction() {
         EditObjectGUI.display(selectedItem);
         if (selectedItem instanceof Product) {
@@ -263,6 +270,9 @@ public class DashboardController {
     @FXML
     private void handleAddButtonAction() {
         AddEntityGUI.display();
+        refreshCustomerView();
+        refreshProductView();
+        refreshSupplierView();
     }
 
 

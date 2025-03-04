@@ -88,7 +88,7 @@ public class EditWindowController {
         productToEdit.setCategory(category);
         productToEdit.setDescription(description);
         productToEdit.setName(productName);
-        productToEdit.setStockQuantity(quantity);
+        productToEdit.setQuantity(quantity);
 
         try {
             ProductDAO productDAO = new ProductDAO();
@@ -167,7 +167,7 @@ public class EditWindowController {
             categoryField.setText(productToEdit.getCategory());
             brandField.setText(productToEdit.getBrand());
             descriptionField.setText(productToEdit.getDescription());
-            quantityField.setText(Integer.toString(productToEdit.getStockQuantity()));
+            quantityField.setText(Integer.toString(productToEdit.getQuantity()));
 
             showView(productVBox);
         } else if (object instanceof Customer) {

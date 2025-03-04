@@ -21,8 +21,8 @@ public class PurchaseService {
 
             // step 2: update product stock
             Product product = item.getProduct();
-            int newStock = product.getStockQuantity() + item.getQuantity();
-            product.setStockQuantity(newStock);
+            int newStock = product.getQuantity() + item.getQuantity();
+            product.setQuantity(newStock);
             productDAO.updateProduct(product);
 
             // step 3: update order total

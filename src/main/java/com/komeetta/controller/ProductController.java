@@ -119,7 +119,7 @@ public class ProductController {
             product.setName(productNameField.getText());
             product.setCategory(categoryCombobox.getValue().toString());
             product.setBrand(brandField.getText());
-            product.setStockQuantity(Integer.parseInt(quantityField.getText()));
+            product.setQuantity(Integer.parseInt(quantityField.getText()));
             product.setDescription(descriptionArea.getText());
 
             dao.addProduct(product);

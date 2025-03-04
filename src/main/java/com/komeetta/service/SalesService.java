@@ -17,8 +17,8 @@ public class SalesService {
         // step 0: check stock availability
         for (SalesOrderItem item : items) {
             Product product = item.getProduct();
-            System.out.println("Stock level for product " + product.getName() + ": " + product.getStockQuantity());
-            if (product.getStockQuantity() < item.getQuantity()) {
+            System.out.println("Stock level for product " + product.getName() + ": " + product.getQuantity());
+            if (product.getQuantity() < item.getQuantity()) {
                 throw new RuntimeException("Not enough stock for product: " + product.getName());
             }
         }
@@ -29,8 +29,8 @@ public class SalesService {
 
             // step 2: update product stock
             Product product = item.getProduct();
-            int newStock = product.getStockQuantity() - item.getQuantity();
-            product.setStockQuantity(newStock);
+            int newStock = product.getQuantity() - item.getQuantity();
+            product.setQuantity(newStock);
             productDAO.updateProduct(product);
 
             // step 3: update order total
