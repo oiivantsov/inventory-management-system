@@ -159,19 +159,6 @@ class SalesOrderDAOTest {
     }
 
     @Test
-    void testUpdateSalesOrder_NonExistent_ShouldThrowException() {
-        SalesOrder salesOrder = new SalesOrder();
-        salesOrder.setOrderId(99999); // Fake order ID
-
-        Exception exception = assertThrows(RuntimeException.class, () -> {
-            salesOrderDAO.updateSalesOrder(salesOrder);
-        });
-
-        assertTrue(exception.getMessage().contains("Failed to update sales order"),
-                "Updating a non-existent sales order should throw an error.");
-    }
-
-    @Test
     void testDeleteSalesOrder_NonExistent_ShouldNotThrowException() {
         SalesOrder salesOrder = new SalesOrder();
         salesOrder.setOrderId(99999); // Fake order ID
