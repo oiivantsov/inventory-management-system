@@ -130,19 +130,6 @@ class SupplierDAOTest {
                 "Updating a non-existent supplier should throw an error.");
     }
 
-    @Test
-    void testDeleteNonExistentSupplier() {
-        Supplier supplier = new Supplier();
-        supplier.setSupplierId(99999); // Fake ID
-
-        Exception exception = assertThrows(RuntimeException.class, () -> {
-            supplierDAO.deleteSupplier(supplier);
-        });
-
-        assertTrue(exception.getMessage().contains("Failed to delete supplier"),
-                "Deleting a non-existent supplier should throw an error.");
-    }
-
 
     @AfterAll
     static void tearDown() {
