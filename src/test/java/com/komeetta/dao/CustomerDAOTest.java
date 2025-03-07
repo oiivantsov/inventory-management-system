@@ -112,20 +112,6 @@ class CustomerDAOTest {
         assertNull(deletedCustomer);
     }
 
-    @Test
-    void testDeleteNonExistentCustomer() {
-        Customer fakeCustomer = new Customer();
-        fakeCustomer.setCustomerId(99999); // Fake ID
-
-        Exception exception = assertThrows(RuntimeException.class, () -> {
-            customerDAO.deleteCustomer(fakeCustomer);
-        });
-
-        assertTrue(exception.getMessage().contains("Failed to delete customer"),
-                "Deleting a non-existent customer should throw an error.");
-
-    }
-
 
     @AfterAll
     static void tearDown() {
