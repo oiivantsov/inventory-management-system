@@ -78,7 +78,12 @@ public class SalesOrder {
         return orderId;
     }
 
-    // set order id is not needed because it is auto generated! ???
+    /** Set the order ID
+     * @param orderId: the unique identifier of the order
+     */
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 
     /** Get the customer who placed the order
      * @return customer

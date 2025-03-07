@@ -152,6 +152,40 @@ class SalesOrderDAOTest {
         assertEquals(800.00, total, 0.01);
     }
 
+    @Test
+    void testGetSalesOrder_NonExistent_ShouldReturnNull() {
+        SalesOrder nonExistentOrder = salesOrderDAO.getSalesOrder(99999);
+        assertNull(nonExistentOrder);
+    }
+
+    @Test
+    void testUpdateSalesOrder_NonExistent_ShouldThrowException() {
+        SalesOrder salesOrder = new SalesOrder();
+        salesOrder.setOrderId(99999); // Fake order ID
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            salesOrderDAO.updateSalesOrder(salesOrder);
+        });
+
+        assertTrue(exception.getMessage().contains("Failed to update sales order"),
+                "Updating a non-existent sales order should throw an error.");
+    }
+
+    @Test
+    void testDeleteSalesOrder_NonExistent_ShouldNotThrowException() {
+        SalesOrder salesOrder = new SalesOrder();
+        salesOrder.setOrderId(99999); // Fake order ID
+
+        assertDoesNotThrow(() -> salesOrderDAO.deleteSalesOrder(salesOrder),
+                "Deleting a non-existent order should not throw an exception.");
+    }
+
+    @Test
+    void testGetTotalSalesOrders_WhenNoOrders_ShouldReturnZero() {
+        salesOrderDAO.deleteAll();
+        double total = salesOrderDAO.getTotalSaleOrders();
+        assertEquals(0.0, total, 0.01);
+    }
 
     @AfterAll
     static void tearDown() {

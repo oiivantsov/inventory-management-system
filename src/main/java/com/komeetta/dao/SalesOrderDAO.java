@@ -141,6 +141,10 @@ public class SalesOrderDAO {
     public double getTotalSaleOrders() {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
+            // return 0 if no sales orders
+            if (getSalesOrders().isEmpty()) {
+                return 0;
+            }
             return em.createQuery("SELECT SUM(s.orderTotal) FROM SalesOrder s", Double.class).getSingleResult();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {

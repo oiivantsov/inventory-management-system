@@ -143,6 +143,10 @@ public class PurchaseOrderDAO {
     public double getTotalPurchaseOrders() {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
+            // if no orders, return 0
+            if (em.createQuery("SELECT COUNT(s) FROM PurchaseOrder s", Long.class).getSingleResult() == 0) {
+                return 0.0;
+            }
             return em.createQuery("SELECT SUM(s.orderTotal) FROM PurchaseOrder s", Double.class).getSingleResult();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -162,6 +166,12 @@ public class PurchaseOrderDAO {
     public double getTotalPurchaseOrdersBySupplier(int supplierId) {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
+            // if no orders, return 0
+            if (em.createQuery("SELECT COUNT(s) FROM PurchaseOrder s WHERE s.supplier.supplierId = :supplierId", Long.class)
+                    .setParameter("supplierId", supplierId)
+                    .getSingleResult() == 0) {
+                return 0.0;
+            }
             return em.createQuery("SELECT SUM(s.orderTotal) FROM PurchaseOrder s WHERE s.supplier.supplierId = :supplierId", Double.class)
                     .setParameter("supplierId", supplierId)
                     .getSingleResult();
