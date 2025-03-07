@@ -47,12 +47,24 @@ com.komeetta.view           # GUI components
       ```sh
       cp .env.example .env
       ```
-    - The persistence unit is defined in `persistence.xml`.
-3. Build the application:
+    
+3. First Run Database Configuration:
+   - Set the following property in `persistence.xml` for the first run to create tables:
+     ```xml
+     <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+     ```
+   - After the first run, change it to:
+     ```xml
+     <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
+     ```
+   - This ensures that data is not lost on subsequent runs.
+
+4. Build the application:
    ```sh
    mvn clean install -DskipTests
    ```
-4. Run the application:
+
+5. Run the application:
    ```sh
    java -jar .\target\inventory-management-system-1.0-SNAPSHOT.jar
    ```
@@ -99,4 +111,3 @@ The project includes a Jenkins pipeline to automate build and deployment.
 
 ---
 This document will be updated as new features are implemented.
-
