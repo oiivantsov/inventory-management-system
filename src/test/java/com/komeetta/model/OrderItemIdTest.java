@@ -68,4 +68,28 @@ class OrderItemIdTest {
         assertNotEquals(null, id);
         assertNotEquals("Not an OrderItemId", id);
     }
+
+    @Test
+    void testEquals_SameInstance_ShouldBeEqual() {
+        OrderItemId id = new OrderItemId(5, 10);
+        assertEquals(id, id);
+    }
+
+    @Test
+    void testHashCode_SameInstance_ShouldBeConsistent() {
+        OrderItemId id = new OrderItemId(8, 20);
+        int hash1 = id.hashCode();
+        int hash2 = id.hashCode();
+
+        assertEquals(hash1, hash2);
+    }
+
+    @Test
+    void testDefaultConstructor() {
+        OrderItemId id = new OrderItemId();
+        assertEquals(0, id.getOrderId()); // Default int value
+        assertEquals(0, id.getProductId()); // Default int value
+    }
+
+
 }

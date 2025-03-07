@@ -70,6 +70,21 @@ public class PurchaseOrderItem {
 
 
     // Getters and Setters
+
+    /** get the id of the purchase order item
+     * @return the id
+     */
+    public OrderItemId getId() {
+        return id;
+    }
+
+    /** set the id of the purchase order item
+     * @param id the id
+     */
+    public void setId(OrderItemId id) {
+        this.id = id;
+    }
+
     /** get purchase order that the item belongs to
      * @return the purchase order
      */

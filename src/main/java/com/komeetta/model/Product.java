@@ -76,7 +76,14 @@ public class Product {
         return productId;
     }
 
-    // set product id is not needed because it is auto generated!
+    /**
+     * Sets the product ID.
+     *
+     * @param productId The product ID.
+     */
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
 
     /**
      * Returns the name of the product.
