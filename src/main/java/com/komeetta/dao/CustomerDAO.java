@@ -107,29 +107,4 @@ public class CustomerDAO {
             em.close();
         }
     }
-
-
-
-    public static void main(String[] args) {
-        Dotenv dotenv = Dotenv.load();
-        System.setProperty("JDBC_URL", dotenv.get("JDBC_URL"));
-        System.setProperty("JDBC_USER", dotenv.get("JDBC_USER"));
-        System.setProperty("JDBC_PASSWORD", dotenv.get("JDBC_PASSWORD"));
-
-        CustomerDAO customerDAO = new CustomerDAO();
-
-        Customer customer = new Customer();
-        customer.setName("Test Customer");
-        customer.setEmail("test@customer.com");
-        customer.setPhoneNumber("987654321");
-        customer.setAddress("Customer Address");
-
-        customerDAO.addCustomer(customer);
-
-        List<Customer> customers = customerDAO.getCustomers();
-        System.out.println("Number of customers: " + customers.size());
-        if (!customers.isEmpty()) {
-            System.out.println("First Customer Name: " + customers.get(0).getName());
-        }
-    }
 }
