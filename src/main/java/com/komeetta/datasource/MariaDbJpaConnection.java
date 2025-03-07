@@ -28,13 +28,4 @@ public class MariaDbJpaConnection {
         initializeFactory(); // Ensure the factory is initialized
         return emf.createEntityManager();
     }
-
-    /**
-     * Closes the EntityManagerFactory.
-     */
-    public static void closeFactory() {
-        if (emf != null && emf.isOpen()) {
-            emf.close();
-        }
-    }
 }
