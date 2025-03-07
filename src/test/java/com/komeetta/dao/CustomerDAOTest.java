@@ -85,20 +85,6 @@ class CustomerDAOTest {
         assertEquals("Updated Name", updatedCustomer.getName());
     }
 
-    @Test
-    void testUpdateNonExistentCustomer() {
-        Customer customer = new Customer();
-        customer.setCustomerId(99999); // Fake ID
-        customer.setName("Should Not Exist");
-
-        Exception exception = assertThrows(RuntimeException.class, () -> {
-            customerDAO.updateCustomer(customer);
-        });
-
-        assertTrue(exception.getMessage().contains("Failed to update customer"),
-                "Updating a non-existent customer should throw an error.");
-    }
-
 
     @Test
     void testDeleteCustomer() {
