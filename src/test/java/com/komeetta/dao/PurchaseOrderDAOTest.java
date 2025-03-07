@@ -118,6 +118,53 @@ class PurchaseOrderDAOTest {
         assertNotNull(fetchedOrder.getItems()); // Ensure items are fetched
     }
 
+    @Test
+    void testGetAllPurchaseOrders() {
+        Supplier supplier = supplierDAO.getSuppliers().get(0);
+
+        PurchaseOrder order1 = new PurchaseOrder(supplier, new Date(), OrderStatus.PENDING, 150.00);
+        PurchaseOrder order2 = new PurchaseOrder(supplier, new Date(), OrderStatus.PENDING, 300.00);
+
+        purchaseOrderDAO.addPurchaseOrder(order1);
+        purchaseOrderDAO.addPurchaseOrder(order2);
+
+        List<PurchaseOrder> orders = purchaseOrderDAO.getPurchaseOrders();
+
+        assertEquals(2, orders.size());
+    }
+
+    @Test
+    void testGetTotalPurchaseOrders() {
+        Supplier supplier = supplierDAO.getSuppliers().get(0);
+
+        PurchaseOrder order1 = new PurchaseOrder(supplier, new Date(), OrderStatus.PENDING, 150.00);
+        PurchaseOrder order2 = new PurchaseOrder(supplier, new Date(), OrderStatus.PENDING, 300.00);
+
+        purchaseOrderDAO.addPurchaseOrder(order1);
+        purchaseOrderDAO.addPurchaseOrder(order2);
+
+        double total = purchaseOrderDAO.getTotalPurchaseOrders();
+
+        assertEquals(450.00, total, 0.01);
+    }
+
+
+    @Test
+    void testGetTotalPurchaseOrdersBySupplier() {
+        Supplier supplier = supplierDAO.getSuppliers().get(0);
+
+        PurchaseOrder order1 = new PurchaseOrder(supplier, new Date(), OrderStatus.PENDING, 200.00);
+        PurchaseOrder order2 = new PurchaseOrder(supplier, new Date(), OrderStatus.PENDING, 300.00);
+
+        purchaseOrderDAO.addPurchaseOrder(order1);
+        purchaseOrderDAO.addPurchaseOrder(order2);
+
+        double totalBySupplier = purchaseOrderDAO.getTotalPurchaseOrdersBySupplier(supplier.getSupplierId());
+
+        assertEquals(500.00, totalBySupplier, 0.01);
+    }
+
+
     @AfterAll
     static void tearDown() {
         purchaseOrderDAO.deleteAll();

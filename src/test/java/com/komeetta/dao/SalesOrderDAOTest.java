@@ -121,6 +121,38 @@ class SalesOrderDAOTest {
         assertNotNull(fetchedOrder.getItems()); // Ensure items are fetched
     }
 
+    @Test
+    void testGetAllSalesOrders() {
+        Customer customer = customerDAO.getCustomers().get(0);
+
+        SalesOrder order1 = new SalesOrder(customer, new Date(), OrderStatus.PENDING, 200.00);
+        SalesOrder order2 = new SalesOrder(customer, new Date(), OrderStatus.PENDING, 500.00);
+
+        salesOrderDAO.addSalesOrder(order1);
+        salesOrderDAO.addSalesOrder(order2);
+
+        List<SalesOrder> orders = salesOrderDAO.getSalesOrders();
+
+        assertEquals(2, orders.size());
+    }
+
+
+    @Test
+    void testGetTotalSalesOrders() {
+        Customer customer = customerDAO.getCustomers().get(0);
+
+        SalesOrder order1 = new SalesOrder(customer, new Date(), OrderStatus.PENDING, 300.00);
+        SalesOrder order2 = new SalesOrder(customer, new Date(), OrderStatus.PENDING, 500.00);
+
+        salesOrderDAO.addSalesOrder(order1);
+        salesOrderDAO.addSalesOrder(order2);
+
+        double total = salesOrderDAO.getTotalSaleOrders();
+
+        assertEquals(800.00, total, 0.01);
+    }
+
+
     @AfterAll
     static void tearDown() {
         salesOrderDAO.deleteAll();

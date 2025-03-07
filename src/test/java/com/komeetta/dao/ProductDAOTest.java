@@ -127,6 +127,30 @@ class ProductDAOTest {
         assertNull(productDAO.getProductById(product2.getProductId()));
     }
 
+    @Test
+    void getProducts_ShouldReturnAllProducts() {
+        Product product1 = new Product();
+        product1.setName("Product A");
+        product1.setBrand("Brand A");
+        product1.setCategory("Category A");
+        product1.setQuantity(10);
+        productDAO.addProduct(product1);
+
+        Product product2 = new Product();
+        product2.setName("Product B");
+        product2.setBrand("Brand B");
+        product2.setCategory("Category B");
+        product2.setQuantity(5);
+        productDAO.addProduct(product2);
+
+        List<Product> products = productDAO.getProducts();
+
+        assertEquals(2, products.size());
+        assertEquals("Product A", products.get(0).getName());
+        assertEquals("Product B", products.get(1).getName());
+    }
+
+
     @AfterAll
     static void tearDown() {
         if (entityManager.isOpen()) {
