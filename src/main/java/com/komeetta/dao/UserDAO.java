@@ -1,14 +1,14 @@
 package com.komeetta.dao;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.EntityManager;
+import java.util.Base64;
 import com.komeetta.model.User;
 import com.komeetta.datasource.MariaDbJpaConnection;
 
 public class UserDAO {
 
     /**
-     * Adds a new user
+     * Adds a new user with an encrypted password
      * @param user A new user
      */
     public void addUser(User user) {
@@ -17,6 +17,11 @@ public class UserDAO {
             if (!isUsernameAvailable(user.getUsername())) {
                 throw new RuntimeException("Username is already taken.");
             }
+
+            // Encrypt the password before storing
+            String encryptedPassword = encrypt(user.getPassword());
+            user.setPassword(encryptedPassword);
+
             em.getTransaction().begin();
             em.persist(user);
             em.getTransaction().commit();
@@ -31,7 +36,7 @@ public class UserDAO {
     }
 
     /**
-     * Authenticates a user during login by checking the username and password
+     * Authenticates a user during login by decrypting the stored password
      * @param username Username
      * @param password Plain text password
      * @return true if authentication is successful, false otherwise
@@ -39,8 +44,8 @@ public class UserDAO {
     public boolean authenticate(String username, String password) {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
-            User user = em.find(User.class, username);
-            return user != null && user.getPassword().equals(password);
+            User user = getUser(username);
+            return user != null && decrypt(user.getPassword()).equals(password);
         } finally {
             em.close();
         }
@@ -81,5 +86,33 @@ public class UserDAO {
         } finally {
             em.close();
         }
+    }
+
+    // Encryption and decryption methods
+
+    /**
+     * Encrypts data by adding 1 to each byte and encoding it with Base64
+     * @param data Plain text data
+     * @return Encrypted data as a Base64 string
+     */
+    private String encrypt(String data) {
+        byte[] result = data.getBytes();
+        for (int i = 0; i < result.length; i++) {
+            result[i] += (byte) 1;
+        }
+        return Base64.getEncoder().encodeToString(result);
+    }
+
+    /**
+     * Decrypts data by decoding from Base64 and subtracting 1 from each byte
+     * @param data Encrypted Base64 string
+     * @return Decrypted plain text data
+     */
+    private String decrypt(String data) {
+        byte[] result = Base64.getDecoder().decode(data);
+        for (int i = 0; i < result.length; i++) {
+            result[i] -= (byte) 1;
+        }
+        return new String(result);
     }
 }
