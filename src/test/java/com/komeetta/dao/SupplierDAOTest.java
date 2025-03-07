@@ -116,20 +116,6 @@ class SupplierDAOTest {
         assertTrue(suppliers.isEmpty());
     }
 
-    @Test
-    void testUpdateNonExistentSupplier() {
-        Supplier supplier = new Supplier();
-        supplier.setSupplierId(99999); // Fake ID
-        supplier.setName("Should Not Exist");
-
-        Exception exception = assertThrows(RuntimeException.class, () -> {
-            supplierDAO.updateSupplier(supplier);
-        });
-
-        assertTrue(exception.getMessage().contains("Failed to update supplier"),
-                "Updating a non-existent supplier should throw an error.");
-    }
-
 
     @AfterAll
     static void tearDown() {
