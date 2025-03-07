@@ -164,6 +164,50 @@ class PurchaseOrderDAOTest {
         assertEquals(500.00, totalBySupplier, 0.01);
     }
 
+    @Test
+    void testGetPurchaseOrder_NonExistent_ShouldReturnNull() {
+        PurchaseOrder nonExistentOrder = purchaseOrderDAO.getPurchaseOrder(99999);
+        assertNull(nonExistentOrder);
+    }
+
+    @Test
+    void testUpdatePurchaseOrder_NonExistent_ShouldThrowException() {
+        PurchaseOrder purchaseOrder = new PurchaseOrder();
+        purchaseOrder.setOrderId(99999); // Fake order ID
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            purchaseOrderDAO.updatePurchaseOrder(purchaseOrder);
+        });
+
+        assertTrue(exception.getMessage().contains("Failed to update purchase order"),
+                "Updating a non-existent purchase order should throw an error.");
+    }
+
+    @Test
+    void testDeletePurchaseOrder_NonExistent_ShouldNotThrowException() {
+        PurchaseOrder purchaseOrder = new PurchaseOrder();
+        purchaseOrder.setOrderId(99999); // Fake order ID
+
+        assertDoesNotThrow(() -> purchaseOrderDAO.deletePurchaseOrder(purchaseOrder),
+                "Deleting a non-existent purchase order should not throw an exception.");
+    }
+
+    @Test
+    void testGetTotalPurchaseOrders_WhenNoOrders_ShouldReturnZero() {
+        purchaseOrderDAO.deleteAll();
+        double total = purchaseOrderDAO.getTotalPurchaseOrders();
+        assertEquals(0.0, total, 0.01);
+    }
+
+    @Test
+    void testGetTotalPurchaseOrdersBySupplier_WhenNoOrders_ShouldReturnZero() {
+        Supplier supplier = new Supplier();
+        supplier.setName("Test Supplier");
+        supplierDAO.addSupplier(supplier);
+
+        double total = purchaseOrderDAO.getTotalPurchaseOrdersBySupplier(supplier.getSupplierId());
+        assertEquals(0.0, total, 0.01);
+    }
 
     @AfterAll
     static void tearDown() {
