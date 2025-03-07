@@ -71,6 +71,20 @@ public class SalesOrderItem {
 
     // Getters and Setters
 
+    /** get the unique identifier of the item
+     * @return the item ID
+     */
+    public OrderItemId getId() {
+        return id;
+    }
+
+    /** set the unique identifier of the item
+     * @param id the item ID
+     */
+    public void setId(OrderItemId id) {
+        this.id = id;
+    }
+
     /** get sales order to which the item belongs
      * @return the sales order
      */
