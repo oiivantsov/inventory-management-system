@@ -78,7 +78,8 @@ public class CustomerDAO {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
             em.getTransaction().begin();
-            em.remove(customer);
+            Customer managedCustomer = em.merge(customer); // Ensure the entity is managed
+            em.remove(managedCustomer);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -89,6 +90,7 @@ public class CustomerDAO {
             em.close();
         }
     }
+
 
     public void deleteAll() {
         EntityManager em = MariaDbJpaConnection.getInstance();

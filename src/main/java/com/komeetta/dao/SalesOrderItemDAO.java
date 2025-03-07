@@ -1,6 +1,7 @@
 package com.komeetta.dao;
 
 import com.komeetta.datasource.MariaDbJpaConnection;
+import com.komeetta.model.OrderItemId;
 import com.komeetta.model.SalesOrderItem;
 import jakarta.persistence.EntityManager;
 
@@ -41,7 +42,7 @@ public class SalesOrderItemDAO {
      * @param salesOrderItemId Sales order item ID
      * @return Sales order item object
      */
-    public SalesOrderItem getSalesOrderItem(int salesOrderItemId) {
+    public SalesOrderItem getSalesOrderItem(OrderItemId salesOrderItemId) {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
             return em.find(SalesOrderItem.class, salesOrderItemId);
@@ -74,7 +75,7 @@ public class SalesOrderItemDAO {
      * Deletes a sales order item from the database
      * @param salesOrderItemId Sales order item ID
      */
-    public void deleteSalesOrderItem(int salesOrderItemId) {
+    public void deleteSalesOrderItem(OrderItemId salesOrderItemId) {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
             em.getTransaction().begin();

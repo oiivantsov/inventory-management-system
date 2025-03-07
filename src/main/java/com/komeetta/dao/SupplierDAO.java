@@ -1,6 +1,7 @@
 package com.komeetta.dao;
 
 import com.komeetta.datasource.MariaDbJpaConnection;
+import com.komeetta.model.Customer;
 import com.komeetta.model.Supplier;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.EntityManager;
@@ -76,7 +77,9 @@ public class SupplierDAO {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
             em.getTransaction().begin();
-            em.remove(supplier);
+            // merge
+            Supplier managedCustomer = em.merge(supplier); // Ensure the entity is managed
+            em.remove(managedCustomer);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
