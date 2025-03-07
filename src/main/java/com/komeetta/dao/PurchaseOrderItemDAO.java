@@ -18,23 +18,17 @@ public class PurchaseOrderItemDAO {
      */
     public void addPurchaseOrderItem(PurchaseOrderItem purchaseOrderItem) {
         EntityManager em = MariaDbJpaConnection.getInstance();
-        try {
-            em.getTransaction().begin();
 
-            // Ensure PurchaseOrder and Product are managed before persisting PurchaseOrderItem
-            purchaseOrderItem.setPurchaseOrder(em.merge(purchaseOrderItem.getPurchaseOrder()));
-            purchaseOrderItem.setProduct(em.merge(purchaseOrderItem.getProduct()));
+        em.getTransaction().begin();
 
-            em.persist(purchaseOrderItem);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw new RuntimeException("Failed to add purchase order item", e);
-        } finally {
-            em.close();
-        }
+        purchaseOrderItem.setPurchaseOrder(em.merge(purchaseOrderItem.getPurchaseOrder()));
+        purchaseOrderItem.setProduct(em.merge(purchaseOrderItem.getProduct()));
+
+        em.persist(purchaseOrderItem);
+        em.getTransaction().commit();
+
+        em.close();
+
     }
 
     /**
@@ -44,11 +38,12 @@ public class PurchaseOrderItemDAO {
      */
     public PurchaseOrderItem getPurchaseOrderItem(OrderItemId purchaseOrderItemId) {
         EntityManager em = MariaDbJpaConnection.getInstance();
-        try {
-            return em.find(PurchaseOrderItem.class, purchaseOrderItemId);
-        } finally {
-            em.close();
-        }
+
+        PurchaseOrderItem result = em.find(PurchaseOrderItem.class, purchaseOrderItemId);
+
+        em.close();
+
+        return result;
     }
 
     /**
@@ -57,18 +52,12 @@ public class PurchaseOrderItemDAO {
      */
     public void updatePurchaseOrderItem(PurchaseOrderItem purchaseOrderItem) {
         EntityManager em = MariaDbJpaConnection.getInstance();
-        try {
-            em.getTransaction().begin();
-            em.merge(purchaseOrderItem);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw new RuntimeException("Failed to update purchase order item", e);
-        } finally {
-            em.close();
-        }
+
+        em.getTransaction().begin();
+        em.merge(purchaseOrderItem);
+        em.getTransaction().commit();
+
+        em.close();
     }
 
     /**
@@ -78,20 +67,13 @@ public class PurchaseOrderItemDAO {
      */
     public void getPurchaseOrderItems(PurchaseOrder purchaseOrder) {
         EntityManager em = MariaDbJpaConnection.getInstance();
-        try {
-            em.getTransaction().begin();
-            em.createQuery("SELECT p FROM PurchaseOrderItem p WHERE p.purchaseOrder.id = :order_id")
-                    .setParameter("order_id", purchaseOrder)
-                    .getResultList();
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw new RuntimeException("Failed to get purchase order items", e);
-        } finally {
-            em.close();
-        }
+        em.getTransaction().begin();
+        em.createQuery("SELECT p FROM PurchaseOrderItem p WHERE p.purchaseOrder.id = :order_id")
+                .setParameter("order_id", purchaseOrder)
+                .getResultList();
+        em.getTransaction().commit();
+
+        em.close();
     }
 
 }
