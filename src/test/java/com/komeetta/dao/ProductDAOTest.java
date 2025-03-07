@@ -79,6 +79,12 @@ class ProductDAOTest {
     }
 
     @Test
+    void getProduct_ShouldReturnNullIfNotFound() {
+        Product fetchedProduct = productDAO.getProductById(99999);
+        assertNull(fetchedProduct);
+    }
+
+    @Test
     void updateProduct() {
         Product product = new Product();
         product.setName("Test Product");
@@ -106,6 +112,16 @@ class ProductDAOTest {
 
         Product deletedProduct = productDAO.getProductById(product.getProductId());
         assertNull(deletedProduct);
+    }
+
+    @Test
+    void deleteNonExistentProduct_ShouldThrowException() {
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            productDAO.deleteProduct(99999);
+        });
+
+        assertTrue(exception.getMessage().contains("Failed to delete product"),
+                "Deleting a non-existent product should throw an error.");
     }
 
     @Test

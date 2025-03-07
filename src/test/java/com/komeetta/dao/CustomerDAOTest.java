@@ -67,6 +67,12 @@ class CustomerDAOTest {
     }
 
     @Test
+    void testGetNonExistentCustomer() {
+        Customer fetchedCustomer = customerDAO.getCustomer(99999); // Assuming 99999 doesn't exist
+        assertNull(fetchedCustomer, "Fetching a non-existent customer should return null.");
+    }
+
+    @Test
     void testUpdateCustomer() {
         Customer customer = new Customer();
         customer.setName("Old Name");
@@ -80,6 +86,21 @@ class CustomerDAOTest {
     }
 
     @Test
+    void testUpdateNonExistentCustomer() {
+        Customer customer = new Customer();
+        customer.setCustomerId(99999); // Fake ID
+        customer.setName("Should Not Exist");
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            customerDAO.updateCustomer(customer);
+        });
+
+        assertTrue(exception.getMessage().contains("Failed to update customer"),
+                "Updating a non-existent customer should throw an error.");
+    }
+
+
+    @Test
     void testDeleteCustomer() {
         Customer customer = new Customer();
         customer.setName("To Be Deleted");
@@ -89,6 +110,20 @@ class CustomerDAOTest {
         Customer deletedCustomer = customerDAO.getCustomer(customer.getCustomerId());
 
         assertNull(deletedCustomer);
+    }
+
+    @Test
+    void testDeleteNonExistentCustomer() {
+        Customer fakeCustomer = new Customer();
+        fakeCustomer.setCustomerId(99999); // Fake ID
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            customerDAO.deleteCustomer(fakeCustomer);
+        });
+
+        assertTrue(exception.getMessage().contains("Failed to delete customer"),
+                "Deleting a non-existent customer should throw an error.");
+
     }
 
 

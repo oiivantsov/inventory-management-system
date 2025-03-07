@@ -62,6 +62,13 @@ public class CustomerDAO {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
             em.getTransaction().begin();
+
+            // Ensure the customer exists
+            Customer existingCustomer = em.find(Customer.class, customer.getCustomerId());
+            if (existingCustomer == null) {
+                throw new RuntimeException("Failed to update customer: Customer not found");
+            }
+
             em.merge(customer);
             em.getTransaction().commit();
         } catch (Exception e) {
