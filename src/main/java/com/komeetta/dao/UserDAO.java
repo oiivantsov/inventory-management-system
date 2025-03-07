@@ -82,26 +82,4 @@ public class UserDAO {
             em.close();
         }
     }
-
-    // fast test to check if the UserDAO works
-    public static void main(String[] args) {
-        Dotenv dotenv = Dotenv.load();
-        System.setProperty("JDBC_URL", dotenv.get("JDBC_URL"));
-        System.setProperty("JDBC_USER", dotenv.get("JDBC_USER"));
-        System.setProperty("JDBC_PASSWORD", dotenv.get("JDBC_PASSWORD"));
-
-        UserDAO userDAO = new UserDAO();
-
-        userDAO.deleteAll();
-
-        User user = new User("admin", "admin123");
-        userDAO.addUser(user);
-
-        boolean isAuthenticated = userDAO.authenticate("admin", "admin123");
-        System.out.println("Authentication successful: " + isAuthenticated);
-
-        // Check username availability
-        boolean isAvailable = userDAO.isUsernameAvailable("admin");
-        System.out.println("Username 'admin' available: " + isAvailable);
-    }
 }

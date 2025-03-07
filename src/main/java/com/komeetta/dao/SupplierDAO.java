@@ -106,27 +106,4 @@ public class SupplierDAO {
             em.close();
         }
     }
-
-    public static void main(String[] args) {
-        Dotenv dotenv = Dotenv.load();
-        System.setProperty("JDBC_URL", dotenv.get("JDBC_URL"));
-        System.setProperty("JDBC_USER", dotenv.get("JDBC_USER"));
-        System.setProperty("JDBC_PASSWORD", dotenv.get("JDBC_PASSWORD"));
-
-        SupplierDAO supplierDAO = new SupplierDAO();
-
-        Supplier supplier = new Supplier();
-        supplier.setName("Test Supplier");
-        supplier.setEmail("test@supplier.com");
-        supplier.setPhoneNumber("123456789");
-        supplier.setAddress("Supplier Address");
-
-        supplierDAO.addSupplier(supplier);
-
-        List<Supplier> suppliers = supplierDAO.getSuppliers();
-        System.out.println("Number of suppliers: " + suppliers.size());
-        if (!suppliers.isEmpty()) {
-            System.out.println("First Supplier Name: " + suppliers.get(0).getName());
-        }
-    }
 }

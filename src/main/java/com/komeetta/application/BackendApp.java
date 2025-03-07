@@ -1,4 +1,5 @@
-package com.komeetta.dao;
+package com.komeetta.application;
+import com.komeetta.dao.*;
 import com.komeetta.model.*;
 import com.komeetta.service.PurchaseService;
 import com.komeetta.service.SalesService;
@@ -6,7 +7,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 import java.util.List;
 
-public class AppTest {
+public class BackendApp {
     public static void main(String[] args) {
         // Load environment variables
         Dotenv dotenv = Dotenv.load();
