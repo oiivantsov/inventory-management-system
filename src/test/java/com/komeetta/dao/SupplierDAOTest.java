@@ -1,5 +1,6 @@
 package com.komeetta.dao;
 
+import com.komeetta.model.Customer;
 import com.komeetta.model.Supplier;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.EntityManager;
@@ -68,6 +69,12 @@ class SupplierDAOTest {
     }
 
     @Test
+    void testGetNonExistentCustomer() {
+        Supplier fetchedSupplier = supplierDAO.getSupplier(99999); // Assuming 99999 doesn't exist
+        assertNull(fetchedSupplier, "Fetching a non-existent supplier should return null.");
+    }
+
+    @Test
     void testUpdateSupplier() {
         Supplier supplier = new Supplier();
         supplier.setName("Old Supplier");
@@ -107,6 +114,33 @@ class SupplierDAOTest {
 
         List<Supplier> suppliers = supplierDAO.getSuppliers();
         assertTrue(suppliers.isEmpty());
+    }
+
+    @Test
+    void testUpdateNonExistentSupplier() {
+        Supplier supplier = new Supplier();
+        supplier.setSupplierId(99999); // Fake ID
+        supplier.setName("Should Not Exist");
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            supplierDAO.updateSupplier(supplier);
+        });
+
+        assertTrue(exception.getMessage().contains("Failed to update supplier"),
+                "Updating a non-existent supplier should throw an error.");
+    }
+
+    @Test
+    void testDeleteNonExistentSupplier() {
+        Supplier supplier = new Supplier();
+        supplier.setSupplierId(99999); // Fake ID
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            supplierDAO.deleteSupplier(supplier);
+        });
+
+        assertTrue(exception.getMessage().contains("Failed to delete supplier"),
+                "Deleting a non-existent supplier should throw an error.");
     }
 
 

@@ -61,6 +61,13 @@ public class SupplierDAO {
         EntityManager em = MariaDbJpaConnection.getInstance();
         try {
             em.getTransaction().begin();
+
+            // Ensure the supplier exists
+            Supplier existingSupplier = em.find(Supplier.class, supplier.getSupplierId());
+            if (existingSupplier == null) {
+                throw new RuntimeException("Failed to update supplier: Supplier not found");
+            }
+
             em.merge(supplier);
             em.getTransaction().commit();
         } catch (Exception e) {
