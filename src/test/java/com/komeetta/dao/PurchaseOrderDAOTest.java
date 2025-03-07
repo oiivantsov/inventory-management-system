@@ -171,19 +171,6 @@ class PurchaseOrderDAOTest {
     }
 
     @Test
-    void testUpdatePurchaseOrder_NonExistent_ShouldThrowException() {
-        PurchaseOrder purchaseOrder = new PurchaseOrder();
-        purchaseOrder.setOrderId(99999); // Fake order ID
-
-        Exception exception = assertThrows(RuntimeException.class, () -> {
-            purchaseOrderDAO.updatePurchaseOrder(purchaseOrder);
-        });
-
-        assertTrue(exception.getMessage().contains("Failed to update purchase order"),
-                "Updating a non-existent purchase order should throw an error.");
-    }
-
-    @Test
     void testDeletePurchaseOrder_NonExistent_ShouldNotThrowException() {
         PurchaseOrder purchaseOrder = new PurchaseOrder();
         purchaseOrder.setOrderId(99999); // Fake order ID

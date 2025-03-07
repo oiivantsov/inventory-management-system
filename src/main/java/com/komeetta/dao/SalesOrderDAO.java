@@ -17,18 +17,13 @@ public class SalesOrderDAO {
      */
     public void addSalesOrder(SalesOrder salesOrder) {
         EntityManager em = MariaDbJpaConnection.getInstance();
-        try {
-            em.getTransaction().begin();
-            em.persist(salesOrder);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw new RuntimeException("Failed to add sales order", e);
-        } finally {
-            em.close();
-        }
+
+        em.getTransaction().begin();
+        em.persist(salesOrder);
+        em.getTransaction().commit();
+
+
+        em.close();
     }
 
     /**
@@ -38,16 +33,13 @@ public class SalesOrderDAO {
      */
     public SalesOrder getSalesOrder(int salesOrderId) {
         EntityManager em = MariaDbJpaConnection.getInstance();
-        try {
-            return em.find(SalesOrder.class, salesOrderId);
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw new RuntimeException("Failed to fetch sales order with items", e);
-        } finally {
-            em.close();
-        }
+
+        SalesOrder result = em.find(SalesOrder.class, salesOrderId);
+
+        em.close();
+
+        return result;
+
     }
 
     /**
@@ -56,18 +48,12 @@ public class SalesOrderDAO {
      */
     public void updateSalesOrder(SalesOrder salesOrder) {
         EntityManager em = MariaDbJpaConnection.getInstance();
-        try {
-            em.getTransaction().begin();
-            em.merge(salesOrder);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw new RuntimeException("Failed to update sales order", e);
-        } finally {
-            em.close();
-        }
+
+        em.getTransaction().begin();
+        em.merge(salesOrder);
+        em.getTransaction().commit();
+
+        em.close();
     }
 
     /**
@@ -76,24 +62,19 @@ public class SalesOrderDAO {
      */
     public void deleteSalesOrder(SalesOrder salesOrder) {
         EntityManager em = MariaDbJpaConnection.getInstance();
-        try {
-            em.getTransaction().begin();
 
-            // Check if the order is managed by the entity manager
-            SalesOrder managedOrder = em.find(SalesOrder.class, salesOrder.getOrderId());
-            if (managedOrder != null) {
-                em.remove(managedOrder);
-            }
+        em.getTransaction().begin();
 
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw new RuntimeException("Failed to delete sales order", e);
-        } finally {
-            em.close();
+        // Check if the order is managed by the entity manager
+        SalesOrder managedOrder = em.find(SalesOrder.class, salesOrder.getOrderId());
+        if (managedOrder != null) {
+            em.remove(managedOrder);
         }
+
+        em.getTransaction().commit();
+
+
+        em.close();
     }
 
 
@@ -102,18 +83,12 @@ public class SalesOrderDAO {
      */
     public void deleteAll() {
         EntityManager em = MariaDbJpaConnection.getInstance();
-        try {
-            em.getTransaction().begin();
-            em.createQuery("DELETE FROM SalesOrder").executeUpdate();
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw new RuntimeException("Failed to delete sales orders", e);
-        } finally {
-            em.close();
-        }
+
+        em.getTransaction().begin();
+        em.createQuery("DELETE FROM SalesOrder").executeUpdate();
+        em.getTransaction().commit();
+
+        em.close();
     }
 
     /**
@@ -122,16 +97,12 @@ public class SalesOrderDAO {
      */
     public List<SalesOrder> getSalesOrders() {
         EntityManager em = MariaDbJpaConnection.getInstance();
-        try {
-            return em.createQuery("SELECT s FROM SalesOrder s", SalesOrder.class).getResultList();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw new RuntimeException("Failed to retrieve sales orders", e);
-        } finally {
-            em.close();
-        }
+
+        List<SalesOrder> result = em.createQuery("SELECT s FROM SalesOrder s", SalesOrder.class).getResultList();
+
+        em.close();
+
+        return result;
 
     }
 
@@ -140,20 +111,15 @@ public class SalesOrderDAO {
      */
     public double getTotalSaleOrders() {
         EntityManager em = MariaDbJpaConnection.getInstance();
-        try {
-            // return 0 if no sales orders
-            if (getSalesOrders().isEmpty()) {
-                return 0;
-            }
-            return em.createQuery("SELECT SUM(s.orderTotal) FROM SalesOrder s", Double.class).getSingleResult();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw new RuntimeException("Failed to sum sales orders", e);
-        } finally {
-            em.close();
+
+        if (getSalesOrders().isEmpty()) {
+            return 0;
         }
+        double result = em.createQuery("SELECT SUM(s.orderTotal) FROM SalesOrder s", Double.class).getSingleResult();
+
+        em.close();
+        return result;
+
     }
 
 }
