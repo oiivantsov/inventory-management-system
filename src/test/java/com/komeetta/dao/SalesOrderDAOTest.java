@@ -12,6 +12,8 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.*;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -171,6 +173,49 @@ class SalesOrderDAOTest {
     void testGetTotalSalesOrders_WhenNoOrders_ShouldReturnZero() {
         salesOrderDAO.deleteAll();
         double total = salesOrderDAO.getTotalSaleOrders();
+        assertEquals(0.0, total, 0.01);
+    }
+
+    @Test
+    void testGetNumberOfSalesOrders() {
+        Customer customer = customerDAO.getCustomers().get(0);
+
+        SalesOrder order1 = new SalesOrder(customer, new Date(), OrderStatus.PENDING, 300.00);
+        SalesOrder order2 = new SalesOrder(customer, new Date(), OrderStatus.PENDING, 500.00);
+
+        salesOrderDAO.addSalesOrder(order1);
+        salesOrderDAO.addSalesOrder(order2);
+
+        int total = salesOrderDAO.getNumberOfSalesOrders();
+
+        assertEquals(2, total);
+    }
+
+    @Test
+    void testGetThreeMonthOrders() {
+        Customer customer = customerDAO.getCustomers().get(0);
+
+        SalesOrder order1 = new SalesOrder(customer, new Date(), OrderStatus.PENDING, 300.00);
+        SalesOrder order2 = new SalesOrder(customer, new Date(), OrderStatus.PENDING, 500.00);
+
+        // Add a sales order older than 3 months
+        LocalDate fourMonthsAgo = LocalDate.now().minusMonths(4);
+        Date fourMonthsAgoDate = Date.from(fourMonthsAgo.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        SalesOrder order3 = new SalesOrder(customer, fourMonthsAgoDate, OrderStatus.PENDING, 100.00);
+
+        salesOrderDAO.addSalesOrder(order1);
+        salesOrderDAO.addSalesOrder(order2);
+        salesOrderDAO.addSalesOrder(order3);
+
+        double total = salesOrderDAO.getThreeMonthOrders();
+
+        assertEquals(800.00, total, 0.01);
+    }
+
+    @Test
+    void testGetThreeMonthOrders_WhenNoOrders_ShouldReturnZero() {
+        salesOrderDAO.deleteAll();
+        double total = salesOrderDAO.getThreeMonthOrders();
         assertEquals(0.0, total, 0.01);
     }
 

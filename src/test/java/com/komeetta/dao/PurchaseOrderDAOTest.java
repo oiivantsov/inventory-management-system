@@ -12,6 +12,8 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.*;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -193,6 +195,59 @@ class PurchaseOrderDAOTest {
         supplierDAO.addSupplier(supplier);
 
         double total = purchaseOrderDAO.getTotalPurchaseOrdersBySupplier(supplier.getSupplierId());
+        assertEquals(0.0, total, 0.01);
+    }
+
+    @Test
+    void testGetNumberOfPurchaseOrders() {
+        Supplier supplier = supplierDAO.getSuppliers().get(0);
+
+        PurchaseOrder order1 = new PurchaseOrder(supplier, new Date(), OrderStatus.PENDING, 200.00);
+        PurchaseOrder order2 = new PurchaseOrder(supplier, new Date(), OrderStatus.PENDING, 300.00);
+        PurchaseOrder order3 = new PurchaseOrder(supplier, new Date(), OrderStatus.PENDING, 500.00);
+
+        purchaseOrderDAO.addPurchaseOrder(order1);
+        purchaseOrderDAO.addPurchaseOrder(order2);
+        purchaseOrderDAO.addPurchaseOrder(order3);
+
+        int numberOfOrders = purchaseOrderDAO.getPurchaseOrders().size();
+        assertEquals(3, numberOfOrders);
+    }
+
+    @Test
+    void testGetNumberOfPurchaseOrders_WhenNoOrders_ShouldReturnZero() {
+        purchaseOrderDAO.deleteAll();
+        int numberOfOrders = purchaseOrderDAO.getPurchaseOrders().size();
+        assertEquals(0, numberOfOrders);
+    }
+
+    @Test
+    void testGetThreeMonthOrders() {
+        Supplier supplier = supplierDAO.getSuppliers().get(0);
+
+        PurchaseOrder order1 = new PurchaseOrder(supplier, new Date(), OrderStatus.PENDING, 200.00);
+        PurchaseOrder order2 = new PurchaseOrder(supplier, new Date(), OrderStatus.PENDING, 300.00);
+        PurchaseOrder order3 = new PurchaseOrder(supplier, new Date(), OrderStatus.PENDING, 500.00);
+
+        // older than 3 months
+        LocalDate fourMonthsAgo = LocalDate.now().minusMonths(4);
+        Date fourMonthsAgoDate = Date.from(fourMonthsAgo.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        PurchaseOrder order4 = new PurchaseOrder(supplier, fourMonthsAgoDate, OrderStatus.PENDING, 100.00);
+
+        purchaseOrderDAO.addPurchaseOrder(order1);
+        purchaseOrderDAO.addPurchaseOrder(order2);
+        purchaseOrderDAO.addPurchaseOrder(order3);
+        purchaseOrderDAO.addPurchaseOrder(order4);
+
+        double total = purchaseOrderDAO.getThreeMonthOrders();
+
+        assertEquals(1000.00, total, 0.01);
+    }
+
+    @Test
+    void testGetThreeMonthOrders_WhenNoOrders_ShouldReturnZero() {
+        purchaseOrderDAO.deleteAll();
+        double total = purchaseOrderDAO.getThreeMonthOrders();
         assertEquals(0.0, total, 0.01);
     }
 

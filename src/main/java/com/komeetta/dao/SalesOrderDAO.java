@@ -4,6 +4,10 @@ import com.komeetta.datasource.MariaDbJpaConnection;
 import com.komeetta.model.SalesOrder;
 import jakarta.persistence.EntityManager;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -122,4 +126,40 @@ public class SalesOrderDAO {
 
     }
 
+    /**
+     * Fetches the total number of sales orders
+     * @return Total number of sales orders (long)
+     */
+    public int getNumberOfSalesOrders() {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+
+        long result = em.createQuery("SELECT COUNT(s) FROM SalesOrder s", long.class).getSingleResult();
+        int resultInt = (int) result;
+
+        em.close();
+
+        return resultInt;
+    }
+
+    /**
+     * Sum of all sales orders from the last three months
+     * @return
+     */
+    public double getThreeMonthOrders() {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+
+        // Convert three months ago to a Date object (start of the day)
+        LocalDate threeMonthsAgo = LocalDate.now().minusMonths(3);
+        Date threeMonthsAgoDate = Date.from(threeMonthsAgo.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        // Query to sum orders from the last 3 months
+        Double result = em.createQuery(
+                        "SELECT SUM(s.orderTotal) FROM SalesOrder s WHERE s.orderDate >= :threeMonthsAgo", Double.class)
+                .setParameter("threeMonthsAgo", threeMonthsAgoDate)
+                .getSingleResult();
+
+        em.close();
+
+        return (result != null) ? result : 0.0; // Return 0 if no results
+    }
 }

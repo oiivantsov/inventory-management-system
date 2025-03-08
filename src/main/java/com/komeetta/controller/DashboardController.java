@@ -8,21 +8,22 @@ import com.komeetta.view.AddEntityGUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.Node;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.komeetta.view.EditObjectGUI;
+import statistics.DashboardStats;
+import statistics.Stat;
 
 public class DashboardController {
 
@@ -152,15 +153,44 @@ public class DashboardController {
     @FXML
     private TableColumn<SalesOrder, Integer> colSaleTotalPrice;
 
+    // Stats Table and Columns
+    @FXML
+    private TableView<Stat> ordersTable;
+
+    @FXML
+    private TableColumn<Stat, String> colOrderStatName;
+
+    @FXML
+    private TableColumn<Stat, String> colOrderStatValue;
+
+    @FXML
+    private TableView<Stat> revenueTable;
+
+    @FXML
+    private TableColumn<Stat, String> colRevenueStatName;
+
+    @FXML
+    private TableColumn<Stat, String> colRevenueStatValue;
+
     @FXML
     private Label greetingLabel;
+
+    @FXML
+    private Label statsLabel;
+
+    @FXML
+    private Button statsButton;
 
     private Object selectedItem = null;
 
     private User user;
 
+    private DashboardStats dashboardStats;
+
     @FXML
     public void initialize() {
+        // Initialize DashboardStats and update stats label
+        dashboardStats = new DashboardStats();
 
         //initialize columns in customerTable.
         colCustomerName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -197,6 +227,14 @@ public class DashboardController {
         colSaleDate.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
         colSaleState.setCellValueFactory(new PropertyValueFactory<>("status"));
         colSaleTotalPrice.setCellValueFactory(new PropertyValueFactory<>("orderTotal"));
+
+        //initialize columns in stats tables
+        colOrderStatName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colOrderStatValue.setCellValueFactory(new PropertyValueFactory<>("value"));
+        colRevenueStatName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colRevenueStatValue.setCellValueFactory(new PropertyValueFactory<>("value"));
+
+        updateStatsTables();
 
         // Add selection listeners for each table
         productTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -273,6 +311,7 @@ public class DashboardController {
         refreshCustomerView();
         refreshProductView();
         refreshSupplierView();
+
     }
 
 
@@ -341,6 +380,8 @@ public class DashboardController {
                 refreshPurchaseView();
             } else if (view == saleVBox) {
                 refreshSaleView();
+            } else if (view == HomeVBox) {
+                refreshStatsView();
             }
         }
     }
@@ -350,6 +391,8 @@ public class DashboardController {
 
         greetingLabel.setText("Welcome, " + user.getUsername() + "\n" +
                 "Use the buttons on the left to manage your company inventory.");
+
+        statsLabel.setText("Statistics:");
 
         buttonEdit.setDisable(true);
 
@@ -415,4 +458,56 @@ public class DashboardController {
         ObservableList<SalesOrder> salesOrders = FXCollections.observableArrayList(salesOrderList);
         salesOrderTable.setItems(salesOrders);
     }
+
+    public void refreshStatsView() {
+        salesOrderTable.getItems().clear();
+        updateStatsTables();
+    }
+
+    /**
+     * Handles the action when the stats button is clicked
+     * Opens a dialog to enter the filename for the CSV report
+     * Creates the CSV file with the statistics
+     * Shows an error message if the filename is invalid
+     */
+    @FXML
+    private void handleStatsButtonAction() {
+        TextInputDialog dialog = new TextInputDialog("stats_report");
+        dialog.setTitle("Save CSV Report");
+        dialog.setHeaderText("Enter the filename for the CSV report:");
+        dialog.setContentText("Filename:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(filename -> {
+            if (filename != null && !filename.isEmpty() && filename.matches("^[a-zA-Z0-9_]*$")) {
+                // Use the filename to create the CSV file
+                dashboardStats.createCvsStatsFile(filename);
+            } else {
+                // Show an error message if the filename is invalid
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Invalid Filename");
+                alert.setHeaderText("The filename is invalid.");
+                alert.setContentText("Please enter a valid filename without special characters.");
+                alert.showAndWait();
+            }
+        });
+    }
+
+    // Updates the stats tables with the latest statistics
+    private void updateStatsTables() {
+        ObservableList<Stat> orderStats = FXCollections.observableArrayList(
+                new Stat("Total Sales Orders", String.valueOf(dashboardStats.getTotalSalesOrders())),
+                new Stat("Total Purchase Orders", String.valueOf(dashboardStats.getTotalPurchaseOrders())),
+                new Stat("Difference", String.valueOf(dashboardStats.getOrderDifference()))
+        );
+
+        ObservableList<Stat> revenueStats = FXCollections.observableArrayList(
+                new Stat("Total Revenue", String.format("%.2f", dashboardStats.getTotalRevenue())),
+                new Stat("Last Three Months Revenue", String.format("%.2f", dashboardStats.getLastThreeMonthsRevenue()))
+        );
+
+        ordersTable.setItems(orderStats);
+        revenueTable.setItems(revenueStats);
+    }
+
 }

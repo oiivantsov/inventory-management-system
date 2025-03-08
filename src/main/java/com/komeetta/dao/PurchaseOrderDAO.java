@@ -4,6 +4,11 @@ import com.komeetta.datasource.MariaDbJpaConnection;
 import com.komeetta.model.PurchaseOrder;
 import jakarta.persistence.EntityManager;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -148,5 +153,37 @@ public class PurchaseOrderDAO {
 
     }
 
+    /**
+     * Fetches the total number of purchase orders
+     * @return Total number of purchase orders (int)
+     */
+    public int getNumberOfPurchaseOrders() {
+        EntityManager em = MariaDbJpaConnection.getInstance();
 
+        long count = em.createQuery("SELECT COUNT(s) FROM PurchaseOrder s", long.class).getSingleResult();
+        int result = (int) count;
+
+        em.close();
+
+        return result;
+    }
+
+    /**
+     * Sum of all purchase orders from the last three months
+     * @return Total number of purchase orders from the last three months (double)
+     */
+    public double getThreeMonthOrders() {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+
+        LocalDate threeMonthsAgo = LocalDate.now().minusMonths(3);
+        Date threeMonthsAgoDate = Date.from(threeMonthsAgo.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        Double result = em.createQuery("SELECT SUM(s.orderTotal) FROM PurchaseOrder s WHERE s.orderDate >= :threeMonthsAgo", Double.class)
+                .setParameter("threeMonthsAgo", threeMonthsAgoDate)
+                .getSingleResult();
+
+        em.close();
+
+        return (result != null) ? result : 0.0;
+    }
 }

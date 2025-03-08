@@ -59,6 +59,7 @@ public class AddWindowController {
         // Remove old dynamically added fields if they exist. Mainly for entities that need more fields.
         formContainer.getChildren().removeIf(node -> node instanceof TextField && node != firstTextField && node != secondTextField && node != thirdTextField && node != fourthTextField);
 
+        headlineLabel.setText("Add New " + selectedType);
         if ("Product".equals(selectedType)) {
             firstTextField.setPromptText("Product Name");
             secondTextField.setPromptText("Product Category");
