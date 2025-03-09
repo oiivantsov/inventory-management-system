@@ -38,7 +38,7 @@ CREATE TABLE PurchaseOrder (
     order_id INT PRIMARY KEY AUTO_INCREMENT,
     supplier_id      INT,
     order_date       DATETIME DEFAULT CURRENT_TIMESTAMP,
-    state           ENUM('pending', 'in_progress', 'completed') DEFAULT 'pending',
+    status           ENUM('pending', 'in_progress', 'completed') DEFAULT 'pending',
     order_total     DOUBLE DEFAULT 0,
     FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id)
 );
@@ -57,7 +57,7 @@ CREATE TABLE SalesOrder (
     order_id INT PRIMARY KEY AUTO_INCREMENT, 
     customer_id   INT,
     order_date    DATETIME DEFAULT CURRENT_TIMESTAMP,
-    state        ENUM('PENDING', 'IN_PROGRESS', 'COMPLETED') DEFAULT 'PENDING',
+    status       ENUM('PENDING', 'IN_PROGRESS', 'COMPLETED') DEFAULT 'PENDING',
     order_total  DOUBLE DEFAULT 0,
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );
