@@ -61,11 +61,14 @@ public class StockController {
         entityMap.clear();
         if (isSale) {
             System.out.println("Loading customers...");
+            entityComboBox.setPromptText("Select Customer");
             for (Customer customer : customerDAO.getCustomers()) {
                 entityComboBox.getItems().add(customer.getName());
                 entityMap.put(customer.getName(), customer.getCustomerId());
             }
         } else {
+            System.out.println("Loading suppliers...");
+            entityComboBox.setPromptText("Select Supplier");
             for (Supplier supplier : supplierDAO.getSuppliers()) {
                 entityComboBox.getItems().add(supplier.getName());
                 entityMap.put(supplier.getName(), supplier.getSupplierId());
@@ -122,6 +125,7 @@ public class StockController {
         SalesOrderItem salesOrderItem = new SalesOrderItem(salesOrder, product, quantity, unitPrice, sale);
         salesService.processSalesOrder(salesOrder, Collections.singletonList(salesOrderItem));
         showAlert("Success", "Sales order processed successfully.", Alert.AlertType.INFORMATION);
+        closeForm();
     }
 
     private void processPurchase(int supplierId, int productId, int quantity, double unitPrice, double sale) {
@@ -132,15 +136,12 @@ public class StockController {
         PurchaseOrderItem purchaseOrderItem = new PurchaseOrderItem(purchaseOrder, product, quantity, unitPrice, sale);
         purchaseService.processPurchaseOrder(purchaseOrder, Collections.singletonList(purchaseOrderItem));
         showAlert("Success", "Purchase order processed successfully.", Alert.AlertType.INFORMATION);
+        closeForm();
     }
 
     @FXML
     private void handleCancel() {
-        entityComboBox.getSelectionModel().clearSelection();
-        productComboBox.getSelectionModel().clearSelection();
-        quantityTextField.clear();
-        unitPriceTextField.clear();
-        saleTextField.clear();
+        clearForm();
     }
 
     private boolean isStockAvailable(int productId, int requestedQuantity) {
@@ -161,5 +162,18 @@ public class StockController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void clearForm() {
+        entityComboBox.getSelectionModel().clearSelection();
+        productComboBox.getSelectionModel().clearSelection();
+        quantityTextField.clear();
+        unitPriceTextField.clear();
+        saleTextField.clear();
+    }
+
+    private void closeForm() {
+        clearForm();
+        cancelButton.getScene().getWindow().hide();
     }
 }

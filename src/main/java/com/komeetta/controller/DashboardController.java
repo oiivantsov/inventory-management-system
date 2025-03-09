@@ -293,6 +293,7 @@ public class DashboardController {
 
     @FXML
     private void handleHomeButtonAction(ActionEvent event) {
+        refreshStatsView();
         showView(HomeVBox);
     }
 
@@ -512,6 +513,8 @@ public class DashboardController {
 
     // Updates the stats tables with the latest statistics
     private void updateStatsTables() {
+        dashboardStats.updateStats();
+
         ObservableList<Stat> orderStats = FXCollections.observableArrayList(
                 new Stat("Total Sales Orders", String.valueOf(dashboardStats.getTotalSalesOrders())),
                 new Stat("Total Purchase Orders", String.valueOf(dashboardStats.getTotalPurchaseOrders())),

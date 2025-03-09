@@ -34,7 +34,7 @@ public class SalesService {
             productDAO.updateProduct(product);
 
             // step 3: update order total
-            double newTotal = salesOrder.getOrderTotal() + (item.getUnitPrice() * item.getQuantity() * (1 - item.getSale()));
+            double newTotal = salesOrder.getOrderTotal() + (item.getUnitPrice() * item.getQuantity() * (1 - item.getSale() / 100));
             salesOrder.setOrderTotal(newTotal);
             salesOrderDAO.updateSalesOrder(salesOrder);
         }

@@ -26,7 +26,7 @@ public class PurchaseService {
             productDAO.updateProduct(product);
 
             // step 3: update order total
-            double newTotal = purchaseOrder.getOrderTotal() + (item.getUnitPrice() * item.getQuantity() * (1 - item.getSale()));
+            double newTotal = purchaseOrder.getOrderTotal() + (item.getUnitPrice() * item.getQuantity() * (1 - item.getSale() / 100));
             purchaseOrder.setOrderTotal(newTotal);
             purchaseOrderDAO.updatePurchaseOrder(purchaseOrder);
         }
