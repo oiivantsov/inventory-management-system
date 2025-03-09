@@ -23,6 +23,7 @@ class UserDAOTest {
         System.setProperty("JDBC_URL", dotenv.get("TEST_JDBC_URL"));
         System.setProperty("JDBC_USER", dotenv.get("TEST_JDBC_USER"));
         System.setProperty("JDBC_PASSWORD", dotenv.get("TEST_JDBC_PASSWORD"));
+
         userDAO = new UserDAO();
         emf = Persistence.createEntityManagerFactory("CompanyMariaDbUnitTesting");
         entityManager = emf.createEntityManager();
@@ -45,7 +46,7 @@ class UserDAOTest {
 
         assertNotNull(fetchedUser);
         assertEquals("testUser", fetchedUser.getUsername());
-        assertEquals("testPassword", fetchedUser.getPassword());
+        assertNotEquals("testPassword", fetchedUser.getPassword()); // Ensure password is encrypted
         assertEquals(UserRole.USER, fetchedUser.getRole());
     }
 
@@ -58,7 +59,6 @@ class UserDAOTest {
         assertFalse(userDAO.authenticate("authUser", "wrongPassword"));
         assertFalse(userDAO.authenticate("nonExistingUser", "securePassword"));
     }
-
 
     @Test
     void testIsUsernameAvailable() {
@@ -81,13 +81,17 @@ class UserDAOTest {
 
         assertNull(userDAO.getUser("User1"));
         assertNull(userDAO.getUser("User2"));
+        assertTrue(userDAO.isUsernameAvailable("User1"));
+        assertTrue(userDAO.isUsernameAvailable("User2"));
     }
-
 
     @AfterAll
     static void tearDown() {
         if (entityManager.isOpen()) {
             entityManager.close();
+        }
+        if (emf.isOpen()) {
+            emf.close();
         }
     }
 }
