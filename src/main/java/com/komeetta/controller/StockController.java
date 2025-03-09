@@ -145,7 +145,7 @@ public class StockController {
 
     private boolean isStockAvailable(int productId, int requestedQuantity) {
         Product product = productDAO.getProductById(productId);
-        int availableStock = product.getQuantity(); // Assuming the Product class has a getStock() method.
+        int availableStock = product.getQuantity();
 
         if (requestedQuantity > availableStock) {
             showAlert("Stock Error", "Not enough stock available. Only " + availableStock + " units left.", Alert.AlertType.ERROR);
