@@ -229,7 +229,17 @@
                            </VBox>
                        </children>
                    </HBox>
-                  <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Mass Import using CSV" textFill="WHITE">
+                   <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Get a CSV File of Statistics:" textFill="WHITE">
+                       <VBox.margin>
+                           <Insets top="20.0" />
+                       </VBox.margin>
+                   </Label>
+                   <Button fx:id="buttonStats"  onAction="#handleStatsButtonAction" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: lightblue;" text="Export CSV" textAlignment="CENTER">
+                       <VBox.margin>
+                           <Insets bottom="10.0" top="10.0" />
+                       </VBox.margin>
+                   </Button>
+                  <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Mass Import Products using CSV:" textFill="WHITE">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
@@ -239,16 +249,6 @@
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                   <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Get a CSV Report File:" textFill="WHITE">
-                       <VBox.margin>
-                            <Insets top="20.0" />
-                       </VBox.margin>
-                   </Label>
-                   <Button fx:id="buttonStats"  onAction="#handleStatsButtonAction" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: lightblue;" text="Export CSV" textAlignment="CENTER">
-                          <VBox.margin>
-                            <Insets bottom="10.0" top="10.0" />
-                          </VBox.margin>
-                   </Button>
                </children>
             </VBox>
          </children>
