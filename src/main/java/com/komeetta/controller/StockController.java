@@ -15,8 +15,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO: Add method to check stock availability
-
 public class StockController {
 
     @FXML
@@ -103,6 +101,10 @@ public class StockController {
             int entityId = entityMap.get(selectedEntity);
 
             if (isSale) {
+                // Check stock before processing the sale
+                if (!isStockAvailable(productId, quantity)) {
+                    return; // Stop if stock is insufficient
+                }
                 processSale(entityId, productId, quantity, unitPrice, sale);
             } else {
                 processPurchase(entityId, productId, quantity, unitPrice, sale);
@@ -140,6 +142,18 @@ public class StockController {
         unitPriceTextField.clear();
         saleTextField.clear();
     }
+
+    private boolean isStockAvailable(int productId, int requestedQuantity) {
+        Product product = productDAO.getProductById(productId);
+        int availableStock = product.getQuantity(); // Assuming the Product class has a getStock() method.
+
+        if (requestedQuantity > availableStock) {
+            showAlert("Stock Error", "Not enough stock available. Only " + availableStock + " units left.", Alert.AlertType.ERROR);
+            return false;
+        }
+        return true;
+    }
+
 
     private void showAlert(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);

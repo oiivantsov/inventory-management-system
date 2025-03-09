@@ -34,10 +34,10 @@
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor></Button>
-            <Button style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Current Stock">
-            <cursor>
-               <Cursor fx:constant="HAND" />
-            </cursor></Button>
+<!--            <Button style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Current Stock">-->
+<!--            <cursor>-->
+<!--               <Cursor fx:constant="HAND" />-->
+<!--            </cursor></Button>-->
             <Button fx:id="buttonCustomer" onAction="#handleCustomerButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="Customers">
             <cursor>
                <Cursor fx:constant="HAND" />
