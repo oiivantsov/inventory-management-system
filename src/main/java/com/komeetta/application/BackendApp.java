@@ -14,6 +14,7 @@ public class BackendApp {
         System.setProperty("JDBC_URL", dotenv.get("JDBC_URL"));
         System.setProperty("JDBC_USER", dotenv.get("JDBC_USER"));
         System.setProperty("JDBC_PASSWORD", dotenv.get("JDBC_PASSWORD"));
+        System.setProperty("DB_MODE", dotenv.get("DB_MODE"));
 
         // Initialize DAOs and services
         CustomerDAO customerDAO = new CustomerDAO();

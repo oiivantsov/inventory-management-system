@@ -30,6 +30,7 @@ pipeline {
                 echo TEST_JDBC_URL=%TEST_JDBC_URL% >> .env
                 echo TEST_JDBC_USER=%TEST_JDBC_USER% >> .env
                 echo TEST_JDBC_PASSWORD=%TEST_JDBC_PASSWORD% >> .env
+                echo DB_MODE=reset >> .env
                 '''
             }
         }

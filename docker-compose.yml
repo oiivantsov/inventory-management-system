@@ -24,6 +24,7 @@ services:
       JDBC_URL: "jdbc:mariadb://db:3306/inventory_db"
       JDBC_USER: "app_user"
       JDBC_PASSWORD: "1234"
+      DB_MODE: "reset"
     ports:
       - "8081:8080" # Change the port if needed
 
