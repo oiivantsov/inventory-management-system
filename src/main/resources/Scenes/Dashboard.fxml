@@ -254,7 +254,7 @@
                             <Insets top="20.0" />
                        </VBox.margin>
                    </Label>
-                   <Button fx:id="buttonStats" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#handleStatsButtonAction" text="new CVS" textAlignment="CENTER">
+                   <Button fx:id="buttonStats" alignment="TOP_CENTER" mnemonicParsing="false"  text="new CVS" textAlignment="CENTER">
                           <VBox.margin>
                             <Insets bottom="10.0" top="10.0" />
                           </VBox.margin>

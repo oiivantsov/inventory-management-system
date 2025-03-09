@@ -92,6 +92,8 @@ public class SalesOrder {
         return customer;
     }
 
+    public int getCustomerId() {return customer.getCustomerId();}
+
     /** Set the customer who placed the order
      * @param customer: the customer who placed the order
      */

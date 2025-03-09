@@ -75,6 +75,8 @@ public class PurchaseOrder {
         return orderId;
     }
 
+    public int getSupplierId() {return supplier.getSupplierId(); }
+
     /** Set the unique identifier of the order.
      * param: orderId the order ID
      */

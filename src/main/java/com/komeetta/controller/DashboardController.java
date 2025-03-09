@@ -2,6 +2,7 @@ package com.komeetta.controller;
 
 import com.komeetta.dao.*;
 import com.komeetta.model.*;
+import com.komeetta.view.SalesPurchaseGUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import com.komeetta.view.AddEntityGUI;
@@ -185,6 +186,8 @@ public class DashboardController {
 
     private User user;
 
+    private String currentView;
+
     private DashboardStats dashboardStats;
 
     @FXML
@@ -215,17 +218,17 @@ public class DashboardController {
         colProductDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         //initialize columns in purchaseOrderTable.
-        colPurchaseID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
-        colPurchaseSupplierID.setCellValueFactory(new PropertyValueFactory<>("supplier"));
-        colPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
-        colPurchaseState.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colPurchaseID.setCellValueFactory(new PropertyValueFactory<>("orderId"));
+        colPurchaseSupplierID.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
+        colPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("Order_date"));
+        colPurchaseState.setCellValueFactory(new PropertyValueFactory<>("OrderStatus"));
         colPurchaseTotalPrice.setCellValueFactory(new PropertyValueFactory<>("orderTotal"));
 
         //initialize columns in saleOrderTable.
-        colSaleID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
-        colSaleCustomerID.setCellValueFactory(new PropertyValueFactory<>("customer"));
+        colSaleID.setCellValueFactory(new PropertyValueFactory<>("orderId"));
+        colSaleCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         colSaleDate.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
-        colSaleState.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colSaleState.setCellValueFactory(new PropertyValueFactory<>("OrderStatus"));
         colSaleTotalPrice.setCellValueFactory(new PropertyValueFactory<>("orderTotal"));
 
         //initialize columns in stats tables
@@ -234,7 +237,7 @@ public class DashboardController {
         colRevenueStatName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colRevenueStatValue.setCellValueFactory(new PropertyValueFactory<>("value"));
 
-        updateStatsTables();
+        //updateStatsTables();
 
         // Add selection listeners for each table
         productTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -307,37 +310,49 @@ public class DashboardController {
 
     @FXML
     private void handleAddButtonAction() {
-        AddEntityGUI.display();
-        refreshCustomerView();
-        refreshProductView();
-        refreshSupplierView();
-
+        if (currentView.equals("Sales")) {
+            SalesPurchaseGUI.display(true);
+            refreshSaleView();
+        } else if (currentView.equals("Purchases")) {
+            SalesPurchaseGUI.display(false);
+            refreshPurchaseView();
+        }else {
+            AddEntityGUI.display();
+            refreshCustomerView();
+            refreshProductView();
+            refreshSupplierView();
+        }
     }
 
 
     // onAction methods for view selection buttons
     @FXML
     private void handleProductButtonAction() {
+        currentView = "Product";
         showView(productVBox);
     }
 
     @FXML
     private void handleCustomerButtonAction() {
+        currentView = "Customer";
         showView(customerVBox);
     }
 
     @FXML
     private void handleSupplierButtonAction() {
+        currentView = "Supplier";
         showView(supplierVBox);
     }
 
     @FXML
     private void handlePurchaseButtonAction() {
+        currentView = "Purchases";
         showView(purchaseVBox);
     }
 
     @FXML
     private void handleSaleButtonAction() {
+        currentView = "Sales";
         showView(saleVBox);
     }
 
@@ -459,6 +474,7 @@ public class DashboardController {
         salesOrderTable.setItems(salesOrders);
     }
 
+
     public void refreshStatsView() {
         salesOrderTable.getItems().clear();
         updateStatsTables();
@@ -493,6 +509,7 @@ public class DashboardController {
         });
     }
 
+
     // Updates the stats tables with the latest statistics
     private void updateStatsTables() {
         ObservableList<Stat> orderStats = FXCollections.observableArrayList(
@@ -509,5 +526,7 @@ public class DashboardController {
         ordersTable.setItems(orderStats);
         revenueTable.setItems(revenueStats);
     }
+
+
 
 }

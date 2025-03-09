@@ -17,7 +17,7 @@ public class AddEntityGUI {
             // Set modality to block interactions with other windows
             window.initModality(Modality.APPLICATION_MODAL);
 
-            // Ensure a NEW instance of EditObjectForm.fxml is loaded
+            // Ensure a NEW instance of AddObjectForm.fxml is loaded
             FXMLLoader loader = new FXMLLoader(EditObjectGUI.class.getResource("/Scenes/AddObjectForm.fxml"));
             Parent newWindow = loader.load();
 

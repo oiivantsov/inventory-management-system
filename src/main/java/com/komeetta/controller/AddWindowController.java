@@ -42,8 +42,6 @@ public class AddWindowController {
     @FXML
     private ComboBox<String> typeCBox;
 
-    private TextField quantityField;
-
     @FXML
     private void initialize() {
         // Populate ComboBox with types
@@ -55,9 +53,6 @@ public class AddWindowController {
 
     private void updateFormFields() {
         String selectedType = typeCBox.getValue();
-
-        // Remove old dynamically added fields if they exist. Mainly for entities that need more fields.
-        formContainer.getChildren().removeIf(node -> node instanceof TextField && node != firstTextField && node != secondTextField && node != thirdTextField && node != fourthTextField);
 
         headlineLabel.setText("Add New " + selectedType);
         if ("Product".equals(selectedType)) {

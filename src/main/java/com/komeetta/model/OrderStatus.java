@@ -25,5 +25,9 @@ public enum OrderStatus {
         public String toString() {
             return "completed";
         }
+    },
+    completed{
+        @Override
+        public String toString() {return "completed";}
     }
 }

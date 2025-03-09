@@ -48,18 +48,14 @@ public class StockController {
     private final PurchaseService purchaseService = new PurchaseService();
     private final SalesService salesService = new SalesService();
 
-    private static boolean isSale;
+    public boolean isSale;
     private final Map<String, Integer> entityMap = new HashMap<>();
     private final Map<String, Integer> productMap = new HashMap<>();
 
-    @FXML
-    public void initialize() {
+    public void setIsSale(boolean value) {
+        isSale = value;
         loadEntities();
         loadProducts();
-    }
-
-    public static void setIsSale(boolean value) {
-        isSale = value;
     }
 
     private void loadEntities() {
