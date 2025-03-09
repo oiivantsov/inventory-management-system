@@ -185,6 +185,18 @@ Modify your `.env` file to match the container setup:
 ---
 
 ## Testing
+0. **Ensure that the database is running** before running tests.
+
+    - Use `.env` file to configure the test database connection parameters. For example:
+
+    ```sh
+    TEST_JDBC_URL=jdbc:mariadb://localhost:3306/sep_inventory_test
+    TEST_JDBC_USER=root
+    TEST_JDBC_PASSWORD=1234
+    ```
+
+  - Ensure that the database is created before running tests.
+
 1. Build the project:
    ```sh
    mvn clean install -DskipTests
