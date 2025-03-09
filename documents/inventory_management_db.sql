@@ -39,7 +39,7 @@ CREATE TABLE PurchaseOrder (
     supplier_id      INT,
     order_date       DATETIME DEFAULT CURRENT_TIMESTAMP,
     state           ENUM('pending', 'in_progress', 'completed') DEFAULT 'pending',
-    total_price     DOUBLE DEFAULT 0,
+    order_total     DOUBLE DEFAULT 0,
     FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id)
 );
 
@@ -58,7 +58,7 @@ CREATE TABLE SalesOrder (
     customer_id   INT,
     order_date    DATETIME DEFAULT CURRENT_TIMESTAMP,
     state        ENUM('PENDING', 'IN_PROGRESS', 'COMPLETED') DEFAULT 'PENDING',
-    total_price  DOUBLE DEFAULT 0,
+    order_total  DOUBLE DEFAULT 0,
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );
 
