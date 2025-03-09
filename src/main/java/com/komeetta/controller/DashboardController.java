@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.komeetta.view.EditObjectGUI;
+import com.komeetta.view.MassImportGUI;
 import statistics.DashboardStats;
 import statistics.Stat;
 
@@ -182,6 +183,9 @@ public class DashboardController {
     @FXML
     private Button statsButton;
 
+    @FXML
+    private Button importButton;
+
     private Object selectedItem = null;
 
     private User user;
@@ -238,6 +242,8 @@ public class DashboardController {
         colRevenueStatValue.setCellValueFactory(new PropertyValueFactory<>("value"));
 
         //updateStatsTables();
+
+        importButton.setOnAction(event -> handleImportButtonAction());
 
         // Add selection listeners for each table
         productTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -325,6 +331,11 @@ public class DashboardController {
         }
     }
 
+    @FXML
+    private void handleImportButtonAction() {
+        MassImportGUI.display();
+        refreshProductView();
+    }
 
     // onAction methods for view selection buttons
     @FXML
