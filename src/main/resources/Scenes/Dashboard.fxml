@@ -13,8 +13,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="964.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.komeetta.controller.DashboardController">
     <!-- Left Sidebar -->
     <left>
@@ -272,21 +270,13 @@
    <top>
       <VBox alignment="TOP_RIGHT" prefHeight="29.0" prefWidth="964.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox fx:id="languageSelector" prefHeight="25.0" prefWidth="94.0" promptText="Language" style="-fx-background-color: lightblue;">
+            <ComboBox fx:id="languageSelector" prefHeight="25.0" prefWidth="60.0" promptText="EN" style="-fx-background-color: lightblue;">
                <VBox.margin>
                   <Insets right="10.0" top="10.0" />
                </VBox.margin>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="English"/>
-                        <String fx:value="Finnish"/>
-                        <String fx:value="Russian"/>
-                        <String fx:value="Japanese"/>
-                    </FXCollections>
-                </items>
             </ComboBox>
          </children>
       </VBox>

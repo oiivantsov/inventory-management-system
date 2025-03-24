@@ -185,7 +185,7 @@ public class DashboardController {
     private Button statsButton;
 
     @FXML
-    private ComboBox<String> languageSelector;
+    private ComboBox<LanguageOption> languageSelector;
 
     @FXML
     private Button importButton;
@@ -287,6 +287,32 @@ public class DashboardController {
                 System.out.println("Selected Supplier: " + newSelection);
             }
         });
+
+        languageSelector.getItems().addAll(
+                new LanguageOption("English", "EN"),
+                new LanguageOption("Finnish", "FI"),
+                new LanguageOption("Russian", "RU"),
+                new LanguageOption("Japanese", "JA")
+        );
+        languageSelector.getSelectionModel().selectFirst(); // Valitse oletuskieli
+        // Näytä listassa: nimi + lyhenne
+        languageSelector.setCellFactory(lv -> new ListCell<LanguageOption>() {
+            @Override
+            protected void updateItem(LanguageOption item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? null : item.getName() + " - " + item.getCode());
+            }
+        });
+
+        // Näytä valittuna: pelkkä lyhenne
+        languageSelector.setButtonCell(new ListCell<LanguageOption>() {
+            @Override
+            protected void updateItem(LanguageOption item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? null : item.getCode());
+            }
+        });
+
 
         // Debugging: Check if buttonEdit is null
         if (buttonEdit == null) {
@@ -390,8 +416,11 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
+
+
 // TODO: Implement language change
-    @FXML
+    /*@FXML
     private void handleLanguageChange(ActionEvent event) {
         String selectedLang = languageSelector.getValue();
 
@@ -405,7 +434,7 @@ public class DashboardController {
 
         Locale locale = new Locale(langCode);
     }
-
+*/
     // Shows corresponding View to passed variable
     private void showView(VBox view) {
         if (contentArea == null) {
