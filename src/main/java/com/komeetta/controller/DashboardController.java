@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import com.komeetta.view.EditObjectGUI;
@@ -182,6 +183,9 @@ public class DashboardController {
 
     @FXML
     private Button statsButton;
+
+    @FXML
+    private ComboBox<String> languageSelector;
 
     @FXML
     private Button importButton;
@@ -385,6 +389,21 @@ public class DashboardController {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+// TODO: Implement language change
+    @FXML
+    private void handleLanguageChange(ActionEvent event) {
+        String selectedLang = languageSelector.getValue();
+
+        String langCode = switch (selectedLang) {
+            case "English" -> "en";
+            case "Finnish" -> "fi";
+            case "Russian" -> "ru";
+            case "Japanese" -> "ja";
+            default -> "en";
+        };
+
+        Locale locale = new Locale(langCode);
     }
 
     // Shows corresponding View to passed variable
