@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -20,37 +21,46 @@
    <center>
       <VBox alignment="CENTER" prefHeight="575.0" prefWidth="402.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="firstNameField" prefHeight="30.0" prefWidth="400.0" promptText="First name" style="-fx-background-color: transparent; -fx-text-fill: ffffff;">
+            <VBox alignment="CENTER_RIGHT" prefHeight="24.0" prefWidth="402.0">
+               <children>
+                  <ComboBox fx:id="languageSelector" prefHeight="25.0" prefWidth="60.0" promptText="EN" style="-fx-background-color: lightblue;">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ComboBox>
+               </children>
+            </VBox>
+            <TextField fx:id="firstNameField" prefHeight="30.0" prefWidth="400.0" promptText="%str_first_name" style="-fx-background-color: transparent; -fx-text-fill: ffffff;">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
             </TextField>
             <Line endX="100.0" startX="-300.0" startY="0.7928932309150696" stroke="WHITE" />
-            <TextField fx:id="lastNameField" prefHeight="30.0" prefWidth="400.0" promptText="Last name" style="-fx-background-color: transparent; -fx-text-fill: ffffff;">
+            <TextField fx:id="lastNameField" prefHeight="30.0" prefWidth="400.0" promptText="%str_last_name" style="-fx-background-color: transparent; -fx-text-fill: ffffff;">
                <VBox.margin>
                   <Insets bottom="5.0" top="30.0" />
                </VBox.margin>
             </TextField>
             <Line endX="100.0" startX="-300.0" startY="0.7928932309150696" stroke="WHITE" />
-            <TextField fx:id="usernameField" prefHeight="30.0" prefWidth="400.0" promptText="Username" style="-fx-background-color: transparent; -fx-text-fill: ffffff;">
+            <TextField fx:id="usernameField" prefHeight="30.0" prefWidth="400.0" promptText="%str_username" style="-fx-background-color: transparent; -fx-text-fill: ffffff;">
                <VBox.margin>
                   <Insets bottom="5.0" top="30.0" />
                </VBox.margin>
             </TextField>
             <Line endX="100.0" startX="-300.0" startY="0.7928932309150696" stroke="WHITE" />
-            <PasswordField fx:id="passwordField" promptText="Enter password" style="-fx-background-color: transparent; -fx-text-fill: ffffff;">
+            <PasswordField fx:id="passwordField" promptText="%str_enter_password" style="-fx-background-color: transparent; -fx-text-fill: ffffff;">
                <VBox.margin>
                   <Insets bottom="5.0" top="30.0" />
                </VBox.margin>
             </PasswordField>
             <Line endX="100.0" startX="-300.0" startY="0.7928932309150696" stroke="WHITE" />
-            <PasswordField fx:id="confirmPasswordField" promptText="Re-enter password" style="-fx-background-color: transparent; -fx-text-fill: ffffff;">
+            <PasswordField fx:id="confirmPasswordField" promptText="%str_reenter_password" style="-fx-background-color: transparent; -fx-text-fill: ffffff;">
                <VBox.margin>
                   <Insets bottom="5.0" top="30.0" />
                </VBox.margin>
             </PasswordField>
             <Line endX="100.0" startX="-300.0" startY="0.7928932309150696" stroke="WHITE" />
-            <Button mnemonicParsing="false" onAction="#handleSignupAction" prefHeight="34.0" prefWidth="234.0" style="-fx-background-radius: 20px; -fx-background-color: lightblue;" text="Signup">
+            <Button mnemonicParsing="false" onAction="#handleSignupAction" prefHeight="34.0" prefWidth="234.0" style="-fx-background-radius: 20px; -fx-background-color: lightblue;" text="%str_signup">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -62,7 +72,7 @@
       </VBox>
    </center>
    <top>
-      <Label alignment="CENTER" prefHeight="21.0" prefWidth="105.0" text="Signup" textFill="WHITE" BorderPane.alignment="CENTER">
+      <Label alignment="CENTER" prefHeight="31.0" prefWidth="385.0" text="%str_register_window_title" textFill="WHITE" BorderPane.alignment="CENTER">
          <font>
             <Font name="Arial Bold" size="26.0" />
          </font>
