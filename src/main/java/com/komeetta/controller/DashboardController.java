@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
@@ -18,10 +19,8 @@ import javafx.scene.Node;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.io.IOException;
+import java.util.*;
 
 import com.komeetta.view.EditObjectGUI;
 import com.komeetta.view.MassImportGUI;
@@ -408,7 +407,7 @@ public class DashboardController {
 
         try{
             // Open login screen
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Login.fxml"), ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale()));
             Stage newStage = new Stage();
             newStage.setScene(new Scene(loader.load()));
             newStage.show();
@@ -420,21 +419,37 @@ public class DashboardController {
 
 
 // TODO: Implement language change
-    /*@FXML
+    @FXML
     private void handleLanguageChange(ActionEvent event) {
-        String selectedLang = languageSelector.getValue();
-
-        String langCode = switch (selectedLang) {
-            case "English" -> "en";
-            case "Finnish" -> "fi";
-            case "Russian" -> "ru";
-            case "Japanese" -> "ja";
-            default -> "en";
-        };
-
-        Locale locale = new Locale(langCode);
+        LanguageOption selected = languageSelector.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            Locale newLocale = switch (selected.getCode()) {
+                case "FI" -> new Locale("fi");
+                case "RU" -> new Locale("ru");
+                case "JA" -> new Locale("ja");
+                default -> new Locale("en");
+            };
+            if (!LanguageUtil.getCurrentLocale().equals(newLocale)) {
+                LanguageUtil.setLocale(newLocale);
+                reloadUIWithBundle(ResourceBundle.getBundle("UIMessages", newLocale));
+            }
+        }
     }
-*/
+
+
+    private void reloadUIWithBundle(ResourceBundle bundle) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Dashboard.fxml"), bundle);
+            Parent root = loader.load();
+
+            Stage stage = (Stage) languageSelector.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     // Shows corresponding View to passed variable
     private void showView(VBox view) {
         if (contentArea == null) {
