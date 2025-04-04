@@ -21,17 +21,46 @@ public class Product {
     @Column(name = "product_id")
     private int productId;
 
+    // --- Multilingual fields ---
     @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "name_fi")
+    private String nameFi;
+
+    @Column(name = "name_ja")
+    private String nameJa;
+
+    @Column(name = "name_ru")
+    private String nameRu;
 
     @Column(name = "category")
     private String category;
 
-    @Column(name = "brand")
-    private String brand;
+    @Column(name = "category_fi")
+    private String categoryFi;
+
+    @Column(name = "category_ja")
+    private String categoryJa;
+
+    @Column(name = "category_ru")
+    private String categoryRu;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+
+    @Column(name = "description_fi", columnDefinition = "TEXT")
+    private String descriptionFi;
+
+    @Column(name = "description_ja", columnDefinition = "TEXT")
+    private String descriptionJa;
+
+    @Column(name = "description_ru", columnDefinition = "TEXT")
+    private String descriptionRu;
+
+    // --- Other fields ---
+    @Column(name = "brand")
+    private String brand;
 
     @Column(name = "quantity ", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int quantity ;
@@ -174,4 +203,79 @@ public class Product {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public String getNameFi() {
+        return nameFi;
+    }
+
+    public void setNameFi(String nameFi) {
+        this.nameFi = nameFi;
+    }
+
+    public String getNameJa() {
+        return nameJa;
+    }
+
+    public void setNameJa(String nameJa) {
+        this.nameJa = nameJa;
+    }
+
+    public String getNameRu() {
+        return nameRu;
+    }
+
+    public void setNameRu(String nameRu) {
+        this.nameRu = nameRu;
+    }
+
+    public String getCategoryFi() {
+        return categoryFi;
+    }
+
+    public void setCategoryFi(String categoryFi) {
+        this.categoryFi = categoryFi;
+    }
+
+    public String getCategoryJa() {
+        return categoryJa;
+    }
+
+    public void setCategoryJa(String categoryJa) {
+        this.categoryJa = categoryJa;
+    }
+
+    public String getCategoryRu() {
+        return categoryRu;
+    }
+
+    public void setCategoryRu(String categoryRu) {
+        this.categoryRu = categoryRu;
+    }
+
+    public String getDescriptionFi() {
+        return descriptionFi;
+    }
+
+    public void setDescriptionFi(String descriptionFi) {
+        this.descriptionFi = descriptionFi;
+    }
+
+    public String getDescriptionJa() {
+        return descriptionJa;
+    }
+
+    public void setDescriptionJa(String descriptionJa) {
+        this.descriptionJa = descriptionJa;
+    }
+
+    public String getDescriptionRu() {
+        return descriptionRu;
+    }
+
+    public void setDescriptionRu(String descriptionRu) {
+        this.descriptionRu = descriptionRu;
+    }
+
+
+
 }
