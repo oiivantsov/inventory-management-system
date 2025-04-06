@@ -6,12 +6,15 @@ import com.komeetta.dao.SupplierDAO;
 import com.komeetta.model.Customer;
 import com.komeetta.model.Product;
 import com.komeetta.model.Supplier;
+import com.komeetta.service.TranslateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.concurrent.CompletableFuture;
 
 public class AddWindowController {
 
@@ -111,9 +114,61 @@ public class AddWindowController {
                 break;
 
             case "Product":
-                Product product = new Product(firstFieldV,secondFieldV,thirdFieldV,fourthFieldV);
                 ProductDAO productDAO = new ProductDAO();
-                productDAO.addProduct(product);
+
+                try {
+                    String inputName = firstFieldV;
+                    String inputCategory = secondFieldV;
+                    String inputDescription = fourthFieldV;
+                    String inputBrand = thirdFieldV;
+
+                    // async translation
+                    CompletableFuture<String> name = TranslateUtil.translate(inputName, "en");
+                    CompletableFuture<String> nameFi = TranslateUtil.translate(inputName, "fi");
+                    CompletableFuture<String> nameJa = TranslateUtil.translate(inputName, "ja");
+                    CompletableFuture<String> nameRu = TranslateUtil.translate(inputName, "ru");
+
+                    CompletableFuture<String> category = TranslateUtil.translate(inputCategory, "en");
+                    CompletableFuture<String> categoryFi = TranslateUtil.translate(inputCategory, "fi");
+                    CompletableFuture<String> categoryJa = TranslateUtil.translate(inputCategory, "ja");
+                    CompletableFuture<String> categoryRu = TranslateUtil.translate(inputCategory, "ru");
+
+                    CompletableFuture<String> description = TranslateUtil.translate(inputDescription, "en");
+                    CompletableFuture<String> descriptionFi = TranslateUtil.translate(inputDescription, "fi");
+                    CompletableFuture<String> descriptionJa = TranslateUtil.translate(inputDescription, "ja");
+                    CompletableFuture<String> descriptionRu = TranslateUtil.translate(inputDescription, "ru");
+
+                    // wait for all translations to complete
+                    CompletableFuture.allOf(
+                            name, nameFi, nameJa, nameRu,
+                            category, categoryFi, categoryJa, categoryRu,
+                            description, descriptionFi, descriptionJa, descriptionRu
+                    ).join();
+
+                    Product product = new Product();
+                    product.setName(name.join());
+                    product.setNameFi(nameFi.join());
+                    product.setNameJa(nameJa.join());
+                    product.setNameRu(nameRu.join());
+
+                    product.setCategory(category.join());
+                    product.setCategoryFi(categoryFi.join());
+                    product.setCategoryJa(categoryJa.join());
+                    product.setCategoryRu(categoryRu.join());
+
+                    product.setDescription(description.join());
+                    product.setDescriptionFi(descriptionFi.join());
+                    product.setDescriptionJa(descriptionJa.join());
+                    product.setDescriptionRu(descriptionRu.join());
+
+                    product.setBrand(inputBrand);
+
+                    productDAO.addProduct(product);
+
+                } catch (Exception e) {
+                    showAlert("Failed to add product", "Please try again.");
+                    e.printStackTrace();
+                }
                 break;
 
             case "Supplier":

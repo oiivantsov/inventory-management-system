@@ -35,16 +35,34 @@ public class BackendApp {
 
         // Create products
         Product laptop = new Product();
+
         laptop.setName("Laptop");
+        laptop.setNameFi("Kannettava");
+        laptop.setNameRu("Ноутбук");
+        laptop.setNameJa("ノートパソコン");
+
         laptop.setBrand("Dell");
+
         laptop.setCategory("Electronics");
+        laptop.setCategoryFi("Elektroniikka");
+        laptop.setCategoryRu("Электроника");
+        laptop.setCategoryJa("エレクトロニクス");
+
         laptop.setQuantity(0); // Initial stock is 0
         productDAO.addProduct(laptop);
 
         Product phone = new Product();
         phone.setName("Phone");
+        phone.setNameFi("Puhelin");
+        phone.setNameRu("Телефон");
+        phone.setNameJa("電話");
+
         phone.setBrand("Apple");
         phone.setCategory("Electronics");
+        phone.setCategoryFi("Elektroniikka");
+        phone.setCategoryRu("Электроника");
+        phone.setCategoryJa("エレクトロニクス");
+
         phone.setQuantity(0); // Initial stock is 0
         productDAO.addProduct(phone);
 
