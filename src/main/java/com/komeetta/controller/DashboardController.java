@@ -287,13 +287,24 @@ public class DashboardController {
             }
         });
 
+        // TODO: refactor as language changing is duplicated in LoginController
         languageSelector.getItems().addAll(
                 new LanguageOption("English", "EN"),
                 new LanguageOption("Finnish", "FI"),
                 new LanguageOption("Russian", "RU"),
                 new LanguageOption("Japanese", "JA")
         );
-        languageSelector.getSelectionModel().selectFirst(); // Valitse oletuskieli
+
+        // set default language to current locale
+        Locale currentLocale = LanguageUtil.getCurrentLocale();
+        String currentLangCode = currentLocale.getLanguage().toUpperCase();
+
+        for (LanguageOption option : languageSelector.getItems()) {
+            if (option.getCode().equalsIgnoreCase(currentLangCode)) {
+                languageSelector.getSelectionModel().select(option);
+                break;
+            }
+        }
         // Näytä listassa: nimi + lyhenne
         languageSelector.setCellFactory(lv -> new ListCell<LanguageOption>() {
             @Override
