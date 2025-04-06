@@ -6,6 +6,7 @@ import com.komeetta.dao.SupplierDAO;
 import com.komeetta.model.Customer;
 import com.komeetta.model.Product;
 import com.komeetta.model.Supplier;
+import com.komeetta.service.TranslateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -14,6 +15,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.concurrent.CompletableFuture;
 
 public class EditWindowController {
 
@@ -75,7 +78,14 @@ public class EditWindowController {
         String category = categoryField.getText().trim();
         String brand = brandField.getText().trim();
         String description = descriptionField.getText().trim();
-        int quantity = Integer.parseInt(quantityField.getText().trim());
+        int quantity;
+
+        try {
+            quantity = Integer.parseInt(quantityField.getText().trim());
+        } catch (NumberFormatException e) {
+            showAlert("Invalid Input", "Quantity must be a valid number.");
+            return;
+        }
 
         if (productName.isEmpty() || category.isEmpty() || brand.isEmpty() || description.isEmpty()) {
             showAlert("Validation Error", "All fields must be filled before editing the product.");
@@ -84,24 +94,65 @@ public class EditWindowController {
             showAlert("Invalid Input", "Quantity must be a positive number.");
             return;
         }
-        productToEdit.setBrand(brand);
+
+        // Set original fields (in English or default)
+        productToEdit.setName(productName);
         productToEdit.setCategory(category);
         productToEdit.setDescription(description);
-        productToEdit.setName(productName);
+        productToEdit.setBrand(brand);
         productToEdit.setQuantity(quantity);
 
-        try {
-            ProductDAO productDAO = new ProductDAO();
-            productDAO.updateProduct(productToEdit);
+        // Translate fields to fi, ru, ja
+        CompletableFuture<String> nameFi = TranslateUtil.translate(productName, "fi");
+        CompletableFuture<String> nameRu = TranslateUtil.translate(productName, "ru");
+        CompletableFuture<String> nameJa = TranslateUtil.translate(productName, "ja");
 
-            showAlert("Success", "Product details updated successfully!");
-            Stage stage = (Stage) productVBox.getScene().getWindow();
-            stage.close();
-        } catch (Exception e) {
-            showAlert("Something went wrong", "Please try again later.");
-        }
+        CompletableFuture<String> descFi = TranslateUtil.translate(description, "fi");
+        CompletableFuture<String> descRu = TranslateUtil.translate(description, "ru");
+        CompletableFuture<String> descJa = TranslateUtil.translate(description, "ja");
 
+        CompletableFuture<String> catFi = TranslateUtil.translate(category, "fi");
+        CompletableFuture<String> catRu = TranslateUtil.translate(category, "ru");
+        CompletableFuture<String> catJa = TranslateUtil.translate(category, "ja");
+
+        // Wait for all to complete
+        CompletableFuture.allOf(
+                nameFi, nameRu, nameJa,
+                descFi, descRu, descJa,
+                catFi, catRu, catJa
+        ).thenRun(() -> {
+            try {
+                productToEdit.setNameFi(nameFi.get());
+                productToEdit.setNameRu(nameRu.get());
+                productToEdit.setNameJa(nameJa.get());
+
+                productToEdit.setDescriptionFi(descFi.get());
+                productToEdit.setDescriptionRu(descRu.get());
+                productToEdit.setDescriptionJa(descJa.get());
+
+                productToEdit.setCategoryFi(catFi.get());
+                productToEdit.setCategoryRu(catRu.get());
+                productToEdit.setCategoryJa(catJa.get());
+
+                ProductDAO productDAO = new ProductDAO();
+                productDAO.updateProduct(productToEdit);
+
+                // Close window on FX thread
+                javafx.application.Platform.runLater(() -> {
+                    showAlert("Success", "Product updated and translated!");
+                    Stage stage = (Stage) productVBox.getScene().getWindow();
+                    stage.close();
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                javafx.application.Platform.runLater(() ->
+                        showAlert("Error", "Failed to update product. Please try again.")
+                );
+            }
+        });
     }
+
 
     public void handleEntityEdit(ActionEvent event) {
         String entityName = entityNameField.getText().trim();
