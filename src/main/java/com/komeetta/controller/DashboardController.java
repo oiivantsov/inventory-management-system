@@ -502,18 +502,55 @@ public class DashboardController {
     }
 
     public void refreshProductView() {
-
         productTable.getItems().clear();
 
-        // load data from a database
         ProductDAO productDAO = new ProductDAO();
-        List<Product> productList = productDAO.getProducts();
-        ObservableList<Product> products = FXCollections.observableArrayList(productList);
+        List<Product> fullList = productDAO.getProducts();
 
+        Locale locale = LanguageUtil.getCurrentLocale();
+        String lang = locale.getLanguage(); // e.g. "fi", "ru", "ja", or "en"
+
+        List<Product> localizedList = new ArrayList<>();
+        for (Product original : fullList) {
+            Product localized = new Product();
+
+            localized.setProductId(original.getProductId());
+            localized.setBrand(original.getBrand());
+            localized.setQuantity(original.getQuantity());
+
+            // --- Name ---
+            switch (lang) {
+                case "fi" -> localized.setName(Optional.ofNullable(original.getNameFi()).orElse(original.getName()));
+                case "ru" -> localized.setName(Optional.ofNullable(original.getNameRu()).orElse(original.getName()));
+                case "ja" -> localized.setName(Optional.ofNullable(original.getNameJa()).orElse(original.getName()));
+                default -> localized.setName(original.getName());
+            }
+
+            // --- Category ---
+            switch (lang) {
+                case "fi" -> localized.setCategory(Optional.ofNullable(original.getCategoryFi()).orElse(original.getCategory()));
+                case "ru" -> localized.setCategory(Optional.ofNullable(original.getCategoryRu()).orElse(original.getCategory()));
+                case "ja" -> localized.setCategory(Optional.ofNullable(original.getCategoryJa()).orElse(original.getCategory()));
+                default -> localized.setCategory(original.getCategory());
+            }
+
+            // --- Description ---
+            switch (lang) {
+                case "fi" -> localized.setDescription(Optional.ofNullable(original.getDescriptionFi()).orElse(original.getDescription()));
+                case "ru" -> localized.setDescription(Optional.ofNullable(original.getDescriptionRu()).orElse(original.getDescription()));
+                case "ja" -> localized.setDescription(Optional.ofNullable(original.getDescriptionJa()).orElse(original.getDescription()));
+                default -> localized.setDescription(original.getDescription());
+            }
+
+            localizedList.add(localized);
+        }
+
+        ObservableList<Product> products = FXCollections.observableArrayList(localizedList);
         productTable.setItems(products);
 
         buttonEdit.setDisable(true);
     }
+
     public void refreshCustomerView() {
 
         customerTable.getItems().clear();
