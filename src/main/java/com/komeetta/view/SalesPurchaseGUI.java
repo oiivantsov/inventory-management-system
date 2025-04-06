@@ -1,6 +1,7 @@
 package com.komeetta.view;
 
 import com.komeetta.controller.StockController;
+import com.komeetta.model.LanguageUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +10,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class SalesPurchaseGUI {
     /*
@@ -41,7 +43,7 @@ public class SalesPurchaseGUI {
             window.initModality(Modality.APPLICATION_MODAL);
 
             // Ensure a NEW instance of AddObjectForm.fxml is loaded
-            FXMLLoader loader = new FXMLLoader(SalesPurchaseGUI.class.getResource("/Scenes/StockForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(SalesPurchaseGUI.class.getResource("/Scenes/StockForm.fxml"), ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale()));
             Parent newWindow = loader.load();
 
             StockController stockController = loader.getController();

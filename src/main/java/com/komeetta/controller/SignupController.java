@@ -88,7 +88,8 @@ public class SignupController {
                     reloadScene();
                 }
             }
-        });
+        }
+        );
     }
 
 
@@ -134,7 +135,7 @@ public class SignupController {
         		// Send to Dashboard here
         		try {
                     // Load the new FXML file
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Dashboard.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Dashboard.fxml"), ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale()));
                     Parent root = loader.load();
 
                     // Send User variable to the next view
