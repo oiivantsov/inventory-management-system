@@ -199,24 +199,21 @@ public class DashboardController {
 
     @FXML
     public void initialize() {
-        // Initialize DashboardStats and update stats label
         dashboardStats = new DashboardStats();
 
-        //initialize columns in customerTable.
+        // === Table column initializations ===
         colCustomerName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         colCustomerMail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colCustomerNum.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         colCustomerAddr.setCellValueFactory(new PropertyValueFactory<>("address"));
 
-        //initialize columns in supplierTable.
         colSupplierName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colSupplierID.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
         colSupplierMail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colSupplierNum.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         colSupplierAddr.setCellValueFactory(new PropertyValueFactory<>("address"));
 
-        //initialize columns in productTable.
         colProductID.setCellValueFactory(new PropertyValueFactory<>("productId"));
         colProductName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colProductCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
@@ -224,31 +221,26 @@ public class DashboardController {
         colProductStock.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colProductDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        //initialize columns in purchaseOrderTable.
         colPurchaseID.setCellValueFactory(new PropertyValueFactory<>("orderId"));
         colPurchaseSupplierID.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
         colPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("Order_date"));
         colPurchaseState.setCellValueFactory(new PropertyValueFactory<>("OrderStatus"));
         colPurchaseTotalPrice.setCellValueFactory(new PropertyValueFactory<>("orderTotal"));
 
-        //initialize columns in saleOrderTable.
         colSaleID.setCellValueFactory(new PropertyValueFactory<>("orderId"));
         colSaleCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         colSaleDate.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
         colSaleState.setCellValueFactory(new PropertyValueFactory<>("OrderStatus"));
         colSaleTotalPrice.setCellValueFactory(new PropertyValueFactory<>("orderTotal"));
 
-        //initialize columns in stats tables
         colOrderStatName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colOrderStatValue.setCellValueFactory(new PropertyValueFactory<>("value"));
         colRevenueStatName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colRevenueStatValue.setCellValueFactory(new PropertyValueFactory<>("value"));
 
-        //updateStatsTables();
-
         importButton.setOnAction(event -> handleImportButtonAction());
 
-        // Add selection listeners for each table
+        // === Table selection listeners ===
         productTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 selectedItem = newSelection;
@@ -276,14 +268,14 @@ public class DashboardController {
         salesOrderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 selectedItem = newSelection;
-                System.out.println("Selected Supplier: " + newSelection);
+                System.out.println("Selected Sale Order: " + newSelection);
             }
         });
 
         purchaseOrderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 selectedItem = newSelection;
-                System.out.println("Selected Supplier: " + newSelection);
+                System.out.println("Selected Purchase Order: " + newSelection);
             }
         });
 
@@ -305,6 +297,7 @@ public class DashboardController {
                 break;
             }
         }
+
         // Näytä listassa: nimi + lyhenne
         languageSelector.setCellFactory(lv -> new ListCell<LanguageOption>() {
             @Override
@@ -314,8 +307,7 @@ public class DashboardController {
             }
         });
 
-        // Näytä valittuna: pelkkä lyhenne
-        languageSelector.setButtonCell(new ListCell<LanguageOption>() {
+        languageSelector.setButtonCell(new ListCell<>() {
             @Override
             protected void updateItem(LanguageOption item, boolean empty) {
                 super.updateItem(item, empty);
@@ -323,19 +315,18 @@ public class DashboardController {
             }
         });
 
-
-        // Debugging: Check if buttonEdit is null
+        // === Buttons ===
         if (buttonEdit == null) {
             System.err.println("ERROR: buttonEdit is NULL! Check fx:id in Dashboard.fxml.");
         } else {
             buttonEdit.setOnAction(event -> handleEditButtonAction());
         }
 
-        // Debugging: Check if contentArea is null
         if (contentArea == null) {
             System.err.println("ERROR: contentArea is NULL! Check fx:id in Dashboard.fxml.");
         }
     }
+
 
     @FXML
     private void handleHomeButtonAction(ActionEvent event) {
