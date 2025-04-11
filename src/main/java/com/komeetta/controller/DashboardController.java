@@ -279,7 +279,6 @@ public class DashboardController {
             }
         });
 
-        // TODO: refactor as language changing is duplicated in LoginController
         languageSelector.getItems().addAll(
                 new LanguageOption("English", "EN"),
                 new LanguageOption("Finnish", "FI"),
@@ -411,7 +410,7 @@ public class DashboardController {
             // Open login screen
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Login.fxml"), ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale()));
             Stage newStage = new Stage();
-            newStage.setScene(new Scene(loader.load()));
+            newStage.setScene(new Scene(loader.load(), 600, 400));
             newStage.show();
         }catch (Exception e){
             e.printStackTrace();
@@ -419,8 +418,6 @@ public class DashboardController {
     }
 
 
-
-// TODO: Implement language change
     @FXML
     private void handleLanguageChange(ActionEvent event) {
         LanguageOption selected = languageSelector.getSelectionModel().getSelectedItem();
@@ -445,7 +442,7 @@ public class DashboardController {
             Parent root = loader.load();
 
             Stage stage = (Stage) languageSelector.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            stage.setScene(new Scene(root, 947, 475));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -629,15 +626,16 @@ public class DashboardController {
         dashboardStats.updateStats();
 
         ObservableList<Stat> orderStats = FXCollections.observableArrayList(
-                new Stat("Total Sales Orders", String.valueOf(dashboardStats.getTotalSalesOrders())),
-                new Stat("Total Purchase Orders", String.valueOf(dashboardStats.getTotalPurchaseOrders())),
-                new Stat("Difference", String.valueOf(dashboardStats.getOrderDifference()))
+                new Stat(LanguageUtil.getString("str_label_total_sales_orders"), String.valueOf(dashboardStats.getTotalSalesOrders())),
+                new Stat(LanguageUtil.getString("str_label_total_purchase_orders"), String.valueOf(dashboardStats.getTotalPurchaseOrders())),
+                new Stat(LanguageUtil.getString("str_label_difference"), String.valueOf(dashboardStats.getOrderDifference()))
         );
 
         ObservableList<Stat> revenueStats = FXCollections.observableArrayList(
-                new Stat("Total Revenue", String.format("%.2f", dashboardStats.getTotalRevenue())),
-                new Stat("Last Three Months Revenue", String.format("%.2f", dashboardStats.getLastThreeMonthsRevenue()))
+                new Stat(LanguageUtil.getString("str_label_total_revenue"), String.format("%.2f", dashboardStats.getTotalRevenue())),
+                new Stat(LanguageUtil.getString("str_label_last_three_months_revenue"), String.format("%.2f", dashboardStats.getLastThreeMonthsRevenue()))
         );
+
 
         ordersTable.setItems(orderStats);
         revenueTable.setItems(revenueStats);

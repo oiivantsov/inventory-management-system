@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
  * Contains the name and value of a statistic
  * Used in the statistics table in the GUI
  */
-// tää on tohon GUI:n tableview, joten ei voi poistaa
+// this is for the GUI's tableview, so it cannot be removed
 public class Stat {
     private final SimpleStringProperty name;
     private final SimpleStringProperty value;

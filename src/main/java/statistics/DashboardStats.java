@@ -2,6 +2,7 @@ package statistics;
 
 import com.komeetta.dao.PurchaseOrderDAO;
 import com.komeetta.dao.SalesOrderDAO;
+import com.komeetta.model.LanguageUtil;
 import com.opencsv.CSVWriter;
 
 import java.io.File;
@@ -9,15 +10,17 @@ import java.io.FileWriter;
 import java.nio.file.Paths;
 import java.util.Date;
 
+import java.util.ResourceBundle;
+
 /**
  * Class for the dashboard statistics
  * Contains the total number of sales and purchase orders and the total revenue
  */
 public class DashboardStats {
-    private int totalSalesOrders; // monta myyntitilausta
-    private int totalPurchaseOrders; // monta ostotilausta
-    private double totalRevenue; // kokonaistuotto
-    private double lastThreeMonthsRevenue; // viime kolmen kuun tuotto
+    private int totalSalesOrders;
+    private int totalPurchaseOrders;
+    private double totalRevenue;
+    private double lastThreeMonthsRevenue;
     PurchaseOrderDAO pDao = new PurchaseOrderDAO();
     SalesOrderDAO sDao = new SalesOrderDAO();
 
@@ -90,6 +93,8 @@ public class DashboardStats {
     public void createCvsStatsFile(String fileName) {
         updateStats(); // update stats before creating the file
 
+        ResourceBundle bundle = ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale());
+
         // all files are created in the Reports folder (src/main/resources/Reports)
         String projectDir = System.getProperty("user.dir");
         String filePath = Paths.get(projectDir, "src", "main", "resources", "Statistics", fileName + ".csv").toString();
@@ -109,17 +114,23 @@ public class DashboardStats {
             Date todayDate = new Date();
             String today = todayDate.toString();
 
-            String[] date = {"Date: ", today};
+            String[] date = {LanguageUtil.getString("str_date"), today};
             writer.writeNext(date);
             writer.writeNext(new String[]{}); // empty line
 
-            String[] orderHeader = {"Total Sales Orders", "Total Purchase Orders"};
+            String[] orderHeader = {
+                    LanguageUtil.getString("str_label_total_sales_orders"),
+                    LanguageUtil.getString("str_label_total_purchase_orders")
+            };
             writer.writeNext(orderHeader);
             String[] orderData = {String.valueOf(totalSalesOrders), String.valueOf(totalPurchaseOrders)};
             writer.writeNext(orderData);
             writer.writeNext(new String[]{}); // empty line
 
-            String[] revenueHeader = {"Total Revenue", "Last Three Months Revenue"};
+            String[] revenueHeader = {
+                    LanguageUtil.getString("str_label_total_revenue"),
+                    LanguageUtil.getString("str_label_last_three_months_revenue")
+            };
             writer.writeNext(revenueHeader);
             String[] revenueData = {String.valueOf(totalRevenue), String.valueOf(lastThreeMonthsRevenue)};
             writer.writeNext(revenueData);

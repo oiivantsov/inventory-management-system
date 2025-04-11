@@ -127,7 +127,7 @@ public class LoginController {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                 // Set the new scene
-                Scene scene = new Scene(root);
+                Scene scene = new Scene(root, 947, 475);
                 stage.setScene(scene);
                 stage.setTitle("Dashboard");
                 stage.show();

@@ -13,26 +13,6 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class SalesPurchaseGUI {
-    /*
-    private boolean isSale; // for testing, then should be moved to dashboard controller
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
-        // sales or purchase
-        StockController.setIsSale(isSale);
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/StockForm.fxml"));
-        Parent root = loader.load();
-
-        Scene scene = new Scene(root, 600, 400);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle(isSale ? "Make a sale" : "Make a purchase");
-        primaryStage.show();
-    }
-
-     */
-
 
     public static void display(boolean isSale) {
         try {
