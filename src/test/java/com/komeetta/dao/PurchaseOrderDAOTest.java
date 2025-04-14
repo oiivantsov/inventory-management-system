@@ -1,15 +1,11 @@
 package com.komeetta.dao;
 
-import com.komeetta.datasource.MariaDbJpaConnection;
+import com.komeetta.InitDBTest;
 import com.komeetta.model.OrderStatus;
 import com.komeetta.model.PurchaseOrder;
 import com.komeetta.model.PurchaseOrderItem;
 import com.komeetta.model.Supplier;
-import io.github.cdimascio.dotenv.Dotenv;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
@@ -19,29 +15,17 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PurchaseOrderDAOTest {
+class PurchaseOrderDAOTest extends InitDBTest {
 
     private static PurchaseOrderDAO purchaseOrderDAO;
     private static SupplierDAO supplierDAO;
-    private static EntityManager entityManager;
-    private static EntityManagerFactory emf;
 
     @BeforeAll
-    static void setUp() {
-        // Load environment variables for test database
-        Dotenv dotenv = Dotenv.load();
-        System.setProperty("JDBC_URL", dotenv.get("TEST_JDBC_URL"));
-        System.setProperty("JDBC_USER", dotenv.get("TEST_JDBC_USER"));
-        System.setProperty("JDBC_PASSWORD", dotenv.get("TEST_JDBC_PASSWORD"));
-
+    static void setupDAOs() {
         purchaseOrderDAO = new PurchaseOrderDAO();
         supplierDAO = new SupplierDAO();
-        emf = Persistence.createEntityManagerFactory("CompanyMariaDbUnitTesting");
-        entityManager = emf.createEntityManager();
 
         Supplier supplier = new Supplier();
-
-        // Add supplier for testing
         supplier.setName("Test Supplier");
         supplier.setEmail("supplier@example.com");
         supplier.setPhoneNumber("123456789");
@@ -51,11 +35,8 @@ class PurchaseOrderDAOTest {
     }
 
     @BeforeEach
-    void beforeEach() {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.createQuery("DELETE FROM PurchaseOrder").executeUpdate();
-        transaction.commit();
+    void cleanUp() {
+        truncate("PurchaseOrder");
     }
 
     @Test
@@ -249,14 +230,5 @@ class PurchaseOrderDAOTest {
         purchaseOrderDAO.deleteAll();
         double total = purchaseOrderDAO.getThreeMonthOrders();
         assertEquals(0.0, total, 0.01);
-    }
-
-    @AfterAll
-    static void tearDown() {
-        purchaseOrderDAO.deleteAll();
-        supplierDAO.deleteAll();
-        if (entityManager.isOpen()) {
-            entityManager.close();
-        }
     }
 }

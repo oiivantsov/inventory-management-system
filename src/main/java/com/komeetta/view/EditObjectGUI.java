@@ -28,7 +28,7 @@ public class EditObjectGUI {
         try {
             // Create a new modal stage
             Stage window = new Stage();
-            window.setTitle("Edit Entity");
+            window.setTitle(LanguageUtil.getString("str_edit_entity"));
             window.initModality(Modality.APPLICATION_MODAL);
 
             // Load the FXML layout with localized resources

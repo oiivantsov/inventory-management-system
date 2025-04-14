@@ -1,40 +1,26 @@
 package com.komeetta.dao;
 
+import com.komeetta.InitDBTest;
 import com.komeetta.model.Customer;
-import io.github.cdimascio.dotenv.Dotenv;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
-class CustomerDAOTest {
+class CustomerDAOTest extends InitDBTest {
 
     private static CustomerDAO customerDAO;
-    private static EntityManager entityManager;
-    private static EntityManagerFactory emf;
 
     @BeforeAll
-    static void setUp() {
-        Dotenv dotenv = Dotenv.load();
-        System.setProperty("JDBC_URL", dotenv.get("TEST_JDBC_URL"));
-        System.setProperty("JDBC_USER", dotenv.get("TEST_JDBC_USER"));
-        System.setProperty("JDBC_PASSWORD", dotenv.get("TEST_JDBC_PASSWORD"));
+    static void setupDAO() {
         customerDAO = new CustomerDAO();
-        emf = Persistence.createEntityManagerFactory("CompanyMariaDbUnitTesting");
-        entityManager = emf.createEntityManager();
     }
 
     @BeforeEach
     void beforeEach() {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.createQuery("DELETE FROM Customer").executeUpdate();
-        transaction.commit();
+        truncate("Customer");
     }
 
     @Test
@@ -96,13 +82,5 @@ class CustomerDAOTest {
         Customer deletedCustomer = customerDAO.getCustomer(customer.getCustomerId());
 
         assertNull(deletedCustomer);
-    }
-
-
-    @AfterAll
-    static void tearDown() {
-        if (entityManager.isOpen()) {
-            entityManager.close();
-        }
     }
 }

@@ -1,11 +1,12 @@
 package com.komeetta.datasource;
 
+import com.komeetta.InitDBTest;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MariaDbJpaConnectionTest {
+class MariaDbJpaConnectionTest extends InitDBTest {
 
     @Test
     void testEntityManagerCreation() {

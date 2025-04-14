@@ -25,7 +25,7 @@ public class AddEntityGUI {
         try {
             // Create a new modal stage
             Stage window = new Stage();
-            window.setTitle("Add Entity");
+            window.setTitle(LanguageUtil.getString("str_add_entity"));
             window.initModality(Modality.APPLICATION_MODAL);
             ResourceBundle bundle = ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale());
             // Load the FXML form using the current locale's resource bundle

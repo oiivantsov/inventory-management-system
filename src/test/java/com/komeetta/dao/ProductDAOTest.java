@@ -1,11 +1,8 @@
 package com.komeetta.dao;
 
+import com.komeetta.InitDBTest;
 import com.komeetta.model.Product;
-import io.github.cdimascio.dotenv.Dotenv;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,28 +12,17 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProductDAOTest {
-    private static EntityManager entityManager;
-    private static EntityManagerFactory emf;
+class ProductDAOTest extends InitDBTest {
     private static ProductDAO productDAO;
 
     @BeforeAll
-    static void setUp() {
-        Dotenv dotenv = Dotenv.load();
-        System.setProperty("JDBC_URL", dotenv.get("TEST_JDBC_URL"));
-        System.setProperty("JDBC_USER", dotenv.get("TEST_JDBC_USER"));
-        System.setProperty("JDBC_PASSWORD", dotenv.get("TEST_JDBC_PASSWORD"));
-        emf = Persistence.createEntityManagerFactory("CompanyMariaDbUnitTesting");
-        entityManager = emf.createEntityManager();
+    static void setupDAO() {
         productDAO = new ProductDAO();
     }
 
     @BeforeEach
     void cleanUp() {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.createQuery("DELETE FROM Product").executeUpdate();
-        transaction.commit();
+        truncate("Product");
     }
 
     @Test
@@ -166,11 +152,4 @@ class ProductDAOTest {
         assertEquals("Product B", products.get(1).getName());
     }
 
-
-    @AfterAll
-    static void tearDown() {
-        if (entityManager.isOpen()) {
-            entityManager.close();
-        }
-    }
 }

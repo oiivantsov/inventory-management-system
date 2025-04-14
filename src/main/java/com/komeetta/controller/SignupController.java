@@ -142,7 +142,7 @@ public class SignupController {
 
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.setScene(new Scene(root, 1100, 570));
-                    stage.setTitle("Dashboard");
+                    stage.setTitle(resources.getString("str_dashboard"));
                     stage.show();
                 } catch (IOException e) {
                     e.printStackTrace();

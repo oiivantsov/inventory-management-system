@@ -27,7 +27,7 @@ public class SalesPurchaseGUI {
         try {
             // Create a new modal window
             Stage window = new Stage();
-            window.setTitle(isSale ? "Make a sale" : "Make a purchase");
+            window.setTitle(isSale ? LanguageUtil.getString("str_make_sale") : LanguageUtil.getString("str_make_purchase"));
             window.initModality(Modality.APPLICATION_MODAL);
 
             // Load FXML and resource bundle for localization

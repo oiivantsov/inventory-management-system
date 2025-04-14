@@ -24,7 +24,7 @@ public class MassImportGUI {
         try {
             // Create a new modal window
             Stage window = new Stage();
-            window.setTitle("Mass Import");
+            window.setTitle(LanguageUtil.getString("str_mass_import"));
             window.initModality(Modality.APPLICATION_MODAL);
 
             // Load the FXML with localized bundle

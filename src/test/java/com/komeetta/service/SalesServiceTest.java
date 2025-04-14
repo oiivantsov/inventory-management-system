@@ -1,5 +1,6 @@
 package com.komeetta.service;
 
+import com.komeetta.InitDBTest;
 import com.komeetta.dao.ProductDAO;
 import com.komeetta.dao.SalesOrderDAO;
 import com.komeetta.dao.SalesOrderItemDAO;
@@ -8,20 +9,14 @@ import com.komeetta.model.Product;
 import com.komeetta.model.SalesOrder;
 import com.komeetta.model.SalesOrderItem;
 import com.komeetta.model.Customer;
-import io.github.cdimascio.dotenv.Dotenv;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SalesServiceTest {
-    private static EntityManager entityManager;
-    private static EntityManagerFactory emf;
+class SalesServiceTest extends InitDBTest {
     private static ProductDAO productDAO;
     private static SalesOrderDAO salesOrderDAO;
     private static SalesOrderItemDAO salesOrderItemDAO;
@@ -30,13 +25,6 @@ class SalesServiceTest {
 
     @BeforeAll
     static void setUp() {
-        Dotenv dotenv = Dotenv.load();
-        System.setProperty("JDBC_URL", dotenv.get("TEST_JDBC_URL"));
-        System.setProperty("JDBC_USER", dotenv.get("TEST_JDBC_USER"));
-        System.setProperty("JDBC_PASSWORD", dotenv.get("TEST_JDBC_PASSWORD"));
-
-        emf = Persistence.createEntityManagerFactory("CompanyMariaDbUnitTesting");
-        entityManager = emf.createEntityManager();
         productDAO = new ProductDAO();
         customerDAO = new CustomerDAO();
         salesOrderDAO = new SalesOrderDAO();
@@ -46,12 +34,7 @@ class SalesServiceTest {
 
     @BeforeEach
     void cleanUp() {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.createQuery("DELETE FROM SalesOrderItem").executeUpdate();
-        entityManager.createQuery("DELETE FROM SalesOrder").executeUpdate();
-        entityManager.createQuery("DELETE FROM Product").executeUpdate();
-        transaction.commit();
+        truncate("SalesOrderItem", "SalesOrder", "Customer");
     }
 
     @Test
@@ -119,12 +102,5 @@ class SalesServiceTest {
         });
 
         assertTrue(exception.getMessage().contains("Not enough stock for product"));
-    }
-
-    @AfterAll
-    static void tearDown() {
-        if (entityManager.isOpen()) {
-            entityManager.close();
-        }
     }
 }
