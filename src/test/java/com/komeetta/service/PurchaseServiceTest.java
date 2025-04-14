@@ -1,5 +1,6 @@
 package com.komeetta.service;
 
+import com.komeetta.InitDBTest;
 import com.komeetta.dao.ProductDAO;
 import com.komeetta.dao.PurchaseOrderDAO;
 import com.komeetta.dao.PurchaseOrderItemDAO;
@@ -19,9 +20,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PurchaseServiceTest {
-    private static EntityManager entityManager;
-    private static EntityManagerFactory emf;
+class PurchaseServiceTest extends InitDBTest {
     private static ProductDAO productDAO;
     private static PurchaseOrderDAO purchaseOrderDAO;
     private static PurchaseOrderItemDAO purchaseOrderItemDAO;
@@ -30,13 +29,6 @@ class PurchaseServiceTest {
 
     @BeforeAll
     static void setUp() {
-        Dotenv dotenv = Dotenv.load();
-        System.setProperty("JDBC_URL", dotenv.get("TEST_JDBC_URL"));
-        System.setProperty("JDBC_USER", dotenv.get("TEST_JDBC_USER"));
-        System.setProperty("JDBC_PASSWORD", dotenv.get("TEST_JDBC_PASSWORD"));
-
-        emf = Persistence.createEntityManagerFactory("CompanyMariaDbUnitTesting");
-        entityManager = emf.createEntityManager();
         productDAO = new ProductDAO();
         supplierDAO = new SupplierDAO();
         purchaseOrderDAO = new PurchaseOrderDAO();
@@ -46,12 +38,7 @@ class PurchaseServiceTest {
 
     @BeforeEach
     void cleanUp() {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.createQuery("DELETE FROM PurchaseOrderItem").executeUpdate();
-        entityManager.createQuery("DELETE FROM PurchaseOrder").executeUpdate();
-        entityManager.createQuery("DELETE FROM Product").executeUpdate();
-        transaction.commit();
+        truncate("PurchaseOrderItem", "PurchaseOrder", "Product");
     }
 
     @Test
@@ -88,13 +75,6 @@ class PurchaseServiceTest {
 
         PurchaseOrder updatedOrder = purchaseOrderDAO.getPurchaseOrder(purchaseOrder.getOrderId());
         assertEquals(5000.0, updatedOrder.getOrderTotal(), 0.01); // 500.00 * 10
-    }
-
-    @AfterAll
-    static void tearDown() {
-        if (entityManager.isOpen()) {
-            entityManager.close();
-        }
     }
 }
 

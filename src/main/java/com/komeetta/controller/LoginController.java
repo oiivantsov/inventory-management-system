@@ -1,7 +1,13 @@
+/**
+ * LoginController manages the login screen behavior, including language selection,
+ * user authentication, and navigation to the dashboard or signup view.
+ */
 package com.komeetta.controller;
 
+import com.komeetta.dao.UserDAO;
 import com.komeetta.model.LanguageOption;
-import com.komeetta.model.LanguageUtil;
+import com.komeetta.model.User;
+import com.komeetta.util.LanguageUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,34 +17,23 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import java.io.IOException;
-
-import com.komeetta.dao.UserDAO;
-import com.komeetta.model.User;
-
 public class LoginController {
 
-    @FXML
-    private TextField usernameField;
-
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private Button loginButton;
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private ComboBox<LanguageOption> languageSelector;
-
+    @FXML private TextField usernameField;
+    @FXML private PasswordField passwordField;
+    @FXML private Button loginButton;
+    @FXML private ResourceBundle resources;
+    @FXML private ComboBox<LanguageOption> languageSelector;
 
     private User user;
 
+    /**
+     * Initializes the login screen, populates the language selector and sets event handlers.
+     */
     @FXML
     public void initialize() {
         languageSelector.getItems().addAll(
@@ -83,7 +78,9 @@ public class LoginController {
         });
     }
 
-
+    /**
+     * Reloads the login scene with the current selected language.
+     */
     private void reloadScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Login.fxml"));
@@ -99,79 +96,71 @@ public class LoginController {
         }
     }
 
-
-
-    //Called when user clicks login
+    /**
+     * Authenticates user credentials and loads the dashboard if successful.
+     */
     @FXML
     private void handleLoginButtonAction(ActionEvent event) {
-        // Get input from the text fields
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        
         UserDAO uDAO = new UserDAO();
-        if(uDAO.authenticate(username, password)) {
-        	System.out.println("login sucsessful");
-        	user = uDAO.getUser(username);
-        	//Send to Dashboard here
+        if (uDAO.authenticate(username, password)) {
+            System.out.println("Login successful");
+            user = uDAO.getUser(username);
             try {
-                // Load the new FXML file
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Dashboard.fxml"), ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale()));
                 Parent root = loader.load();
 
-                // Send User variable to the next view
                 DashboardController controller = loader.getController();
                 controller.setInitialView(user);
 
-                // Get the current stage (window)
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                // Set the new scene
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.setTitle("Dashboard");
+                stage.setScene(new Scene(root, 1100, 570));
+                stage.setTitle(resources.getString("str_dashboard"));
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else {
-        	System.out.println("Wrong credentials");
+        } else {
+            System.out.println("Wrong credentials");
             showAlert(Alert.AlertType.INFORMATION,
                     resources.getString("str_signin_failed_title"),
                     resources.getString("str_wrong_credentials"));
-
         }
     }
-    
-    // Called when user clicks create new user
+
+    /**
+     * Navigates the user to the signup view.
+     */
     @FXML
     private void handleSignupButtonAction(ActionEvent event) {
         System.out.println("Redirecting to the registration page...");
         try {
-            // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Signup.fxml"));
             loader.setResources(ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale()));
             Parent root = loader.load();
 
-            // Get the current stage (window)
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // Set the new scene
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
             stage.setTitle(resources.getString("str_register_window_title"));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
-    // Used to show user alerts
+
+    /**
+     * Displays an alert dialog with the provided message.
+     * @param alertType The type of alert (e.g., INFORMATION, ERROR)
+     * @param title The title of the alert dialog
+     * @param message The message to display in the alert
+     */
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setContentText(message);
         alert.showAndWait();
     }
-    
+
 }

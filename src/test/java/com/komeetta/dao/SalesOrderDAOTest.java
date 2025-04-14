@@ -1,15 +1,11 @@
 package com.komeetta.dao;
 
-import com.komeetta.datasource.MariaDbJpaConnection;
+import com.komeetta.InitDBTest;
 import com.komeetta.model.Customer;
 import com.komeetta.model.OrderStatus;
 import com.komeetta.model.SalesOrder;
 import com.komeetta.model.SalesOrderItem;
-import io.github.cdimascio.dotenv.Dotenv;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
@@ -19,43 +15,27 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SalesOrderDAOTest {
+class SalesOrderDAOTest extends InitDBTest {
 
     private static SalesOrderDAO salesOrderDAO;
     private static CustomerDAO customerDAO;
-    private static EntityManager entityManager;
-    private static EntityManagerFactory emf;
 
     @BeforeAll
-    static void setUp() {
-        // Load environment variables for test database
-        Dotenv dotenv = Dotenv.load();
-        System.setProperty("JDBC_URL", dotenv.get("TEST_JDBC_URL"));
-        System.setProperty("JDBC_USER", dotenv.get("TEST_JDBC_USER"));
-        System.setProperty("JDBC_PASSWORD", dotenv.get("TEST_JDBC_PASSWORD"));
-
+    static void initDAOs() {
         salesOrderDAO = new SalesOrderDAO();
         customerDAO = new CustomerDAO();
-        emf = Persistence.createEntityManagerFactory("CompanyMariaDbUnitTesting");
-        entityManager = emf.createEntityManager();
 
         Customer customer = new Customer();
-
-        // add to be able to fetch customer
         customer.setName("Test Customer");
         customer.setEmail("customer@example.com");
         customer.setPhoneNumber("987654321");
         customer.setAddress("Customer Address");
-
         customerDAO.addCustomer(customer);
     }
 
     @BeforeEach
-    void beforeEach() {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.createQuery("DELETE FROM SalesOrder").executeUpdate();
-        transaction.commit();
+    void cleanUp() {
+        truncate("SalesOrder");
     }
 
     @Test
@@ -217,14 +197,5 @@ class SalesOrderDAOTest {
         salesOrderDAO.deleteAll();
         double total = salesOrderDAO.getThreeMonthOrders();
         assertEquals(0.0, total, 0.01);
-    }
-
-    @AfterAll
-    static void tearDown() {
-        salesOrderDAO.deleteAll();
-        customerDAO.deleteAll();
-        if (entityManager.isOpen()) {
-            entityManager.close();
-        }
     }
 }

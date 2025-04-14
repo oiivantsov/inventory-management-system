@@ -7,198 +7,180 @@ import com.komeetta.model.Customer;
 import com.komeetta.model.Product;
 import com.komeetta.model.Supplier;
 import com.komeetta.service.TranslateUtil;
+import com.komeetta.util.LanguageUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Controller class for Add Entity form.
+ * Handles entity selection, form field population, validation, and database insertion.
+ */
 public class AddWindowController {
 
-    @FXML
-    private Label headlineLabel;
+    @FXML private Label headlineLabel;
+    @FXML private VBox formContainer;
+    @FXML private TextField firstTextField, secondTextField, thirdTextField, fourthTextField;
+    @FXML private Button addButton, cancelButton;
+    @FXML private ComboBox<String> typeCBox;
 
-    @FXML
-    private VBox formContainer;
+    private String customerLabel, productLabel, supplierLabel;
 
-    @FXML
-    private TextField firstTextField;
-
-    @FXML
-    private TextField secondTextField;
-
-    @FXML
-    private TextField thirdTextField;
-
-    @FXML
-    private TextField fourthTextField;
-
-    @FXML
-    private Button addButton;
-
-    @FXML
-    private Button cancelButton;
-
-    @FXML
-    private ComboBox<String> typeCBox;
-
+    /**
+     * Initializes the form and sets up localized ComboBox values and listeners.
+     */
     @FXML
     private void initialize() {
-        // Populate ComboBox with types
-        typeCBox.getItems().addAll("Customer", "Product", "Supplier");
+        customerLabel = LanguageUtil.getString("str_customer");
+        productLabel = LanguageUtil.getString("str_product");
+        supplierLabel = LanguageUtil.getString("str_supplier");
+
+        // Populate ComboBox with localized types
+        typeCBox.getItems().addAll(customerLabel, productLabel, supplierLabel);
 
         // Add listener for selection changes
         typeCBox.setOnAction(event -> updateFormFields());
     }
 
+    /**
+     * Updates placeholder texts and form headline based on selected entity type.
+     */
     private void updateFormFields() {
         String selectedType = typeCBox.getValue();
+        headlineLabel.setText(LanguageUtil.getString("str_add_new") + " " + selectedType);
 
-        headlineLabel.setText("Add New " + selectedType);
-        if ("Product".equals(selectedType)) {
-            firstTextField.setPromptText("Product Name");
-            secondTextField.setPromptText("Product Category");
-            thirdTextField.setPromptText("Product Brand");
-            fourthTextField.setPromptText("Product Description");
-        }else if ("Supplier".equals(selectedType) || "Customer".equals(selectedType)) {
-            firstTextField.setPromptText("Name");
-            secondTextField.setPromptText("Email");
-            thirdTextField.setPromptText("Phone");
-            fourthTextField.setPromptText("Address");
+        if (selectedType.equals(productLabel)) {
+            firstTextField.setPromptText(LanguageUtil.getString("str_product_name"));
+            secondTextField.setPromptText(LanguageUtil.getString("str_product_category"));
+            thirdTextField.setPromptText(LanguageUtil.getString("str_product_brand"));
+            fourthTextField.setPromptText(LanguageUtil.getString("str_product_description"));
+        } else {
+            firstTextField.setPromptText(LanguageUtil.getString("str_name"));
+            secondTextField.setPromptText(LanguageUtil.getString("str_email"));
+            thirdTextField.setPromptText(LanguageUtil.getString("str_phone"));
+            fourthTextField.setPromptText(LanguageUtil.getString("str_address"));
         }
     }
 
+    /**
+     * Handles form submission and entity creation.
+     * Performs validation and initiates appropriate DAO actions.
+     */
     @FXML
-    private void handleAdd(ActionEvent event) {
+    private void handleAdd() {
         String selectedType = typeCBox.getValue();
-
         String firstFieldV = firstTextField.getText().trim();
         String secondFieldV = secondTextField.getText().trim();
         String thirdFieldV = thirdTextField.getText().trim();
         String fourthFieldV = fourthTextField.getText().trim();
 
         if (firstFieldV.isEmpty() || secondFieldV.isEmpty() || thirdFieldV.isEmpty() || fourthFieldV.isEmpty()) {
-            showAlert("Validation Error", "All fields must be filled before adding an entity.");
+            showAlert("Validation Error", LanguageUtil.getString("str_fill_all_fields"));
             return;
         }
 
-        if (!secondFieldV.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            if (selectedType.equals("Customer") || selectedType.equals("Supplier")){
-                showAlert("Invalid Email", "Please enter a valid email address.");
-                return;
+        boolean isEntity = selectedType.equals(customerLabel) || selectedType.equals(supplierLabel);
+
+        if (isEntity && !secondFieldV.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            showAlert("Invalid Email", LanguageUtil.getString("str_invalid_email"));
+            return;
+        }
+
+        if (isEntity && !thirdFieldV.matches("^\\d{10,15}$")) {
+            showAlert("Invalid Phone Number", LanguageUtil.getString("str_invalid_phone"));
+            return;
+        }
+
+        if (selectedType.equals(customerLabel)) {
+            Customer customer = new Customer();
+            customer.setName(firstFieldV);
+            customer.setEmail(secondFieldV);
+            customer.setAddress(fourthFieldV);
+            customer.setPhoneNumber(thirdFieldV);
+            new CustomerDAO().addCustomer(customer);
+            showAlert("Success", LanguageUtil.getString("str_entity_added"));
+
+        } else if (selectedType.equals(supplierLabel)) {
+            Supplier supplier = new Supplier();
+            supplier.setName(firstFieldV);
+            supplier.setEmail(secondFieldV);
+            supplier.setAddress(fourthFieldV);
+            supplier.setPhoneNumber(thirdFieldV);
+            new SupplierDAO().addSupplier(supplier);
+            showAlert("Success", LanguageUtil.getString("str_entity_added"));
+
+        } else if (selectedType.equals(productLabel)) {
+            try {
+                CompletableFuture<String> name = TranslateUtil.translate(firstFieldV, "en");
+                CompletableFuture<String> nameFi = TranslateUtil.translate(firstFieldV, "fi");
+                CompletableFuture<String> nameJa = TranslateUtil.translate(firstFieldV, "ja");
+                CompletableFuture<String> nameRu = TranslateUtil.translate(firstFieldV, "ru");
+
+                CompletableFuture<String> category = TranslateUtil.translate(secondFieldV, "en");
+                CompletableFuture<String> categoryFi = TranslateUtil.translate(secondFieldV, "fi");
+                CompletableFuture<String> categoryJa = TranslateUtil.translate(secondFieldV, "ja");
+                CompletableFuture<String> categoryRu = TranslateUtil.translate(secondFieldV, "ru");
+
+                CompletableFuture<String> description = TranslateUtil.translate(fourthFieldV, "en");
+                CompletableFuture<String> descriptionFi = TranslateUtil.translate(fourthFieldV, "fi");
+                CompletableFuture<String> descriptionJa = TranslateUtil.translate(fourthFieldV, "ja");
+                CompletableFuture<String> descriptionRu = TranslateUtil.translate(fourthFieldV, "ru");
+
+                CompletableFuture.allOf(name, nameFi, nameJa, nameRu,
+                        category, categoryFi, categoryJa, categoryRu,
+                        description, descriptionFi, descriptionJa, descriptionRu).join();
+
+                Product product = new Product();
+                product.setName(name.join());
+                product.setNameFi(nameFi.join());
+                product.setNameJa(nameJa.join());
+                product.setNameRu(nameRu.join());
+
+                product.setCategory(category.join());
+                product.setCategoryFi(categoryFi.join());
+                product.setCategoryJa(categoryJa.join());
+                product.setCategoryRu(categoryRu.join());
+
+                product.setDescription(description.join());
+                product.setDescriptionFi(descriptionFi.join());
+                product.setDescriptionJa(descriptionJa.join());
+                product.setDescriptionRu(descriptionRu.join());
+
+                product.setBrand(thirdFieldV);
+                new ProductDAO().addProduct(product);
+                showAlert("Success", LanguageUtil.getString("str_entity_added"));
+
+            } catch (Exception e) {
+                showAlert("Failed to add product", LanguageUtil.getString("str_product_add_fail"));
+                e.printStackTrace();
             }
         }
-
-        if (!thirdFieldV.matches("^\\d{10,15}$")) {
-            if (selectedType.equals("Customer") || selectedType.equals("Supplier")){
-                showAlert("Invalid Phone Number", "Phone number must be between 10-15 digits.");
-                return;
-            }
-        }
-
-        switch (selectedType){
-            case "Customer":
-                Customer customer = new Customer();
-                customer.setName(firstFieldV);
-                customer.setEmail(secondFieldV);
-                customer.setAddress(fourthFieldV);
-                customer.setPhoneNumber(thirdFieldV);
-
-                CustomerDAO customerDAO = new CustomerDAO();
-                customerDAO.addCustomer(customer);
-
-                showAlert("Success", "Entity added successfully!");
-                break;
-
-            case "Product":
-                ProductDAO productDAO = new ProductDAO();
-
-                try {
-                    String inputName = firstFieldV;
-                    String inputCategory = secondFieldV;
-                    String inputDescription = fourthFieldV;
-                    String inputBrand = thirdFieldV;
-
-                    // async translation
-                    CompletableFuture<String> name = TranslateUtil.translate(inputName, "en");
-                    CompletableFuture<String> nameFi = TranslateUtil.translate(inputName, "fi");
-                    CompletableFuture<String> nameJa = TranslateUtil.translate(inputName, "ja");
-                    CompletableFuture<String> nameRu = TranslateUtil.translate(inputName, "ru");
-
-                    CompletableFuture<String> category = TranslateUtil.translate(inputCategory, "en");
-                    CompletableFuture<String> categoryFi = TranslateUtil.translate(inputCategory, "fi");
-                    CompletableFuture<String> categoryJa = TranslateUtil.translate(inputCategory, "ja");
-                    CompletableFuture<String> categoryRu = TranslateUtil.translate(inputCategory, "ru");
-
-                    CompletableFuture<String> description = TranslateUtil.translate(inputDescription, "en");
-                    CompletableFuture<String> descriptionFi = TranslateUtil.translate(inputDescription, "fi");
-                    CompletableFuture<String> descriptionJa = TranslateUtil.translate(inputDescription, "ja");
-                    CompletableFuture<String> descriptionRu = TranslateUtil.translate(inputDescription, "ru");
-
-                    // wait for all translations to complete
-                    CompletableFuture.allOf(
-                            name, nameFi, nameJa, nameRu,
-                            category, categoryFi, categoryJa, categoryRu,
-                            description, descriptionFi, descriptionJa, descriptionRu
-                    ).join();
-
-                    Product product = new Product();
-                    product.setName(name.join());
-                    product.setNameFi(nameFi.join());
-                    product.setNameJa(nameJa.join());
-                    product.setNameRu(nameRu.join());
-
-                    product.setCategory(category.join());
-                    product.setCategoryFi(categoryFi.join());
-                    product.setCategoryJa(categoryJa.join());
-                    product.setCategoryRu(categoryRu.join());
-
-                    product.setDescription(description.join());
-                    product.setDescriptionFi(descriptionFi.join());
-                    product.setDescriptionJa(descriptionJa.join());
-                    product.setDescriptionRu(descriptionRu.join());
-
-                    product.setBrand(inputBrand);
-
-                    productDAO.addProduct(product);
-
-                } catch (Exception e) {
-                    showAlert("Failed to add product", "Please try again.");
-                    e.printStackTrace();
-                }
-                break;
-
-            case "Supplier":
-                Supplier supplier = new Supplier();
-                supplier.setName(firstFieldV);
-                supplier.setEmail(secondFieldV);
-                supplier.setAddress(fourthFieldV);
-                supplier.setPhoneNumber(thirdFieldV);
-
-                SupplierDAO supplierDAO = new SupplierDAO();
-                supplierDAO.addSupplier(supplier);
-
-                showAlert("Success", "Entity added successfully!");
-                break;
-        }
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        stage.close();
+        ((Stage) cancelButton.getScene().getWindow()).close();
     }
 
+    /**
+     * Closes the window and clears form fields.
+     */
     @FXML
-    private void handleCancel(ActionEvent event) {
+    private void handleCancel() {
         firstTextField.clear();
         secondTextField.clear();
         thirdTextField.clear();
         fourthTextField.clear();
-
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        stage.close();
+        ((Stage) cancelButton.getScene().getWindow()).close();
     }
 
+    /**
+     * Displays an informational alert dialog.
+     *
+     * @param title dialog title
+     * @param message dialog content message
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(title);
@@ -207,4 +189,3 @@ public class AddWindowController {
         alert.showAndWait();
     }
 }
-

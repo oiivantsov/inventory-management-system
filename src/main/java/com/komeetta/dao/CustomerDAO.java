@@ -1,15 +1,21 @@
+/**
+ * CustomerDAO handles database operations related to Customer entities.
+ * It provides methods to add, retrieve, update, and delete customers
+ * using JPA and a MariaDB connection.
+ */
 package com.komeetta.dao;
 
 import com.komeetta.datasource.MariaDbJpaConnection;
 import com.komeetta.model.Customer;
-import com.komeetta.model.Supplier;
-import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.EntityManager;
-
 import java.util.List;
 
 public class CustomerDAO {
 
+    /**
+     * Persists a new customer to the database.
+     * @param customer the Customer object to be saved
+     */
     public void addCustomer(Customer customer) {
         EntityManager em = MariaDbJpaConnection.getInstance();
         em.getTransaction().begin();
@@ -18,6 +24,10 @@ public class CustomerDAO {
         em.close();
     }
 
+    /**
+     * Retrieves all customers from the database.
+     * @return a list of all Customer objects
+     */
     public List<Customer> getCustomers() {
         EntityManager em = MariaDbJpaConnection.getInstance();
         em.getTransaction().begin();
@@ -27,7 +37,11 @@ public class CustomerDAO {
         return customers;
     }
 
-
+    /**
+     * Retrieves a specific customer by ID.
+     * @param customerId the ID of the customer to retrieve
+     * @return the Customer object if found, otherwise null
+     */
     public Customer getCustomer(int customerId) {
         EntityManager em = MariaDbJpaConnection.getInstance();
         Customer customer = em.find(Customer.class, customerId);
@@ -35,6 +49,11 @@ public class CustomerDAO {
         return customer;
     }
 
+    /**
+     * Updates an existing customer in the database.
+     * @param customer the Customer object with updated fields
+     * @throws RuntimeException if the customer does not exist in the database
+     */
     public void updateCustomer(Customer customer) {
         EntityManager em = MariaDbJpaConnection.getInstance();
         em.getTransaction().begin();
@@ -47,6 +66,10 @@ public class CustomerDAO {
         em.close();
     }
 
+    /**
+     * Deletes a customer from the database.
+     * @param customer the Customer object to delete
+     */
     public void deleteCustomer(Customer customer) {
         EntityManager em = MariaDbJpaConnection.getInstance();
         em.getTransaction().begin();
@@ -56,7 +79,9 @@ public class CustomerDAO {
         em.close();
     }
 
-
+    /**
+     * Deletes all customer records from the database.
+     */
     public void deleteAll() {
         EntityManager em = MariaDbJpaConnection.getInstance();
         em.getTransaction().begin();

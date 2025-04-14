@@ -1,5 +1,6 @@
 package com.komeetta.model;
 
+import com.komeetta.InitDBTest;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.*;
 import org.junit.jupiter.api.*;
@@ -8,29 +9,11 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PurchaseOrderTest {
-    private static EntityManager entityManager;
-    private static EntityManagerFactory emf;
-
-    @BeforeAll
-    static void setUp() {
-        Dotenv dotenv = Dotenv.load();
-        System.setProperty("JDBC_URL", dotenv.get("TEST_JDBC_URL"));
-        System.setProperty("JDBC_USER", dotenv.get("TEST_JDBC_USER"));
-        System.setProperty("JDBC_PASSWORD", dotenv.get("TEST_JDBC_PASSWORD"));
-
-        emf = Persistence.createEntityManagerFactory("CompanyMariaDbUnitTesting");
-        entityManager = emf.createEntityManager();
-    }
+class PurchaseOrderTest extends InitDBTest {
 
     @BeforeEach
     void cleanUp() {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.createQuery("DELETE FROM PurchaseOrderItem").executeUpdate();
-        entityManager.createQuery("DELETE FROM PurchaseOrder").executeUpdate();
-        entityManager.createQuery("DELETE FROM Supplier").executeUpdate();
-        transaction.commit();
+        truncate("PurchaseOrderItem", "SalesOrderItem", "PurchaseOrder", "SalesOrder", "Product");
     }
 
     @Test
@@ -135,12 +118,5 @@ class PurchaseOrderTest {
         // Verify deletion
         PurchaseOrder deletedOrder = entityManager.find(PurchaseOrder.class, purchaseOrder.getOrderId());
         assertNull(deletedOrder);
-    }
-
-    @AfterAll
-    static void tearDown() {
-        if (entityManager.isOpen()) {
-            entityManager.close();
-        }
     }
 }

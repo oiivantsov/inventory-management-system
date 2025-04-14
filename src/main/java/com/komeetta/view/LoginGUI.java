@@ -1,17 +1,27 @@
+/**
+ * LoginGUI is the entry point of the application. It sets up and launches the login window.
+ * It initializes the JavaFX application using a localized FXML layout and resource bundle.
+ */
 package com.komeetta.view;
 
-import com.komeetta.model.LanguageUtil;
+import com.komeetta.util.LanguageUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginGUI extends Application {
 
+    /**
+     * Starts the JavaFX application and displays the login window.
+     * Loads the Login.fxml file using the current locale's resource bundle.
+     *
+     * @param primaryStage the main application stage
+     * @throws Exception if loading the FXML file fails
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         ResourceBundle bundle = ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale());
@@ -22,12 +32,15 @@ public class LoginGUI extends Application {
 
         Scene scene = new Scene(root, 600, 400);
         primaryStage.setScene(scene);
-
         primaryStage.setTitle(bundle.getString("str_login_form"));
         primaryStage.show();
     }
 
-
+    /**
+     * Main method to launch the JavaFX application.
+     *
+     * @param args command line arguments (not used)
+     */
     public static void main(String[] args) {
         launch(args);
     }

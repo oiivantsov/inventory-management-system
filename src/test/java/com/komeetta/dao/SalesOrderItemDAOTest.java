@@ -1,34 +1,22 @@
 package com.komeetta.dao;
 
+import com.komeetta.InitDBTest;
 import com.komeetta.model.*;
-import io.github.cdimascio.dotenv.Dotenv;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SalesOrderItemDAOTest {
-    private static EntityManager entityManager;
-    private static EntityManagerFactory emf;
+class SalesOrderItemDAOTest extends InitDBTest {
     private static ProductDAO productDAO;
     private static CustomerDAO customerDAO;
     private static SalesOrderDAO salesOrderDAO;
     private static SalesOrderItemDAO salesOrderItemDAO;
 
     @BeforeAll
-    static void setUp() {
-        Dotenv dotenv = Dotenv.load();
-        System.setProperty("JDBC_URL", dotenv.get("TEST_JDBC_URL"));
-        System.setProperty("JDBC_USER", dotenv.get("TEST_JDBC_USER"));
-        System.setProperty("JDBC_PASSWORD", dotenv.get("TEST_JDBC_PASSWORD"));
-
-        emf = Persistence.createEntityManagerFactory("CompanyMariaDbUnitTesting");
-        entityManager = emf.createEntityManager();
+    static void initDAOs() {
         productDAO = new ProductDAO();
         customerDAO = new CustomerDAO();
         salesOrderDAO = new SalesOrderDAO();
@@ -37,13 +25,7 @@ class SalesOrderItemDAOTest {
 
     @BeforeEach
     void cleanUp() {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.createQuery("DELETE FROM SalesOrderItem").executeUpdate();
-        entityManager.createQuery("DELETE FROM SalesOrder").executeUpdate();
-        entityManager.createQuery("DELETE FROM Product").executeUpdate();
-        entityManager.createQuery("DELETE FROM Customer").executeUpdate();
-        transaction.commit();
+        truncate("SalesOrderItem", "SalesOrder",  "Product", "Customer");
     }
 
     @Test
@@ -181,12 +163,5 @@ class SalesOrderItemDAOTest {
 
         assertEquals(1, items.size());
         assertEquals(2, items.get(0).getQuantity());
-    }
-
-    @AfterAll
-    static void tearDown() {
-        if (entityManager.isOpen()) {
-            entityManager.close();
-        }
     }
 }
