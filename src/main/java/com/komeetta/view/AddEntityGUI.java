@@ -1,6 +1,10 @@
+/**
+ * AddEntityGUI handles the creation and display of a modal window
+ * used for adding new entities (Customer, Supplier, etc.) via a form.
+ */
 package com.komeetta.view;
 
-import com.komeetta.model.LanguageUtil;
+import com.komeetta.util.LanguageUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,26 +15,31 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class AddEntityGUI {
+
+    /**
+     * Displays a modal form window for adding a new entity.
+     * The method loads AddObjectForm.fxml with the correct language resource bundle,
+     * creates a new modal stage, and blocks the main window until the form is closed.
+     */
     public static void display() {
         try {
+            // Create a new modal stage
             Stage window = new Stage();
             window.setTitle("Add Entity");
-
-            // Set modality to block interactions with other windows
             window.initModality(Modality.APPLICATION_MODAL);
-
-            // Ensure a NEW instance of AddObjectForm.fxml is loaded
-            FXMLLoader loader = new FXMLLoader(EditObjectGUI.class.getResource("/Scenes/AddObjectForm.fxml"), ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale()));
+            ResourceBundle bundle = ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale());
+            // Load the FXML form using the current locale's resource bundle
+            FXMLLoader loader = new FXMLLoader(
+                    EditObjectGUI.class.getResource("/Scenes/AddObjectForm.fxml"), bundle);
             Parent newWindow = loader.load();
 
+            // Set and show the scene
             Scene scene = new Scene(newWindow, 600, 400);
             window.setScene(scene);
-
-            // Show window and wait (blocking interaction with other windows)
-            window.showAndWait();
+            window.showAndWait(); // Blocks user interaction with other windows
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Failed to load AddObjectForm.fxml. Check the file path.");
         }
     }
-}
+} 

@@ -1,12 +1,19 @@
+/**
+ * SignupController handles user registration and localization.
+ * It allows users to enter details, validates input, creates a new user,
+ * and navigates to the dashboard on success. It also supports multilingual UI.
+ */
 package com.komeetta.controller;
 
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import com.komeetta.dao.UserDAO;
 import com.komeetta.model.LanguageOption;
-import com.komeetta.model.LanguageUtil;
 import com.komeetta.model.User;
-
+import com.komeetta.util.LanguageUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,37 +23,22 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.text.MessageFormat;
-
 public class SignupController {
 
-    // Variables for view objects
-    @FXML
-    private TextField firstNameField;
+    // UI elements for registration form
+    @FXML private TextField firstNameField;
+    @FXML private TextField lastNameField;
+    @FXML private TextField usernameField;
+    @FXML private PasswordField passwordField;
+    @FXML private PasswordField confirmPasswordField;
+    @FXML private ResourceBundle resources;
+    @FXML private ComboBox<LanguageOption> languageSelector;
 
-    @FXML
-    private TextField lastNameField;
-
-    @FXML
-    private TextField usernameField;
-
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private PasswordField confirmPasswordField;
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private ComboBox<LanguageOption> languageSelector;
-
-    // Variable for storing and sending user object to the next view
     private User user;
 
+    /**
+     * Initializes the signup screen and sets up the language selector.
+     */
     @FXML
     public void initialize() {
         languageSelector.getItems().addAll(
@@ -88,11 +80,12 @@ public class SignupController {
                     reloadScene();
                 }
             }
-        }
-        );
+        });
     }
 
-
+    /**
+     * Reloads the signup scene using the currently selected language.
+     */
     private void reloadScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Signup.fxml"));
@@ -108,7 +101,10 @@ public class SignupController {
         }
     }
 
-    // Called when the Signup button is clicked
+    /**
+     * Handles signup form submission: validates inputs, checks for username availability,
+     * creates a new user, and redirects to the dashboard.
+     */
     @FXML
     private void handleSignupAction(ActionEvent event) {
         String firstName = firstNameField.getText();
@@ -117,49 +113,50 @@ public class SignupController {
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
 
-        // Validate inputs if valid create user in database
-        if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, resources.getString("str_signup_failed_title"), resources.getString("str_fill_all_fields"));
+        if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty()
+                || password.isEmpty() || confirmPassword.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, resources.getString("str_signup_failed_title"),
+                    resources.getString("str_fill_all_fields"));
         } else if (!password.equals(confirmPassword)) {
-            showAlert(Alert.AlertType.ERROR, resources.getString("str_signup_failed_title"), resources.getString("str_password_mismatch"));
+            showAlert(Alert.AlertType.ERROR, resources.getString("str_signup_failed_title"),
+                    resources.getString("str_password_mismatch"));
         } else {
-        	UserDAO uDAO = new UserDAO();
-        	user = new User(username, password);
-        	if(!uDAO.isUsernameAvailable(username)){
-                showAlert(Alert.AlertType.INFORMATION, resources.getString("str_signup_failed_title"), resources.getString("str_username_taken"));
-        	}else {
-        		uDAO.addUser(user);
+            UserDAO uDAO = new UserDAO();
+            user = new User(username, password);
+
+            if (!uDAO.isUsernameAvailable(username)) {
+                showAlert(Alert.AlertType.INFORMATION, resources.getString("str_signup_failed_title"),
+                        resources.getString("str_username_taken"));
+            } else {
+                uDAO.addUser(user);
                 showAlert(Alert.AlertType.INFORMATION, resources.getString("str_signup_success"),
                         MessageFormat.format(resources.getString("str_welcome_message"), firstName, lastName));
 
-        		// Send to Dashboard here
-        		try {
-                    // Load the new FXML file
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Dashboard.fxml"), ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale()));
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Dashboard.fxml"),
+                            ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale()));
                     Parent root = loader.load();
 
-                    // Send User variable to the next view
                     DashboardController controller = loader.getController();
                     controller.setInitialView(user);
 
-                    // Get the current stage (window)
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                    // Set the new scene
-                    Scene scene = new Scene(root, 947, 475);
-                    stage.setScene(scene);
+                    stage.setScene(new Scene(root, 1100, 570));
                     stage.setTitle("Dashboard");
                     stage.show();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-        	}
-            
-        	
+            }
         }
     }
 
-    // Used to show user alerts
+    /**
+     * Displays an alert dialog with the given message.
+     * @param alertType the type of alert (INFORMATION, ERROR, etc.)
+     * @param title the title of the alert window
+     * @param message the message shown inside the alert
+     */
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

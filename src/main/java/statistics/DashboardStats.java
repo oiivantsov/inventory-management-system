@@ -2,7 +2,7 @@ package statistics;
 
 import com.komeetta.dao.PurchaseOrderDAO;
 import com.komeetta.dao.SalesOrderDAO;
-import com.komeetta.model.LanguageUtil;
+import com.komeetta.util.LanguageUtil;
 import com.opencsv.CSVWriter;
 
 import java.io.File;

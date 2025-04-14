@@ -1,6 +1,10 @@
+/**
+ * MassImportGUI provides a modal interface for importing product data in bulk.
+ * It loads a localized FXML layout and blocks the main window until the user closes it.
+ */
 package com.komeetta.view;
 
-import com.komeetta.model.LanguageUtil;
+import com.komeetta.util.LanguageUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,23 +15,30 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class MassImportGUI {
+
+    /**
+     * Displays a modal window for mass importing products.
+     * Loads MassImportForm.fxml with localization support based on the current locale.
+     */
     public static void display() {
         try {
+            // Create a new modal window
             Stage window = new Stage();
             window.setTitle("Mass Import");
-
-            // Set modality to block interactions with other windows
             window.initModality(Modality.APPLICATION_MODAL);
 
-            // Ensure a NEW instance of AddObjectForm.fxml is loaded
-            FXMLLoader loader = new FXMLLoader(EditObjectGUI.class.getResource("/Scenes/MassImportForm.fxml"), ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale()));
+            // Load the FXML with localized bundle
+            FXMLLoader loader = new FXMLLoader(
+                    EditObjectGUI.class.getResource("/Scenes/MassImportForm.fxml"),
+                    ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale())
+            );
             Parent newWindow = loader.load();
 
+            // Set and show the scene
             Scene scene = new Scene(newWindow, 400, 300);
             window.setScene(scene);
-
-            // Show window and wait (blocking interaction with other windows)
             window.showAndWait();
+
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Failed to load MassImportForm.fxml. Check the file path.");

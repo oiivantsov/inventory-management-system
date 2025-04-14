@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="443.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.komeetta.controller.DashboardController">
+<BorderPane prefHeight="563.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.komeetta.controller.DashboardController">
     <left>
         <VBox style="-fx-background-color: #333333; -fx-pref-width: 200; -fx-padding: 10;">
             <Label style="-fx-text-fill: #FFFFFF; -fx-font-size: 18px; -fx-font-weight: bold;" text="%str_menu" />
@@ -21,29 +21,50 @@
 
             <Button onAction="#handleHomeButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="%str_home">
                 <cursor><Cursor fx:constant="HAND" /></cursor>
+            <VBox.margin>
+               <Insets top="5.0" />
+            </VBox.margin>
             </Button>
             <Button fx:id="buttonProduct" onAction="#handleProductButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="%str_products">
                 <cursor><Cursor fx:constant="HAND" /></cursor>
+            <VBox.margin>
+               <Insets top="5.0" />
+            </VBox.margin>
             </Button>
             <Button fx:id="buttonCustomer" onAction="#handleCustomerButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="%str_customers">
                 <cursor><Cursor fx:constant="HAND" /></cursor>
+            <VBox.margin>
+               <Insets top="5.0" />
+            </VBox.margin>
             </Button>
             <Button onAction="#handleSupplierButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="%str_suppliers">
                 <cursor><Cursor fx:constant="HAND" /></cursor>
+            <VBox.margin>
+               <Insets top="5.0" />
+            </VBox.margin>
             </Button>
             <Button onAction="#handleSaleButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="%str_sales">
                 <cursor><Cursor fx:constant="HAND" /></cursor>
+            <VBox.margin>
+               <Insets top="5.0" />
+            </VBox.margin>
             </Button>
             <Button onAction="#handlePurchaseButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="%str_purchases">
                 <cursor><Cursor fx:constant="HAND" /></cursor>
+            <VBox.margin>
+               <Insets top="5.0" />
+            </VBox.margin>
             </Button>
             <Button onAction="#handleLogoutButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="%str_logout">
                 <cursor><Cursor fx:constant="HAND" /></cursor>
+            <VBox.margin>
+               <Insets top="5.0" />
+            </VBox.margin>
             </Button>
         </VBox>
     </left>
     <center>
-        <StackPane fx:id="contentArea" prefHeight="320.0" prefWidth="477.0" style="-fx-background-color: #333333;">
+        <StackPane fx:id="contentArea" prefHeight="443.0" prefWidth="750.0" style="-fx-background-color: #333333;">
             <VBox fx:id="productVBox" style="-fx-padding: 10;" visible="false">
                 <HBox style="-fx-spacing: 10; -fx-alignment: center-left;">
                     <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="%str_product" textFill="WHITE" />
@@ -120,16 +141,19 @@
                     <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /></columnResizePolicy>
                 </TableView>
             </VBox>
-            <VBox fx:id="HomeVBox" style="-fx-padding: 10;">
+            <VBox fx:id="HomeVBox" prefHeight="443.0" prefWidth="750.0" style="-fx-padding: 10;">
                 <HBox prefHeight="33.0" prefWidth="476.0" style="-fx-spacing: 10; -fx-alignment: center-left;">
                     <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="%str_home" textFill="WHITE" />
                 </HBox>
                 <Separator prefWidth="200.0" />
                 <Label fx:id="greetingLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="%str_msg_manage_inventory" textFill="WHITE" />
-                <Label fx:id="statsLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="%str_reporting_here" textFill="WHITE" />
-                <HBox fx:id="statsHBox" spacing="15">
+                <Label fx:id="statsLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="%str_reporting_here" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin></Label>
+                <HBox fx:id="statsHBox" alignment="CENTER_LEFT" prefHeight="195.0" prefWidth="815.0" spacing="15">
                     <VBox>
-                        <TableView fx:id="ordersTable">
+                        <TableView fx:id="ordersTable" prefHeight="200.0" prefWidth="405.0">
                             <columns>
                                 <TableColumn fx:id="colOrderStatName" text="%str_total_sales" />
                                 <TableColumn fx:id="colOrderStatValue" text="%str_label_difference" />
@@ -138,7 +162,7 @@
                         </TableView>
                     </VBox>
                     <VBox>
-                        <TableView fx:id="revenueTable">
+                        <TableView fx:id="revenueTable" prefHeight="200.0" prefWidth="405.0">
                             <columns>
                                 <TableColumn fx:id="colRevenueStatName" text="%str_total_revenue" />
                                 <TableColumn fx:id="colRevenueStatValue" text="%str_label_difference" />
@@ -149,13 +173,16 @@
                 </HBox>
                 <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="%str_label_get_csv" textFill="WHITE">
                <VBox.margin>
-                  <Insets top="5.0" />
+                  <Insets top="20.0" />
                </VBox.margin></Label>
                 <Button fx:id="buttonStats" onAction="#handleStatsButtonAction" style="-fx-background-color: lightblue;" text="%str_export_csv">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin></Button>
-                <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="%str_label_mass_import" textFill="WHITE" />
+                <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="%str_label_mass_import" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin></Label>
                 <Button fx:id="importButton" style="-fx-background-color: lightblue;" text="%str_import_csv">
                <VBox.margin>
                   <Insets bottom="10.0" top="5.0" />

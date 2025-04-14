@@ -1,3 +1,7 @@
+/**
+ * EditWindowController manages the logic for editing Product, Customer, or Supplier objects.
+ * It handles data validation, translation (for Product), and updates to the database.
+ */
 package com.komeetta.controller;
 
 import com.komeetta.dao.CustomerDAO;
@@ -20,58 +24,23 @@ import java.util.concurrent.CompletableFuture;
 
 public class EditWindowController {
 
-    @FXML
-    private Label headlineLabel;
+    @FXML private Label headlineLabel;
+    @FXML private TextField productNameField, categoryField, brandField, descriptionField, quantityField;
+    @FXML private VBox productVBox;
+    @FXML private Button productEditButton, productCancelButton;
+    @FXML private TextField entityNameField, entityEmailField, entityPhoneField, entityAddressField;
+    @FXML private Label entityHeadlineLabel;
+    @FXML private VBox entityVBox;
+    @FXML private StackPane formArea;
 
-    @FXML
-    private TextField productNameField;
+    private Product productToEdit;
+    private Customer customerToEdit;
+    private Supplier supplierToEdit;
 
-    @FXML
-    private TextField categoryField;
-
-    @FXML
-    private TextField brandField;
-
-    @FXML
-    private TextField descriptionField;
-
-    @FXML
-    private TextField quantityField;
-
-    @FXML
-    private VBox productVBox;
-
-    @FXML
-    private Button productEditButton;
-
-    @FXML
-    private Button productCancelButton;
-
-    @FXML
-    private TextField entityNameField;
-
-    @FXML
-    private TextField entityEmailField;
-
-    @FXML
-    private TextField entityPhoneField;
-
-    @FXML
-    private TextField entityAddressField;
-
-    @FXML
-    private Label entityHeadlineLabel;
-
-    @FXML
-    private VBox entityVBox;
-
-    @FXML
-    private StackPane formArea;
-
-    private Product productToEdit = null;
-    private Customer customerToEdit = null;
-    private Supplier supplierToEdit = null;
-
+    /**
+     * Handles editing and saving a Product object, including field validation,
+     * translation to multiple languages, and database update.
+     */
     @FXML
     private void handleProductEdit(ActionEvent event) {
         String productName = productNameField.getText().trim();
@@ -95,14 +64,12 @@ public class EditWindowController {
             return;
         }
 
-        // Set original fields (in English or default)
         productToEdit.setName(productName);
         productToEdit.setCategory(category);
         productToEdit.setDescription(description);
         productToEdit.setBrand(brand);
         productToEdit.setQuantity(quantity);
 
-        // Translate fields to fi, ru, ja
         CompletableFuture<String> nameFi = TranslateUtil.translate(productName, "fi");
         CompletableFuture<String> nameRu = TranslateUtil.translate(productName, "ru");
         CompletableFuture<String> nameJa = TranslateUtil.translate(productName, "ja");
@@ -115,45 +82,38 @@ public class EditWindowController {
         CompletableFuture<String> catRu = TranslateUtil.translate(category, "ru");
         CompletableFuture<String> catJa = TranslateUtil.translate(category, "ja");
 
-        // Wait for all to complete
-        CompletableFuture.allOf(
-                nameFi, nameRu, nameJa,
-                descFi, descRu, descJa,
-                catFi, catRu, catJa
-        ).thenRun(() -> {
-            try {
-                productToEdit.setNameFi(nameFi.get());
-                productToEdit.setNameRu(nameRu.get());
-                productToEdit.setNameJa(nameJa.get());
+        CompletableFuture.allOf(nameFi, nameRu, nameJa, descFi, descRu, descJa, catFi, catRu, catJa)
+                .thenRun(() -> {
+                    try {
+                        productToEdit.setNameFi(nameFi.get());
+                        productToEdit.setNameRu(nameRu.get());
+                        productToEdit.setNameJa(nameJa.get());
+                        productToEdit.setDescriptionFi(descFi.get());
+                        productToEdit.setDescriptionRu(descRu.get());
+                        productToEdit.setDescriptionJa(descJa.get());
+                        productToEdit.setCategoryFi(catFi.get());
+                        productToEdit.setCategoryRu(catRu.get());
+                        productToEdit.setCategoryJa(catJa.get());
 
-                productToEdit.setDescriptionFi(descFi.get());
-                productToEdit.setDescriptionRu(descRu.get());
-                productToEdit.setDescriptionJa(descJa.get());
+                        new ProductDAO().updateProduct(productToEdit);
 
-                productToEdit.setCategoryFi(catFi.get());
-                productToEdit.setCategoryRu(catRu.get());
-                productToEdit.setCategoryJa(catJa.get());
-
-                ProductDAO productDAO = new ProductDAO();
-                productDAO.updateProduct(productToEdit);
-
-                // Close window on FX thread
-                javafx.application.Platform.runLater(() -> {
-                    showAlert("Success", "Product updated and translated!");
-                    Stage stage = (Stage) productVBox.getScene().getWindow();
-                    stage.close();
+                        javafx.application.Platform.runLater(() -> {
+                            showAlert("Success", "Product updated and translated!");
+                            Stage stage = (Stage) productVBox.getScene().getWindow();
+                            stage.close();
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        javafx.application.Platform.runLater(() ->
+                                showAlert("Error", "Failed to update product. Please try again.")
+                        );
+                    }
                 });
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                javafx.application.Platform.runLater(() ->
-                        showAlert("Error", "Failed to update product. Please try again.")
-                );
-            }
-        });
     }
 
-
+    /**
+     * Handles editing a Customer or Supplier, performs validation and updates the database.
+     */
     public void handleEntityEdit(ActionEvent event) {
         String entityName = entityNameField.getText().trim();
         String entityEmail = entityEmailField.getText().trim();
@@ -169,84 +129,73 @@ public class EditWindowController {
             return;
         }
 
-        if (customerToEdit != null) {
-            customerToEdit.setName(entityName);
-            customerToEdit.setEmail(entityEmail);
-            customerToEdit.setPhoneNumber(entityPhone);
-            customerToEdit.setAddress(entityAddress);
-
-            try{
-                CustomerDAO customerDAO = new CustomerDAO();
-                customerDAO.updateCustomer(customerToEdit);
-
+        try {
+            if (customerToEdit != null) {
+                customerToEdit.setName(entityName);
+                customerToEdit.setEmail(entityEmail);
+                customerToEdit.setPhoneNumber(entityPhone);
+                customerToEdit.setAddress(entityAddress);
+                new CustomerDAO().updateCustomer(customerToEdit);
                 showAlert("Success", "Customer details updated successfully!");
-                Stage stage = (Stage) entityVBox.getScene().getWindow();
-                stage.close();
-            } catch (Exception e) {
-                showAlert("Something went wrong", "Please try again later.");
-            }
-        }else {
-            supplierToEdit.setName(entityName);
-            supplierToEdit.setEmail(entityEmail);
-            supplierToEdit.setPhoneNumber(entityPhone);
-            supplierToEdit.setAddress(entityAddress);
-
-            try{
-                SupplierDAO supplierDAO = new SupplierDAO();
-                supplierDAO.updateSupplier(supplierToEdit);
-
+            } else {
+                supplierToEdit.setName(entityName);
+                supplierToEdit.setEmail(entityEmail);
+                supplierToEdit.setPhoneNumber(entityPhone);
+                supplierToEdit.setAddress(entityAddress);
+                new SupplierDAO().updateSupplier(supplierToEdit);
                 showAlert("Success", "Supplier details updated successfully!");
-                Stage stage = (Stage) entityVBox.getScene().getWindow();
-                stage.close();
-            } catch (Exception e) {
-                showAlert("Something went wrong", "Please try again later.");
             }
+            Stage stage = (Stage) entityVBox.getScene().getWindow();
+            stage.close();
+        } catch (Exception e) {
+            showAlert("Something went wrong", "Please try again later.");
         }
     }
 
+    /**
+     * Cancels the edit and closes the current window.
+     */
     @FXML
     private void handleCancel(ActionEvent event) {
         Stage stage = (Stage) productEditButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Displays the appropriate form based on the type of object (Product, Customer, Supplier).
+     * @param object The object to be edited
+     */
     public void showNeededForm(Object object) {
-        if (object instanceof Product) {
-            this.productToEdit = (Product) object;
-
-            productNameField.setText(productToEdit.getName());
-            categoryField.setText(productToEdit.getCategory());
-            brandField.setText(productToEdit.getBrand());
-            descriptionField.setText(productToEdit.getDescription());
-            quantityField.setText(Integer.toString(productToEdit.getQuantity()));
-
+        if (object instanceof Product product) {
+            this.productToEdit = product;
+            productNameField.setText(product.getName());
+            categoryField.setText(product.getCategory());
+            brandField.setText(product.getBrand());
+            descriptionField.setText(product.getDescription());
+            quantityField.setText(Integer.toString(product.getQuantity()));
             showView(productVBox);
-        } else if (object instanceof Customer) {
-            this.customerToEdit = (Customer) object;
-
+        } else if (object instanceof Customer customer) {
+            this.customerToEdit = customer;
             entityHeadlineLabel.setText("Alter customer details");
-
-            entityNameField.setText(customerToEdit.getName());
-            entityEmailField.setText(customerToEdit.getEmail());
-            entityAddressField.setText(customerToEdit.getAddress());
-            entityPhoneField.setText(customerToEdit.getPhoneNumber());
-
+            entityNameField.setText(customer.getName());
+            entityEmailField.setText(customer.getEmail());
+            entityAddressField.setText(customer.getAddress());
+            entityPhoneField.setText(customer.getPhoneNumber());
             showView(entityVBox);
-        }else if (object instanceof Supplier) {
-            this.supplierToEdit = (Supplier) object;
-
+        } else if (object instanceof Supplier supplier) {
+            this.supplierToEdit = supplier;
             entityHeadlineLabel.setText("Alter supplier details");
-
-            entityNameField.setText(supplierToEdit.getName());
-            entityEmailField.setText(supplierToEdit.getEmail());
-            entityPhoneField.setText(supplierToEdit.getPhoneNumber());
-            entityAddressField.setText(supplierToEdit.getAddress());
-
+            entityNameField.setText(supplier.getName());
+            entityEmailField.setText(supplier.getEmail());
+            entityPhoneField.setText(supplier.getPhoneNumber());
+            entityAddressField.setText(supplier.getAddress());
             showView(entityVBox);
         }
     }
 
-    // Shows corresponding View to passed variable
+    /**
+     * Displays the given VBox form and hides others.
+     */
     private void showView(VBox view) {
         if (formArea == null) {
             System.err.println("ERROR: formArea is NULL! Check fx:id in Dashboard.fxml.");
@@ -256,14 +205,14 @@ public class EditWindowController {
         for (Node node : formArea.getChildren()) {
             node.setVisible(node == view);
             node.setManaged(node == view);
-            if (view == productVBox) {
-
-            } else if (view == entityVBox) {
-
-            }
         }
     }
 
+    /**
+     * Utility method to show an informational alert dialog.
+     * @param title The title of the alert
+     * @param message The message to display
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(title);
