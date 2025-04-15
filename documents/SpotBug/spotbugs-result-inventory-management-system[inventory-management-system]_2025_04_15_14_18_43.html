@@ -1,0 +1,932 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="UTF-8"/>
+      <title>SpotBugs Report</title>
+      <style type="text/css">
+		.tablerow0 {
+			background: #EEEEEE;
+		}
+
+		.tablerow1 {
+			background: white;
+		}
+
+		.detailrow0 {
+			background: #EEEEEE;
+		}
+
+		.detailrow1 {
+			background: white;
+		}
+
+		.tableheader {
+			background: #b9b9fe;
+			font-size: larger;
+		}
+		</style>
+   </head>
+   <body>
+      <h1>SpotBugs Report</h1>
+      <p>Produced using <a href="https://spotbugs.github.io">SpotBugs</a>4.8.6.</p>
+      <p>Project: 
+			inventory-management-system[inventory-management-system]</p>
+      <h2>Metrics</h2>
+      <p>2411 lines of code analyzed,
+	in 55 classes, 
+	in 9 packages.</p>
+      <table width="500" cellpadding="5" cellspacing="2">
+         <tr class="tableheader">
+            <th align="left">Metric</th>
+            <th align="right">Total</th>
+            <th align="right">Density*</th>
+         </tr>
+         <tr class="tablerow0">
+            <td>High Priority Warnings</td>
+            <td align="right">4</td>
+            <td align="right">1.66</td>
+         </tr>
+         <tr class="tablerow1">
+            <td>Medium Priority Warnings</td>
+            <td align="right">42</td>
+            <td align="right">17.42</td>
+         </tr>
+         <tr class="$totalClass">
+            <td>
+               <b>Total Warnings</b>
+            </td>
+            <td align="right">
+               <b>46</b>
+            </td>
+            <td align="right">
+               <b>19.08</b>
+            </td>
+         </tr>
+      </table>
+      <p>
+         <i>(* Defects per Thousand lines of non-commenting source statements)</i>
+      </p>
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>Summary</h2>
+      <table width="500" cellpadding="5" cellspacing="2">
+         <tr class="tableheader">
+            <th align="left">Warning Type</th>
+            <th align="right">Number</th>
+         </tr>
+         <tr class="tablerow0">
+            <td>
+               <a href="#Warnings_BAD_PRACTICE">Bad practice Warnings</a>
+            </td>
+            <td align="right">3</td>
+         </tr>
+         <tr class="tablerow1">
+            <td>
+               <a href="#Warnings_I18N">Internationalization Warnings</a>
+            </td>
+            <td align="right">4</td>
+         </tr>
+         <tr class="tablerow0">
+            <td>
+               <a href="#Warnings_MALICIOUS_CODE">Malicious code vulnerability Warnings</a>
+            </td>
+            <td align="right">36</td>
+         </tr>
+         <tr class="tablerow1">
+            <td>
+               <a href="#Warnings_PERFORMANCE">Performance Warnings</a>
+            </td>
+            <td align="right">2</td>
+         </tr>
+         <tr class="tablerow0">
+            <td>
+               <a href="#Warnings_STYLE">Dodgy code Warnings</a>
+            </td>
+            <td align="right">1</td>
+         </tr>
+         <tr class="tablerow1">
+            <td>
+               <b>Total</b>
+            </td>
+            <td align="right">
+               <b>46</b>
+            </td>
+         </tr>
+      </table>
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <h1>Warnings</h1>
+      <p>Click on each warning link to see a full description of the issue, and
+	    details of how to resolve it.</p>
+      <h2>
+         <a name="Warnings_BAD_PRACTICE">Bad practice Warnings</a>
+      </h2>
+      <table class="warningtable"
+             width="100%"
+             cellspacing="2"
+             cellpadding="5">
+         <tr class="tableheader">
+            <th align="left">Warning</th>
+            <th align="left">Priority</th>
+            <th align="left">Details</th>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#CT_CONSTRUCTOR_THROW">Be wary of letting constructors throw exceptions.</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>Exception thrown in class com.komeetta.model.PurchaseOrderItem at new com.komeetta.model.PurchaseOrderItem(PurchaseOrder, Product, int, double, double) will leave the constructor. The object under construction remains partially initialized and may be vulnerable to Finalizer attacks.<br/>
+                  <br/>
+                  <br/>In file PurchaseOrderItem.java PurchaseOrderItem.java PurchaseOrderItem.java,
+					
+						line 57 57 57<br/>In class com.komeetta.model.PurchaseOrderItem<br/>In method new com.komeetta.model.PurchaseOrderItem(PurchaseOrder, Product, int, double, double)<br/>At PurchaseOrderItem.java:[line 57]<br/>At PurchaseOrderItem.java:[line 57]<br/>At PurchaseOrderItem.java:[line 57]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#CT_CONSTRUCTOR_THROW">Be wary of letting constructors throw exceptions.</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>Exception thrown in class com.komeetta.model.SalesOrderItem at new com.komeetta.model.SalesOrderItem(SalesOrder, Product, int, double, double) will leave the constructor. The object under construction remains partially initialized and may be vulnerable to Finalizer attacks.<br/>
+                  <br/>
+                  <br/>In file SalesOrderItem.java SalesOrderItem.java SalesOrderItem.java,
+					
+						line 57 57 57<br/>In class com.komeetta.model.SalesOrderItem<br/>In method new com.komeetta.model.SalesOrderItem(SalesOrder, Product, int, double, double)<br/>At SalesOrderItem.java:[line 57]<br/>At SalesOrderItem.java:[line 57]<br/>At SalesOrderItem.java:[line 57]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#PA_PUBLIC_PRIMITIVE_ATTRIBUTE">Primitive field is public</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>Primitive field com.komeetta.controller.StockController.isSale is public and set from inside the class, which makes it too exposed. Consider making it private to limit external accessibility.<br/>
+                  <br/>
+                  <br/>In file StockController.java,
+					
+						line 47<br/>In class com.komeetta.controller.StockController<br/>Field com.komeetta.controller.StockController.isSale<br/>At StockController.java:[line 47]</p>
+            </td>
+         </tr>
+      </table>
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>
+         <a name="Warnings_I18N">Internationalization Warnings</a>
+      </h2>
+      <table class="warningtable"
+             width="100%"
+             cellspacing="2"
+             cellpadding="5">
+         <tr class="tableheader">
+            <th align="left">Warning</th>
+            <th align="left">Priority</th>
+            <th align="left">Details</th>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#DM_DEFAULT_ENCODING">Reliance on default encoding</a>
+            </td>
+            <td width="10%" valign="top">High</td>
+            <td width="70%">
+               <p>Found reliance on default encoding in com.komeetta.dao.ProductDAO.bulkUploadFromCsv(String): new java.io.FileReader(String)<br/>
+                  <br/>
+                  <br/>In file ProductDAO.java ProductDAO.java,
+					
+						line 147 147<br/>In class com.komeetta.dao.ProductDAO<br/>In method com.komeetta.dao.ProductDAO.bulkUploadFromCsv(String)<br/>Called method new java.io.FileReader(String)<br/>At ProductDAO.java:[line 147]<br/>At ProductDAO.java:[line 147]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#DM_DEFAULT_ENCODING">Reliance on default encoding</a>
+            </td>
+            <td width="10%" valign="top">High</td>
+            <td width="70%">
+               <p>Found reliance on default encoding in com.komeetta.dao.UserDAO.decrypt(String): new String(byte[])<br/>
+                  <br/>
+                  <br/>In file UserDAO.java UserDAO.java,
+					
+						line 116 116<br/>In class com.komeetta.dao.UserDAO<br/>In method com.komeetta.dao.UserDAO.decrypt(String)<br/>Called method new String(byte[])<br/>At UserDAO.java:[line 116]<br/>At UserDAO.java:[line 116]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#DM_DEFAULT_ENCODING">Reliance on default encoding</a>
+            </td>
+            <td width="10%" valign="top">High</td>
+            <td width="70%">
+               <p>Found reliance on default encoding in com.komeetta.dao.UserDAO.encrypt(String): String.getBytes()<br/>
+                  <br/>
+                  <br/>In file UserDAO.java UserDAO.java,
+					
+						line 99 99<br/>In class com.komeetta.dao.UserDAO<br/>In method com.komeetta.dao.UserDAO.encrypt(String)<br/>Called method String.getBytes()<br/>At UserDAO.java:[line 99]<br/>At UserDAO.java:[line 99]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#DM_DEFAULT_ENCODING">Reliance on default encoding</a>
+            </td>
+            <td width="10%" valign="top">High</td>
+            <td width="70%">
+               <p>Found reliance on default encoding in statistics.DashboardStats.createCvsStatsFile(String): new java.io.FileWriter(File)<br/>
+                  <br/>
+                  <br/>In file DashboardStats.java DashboardStats.java,
+					
+						line 112 112<br/>In class statistics.DashboardStats<br/>In method statistics.DashboardStats.createCvsStatsFile(String)<br/>Called method new java.io.FileWriter(File)<br/>At DashboardStats.java:[line 112]<br/>At DashboardStats.java:[line 112]</p>
+            </td>
+         </tr>
+      </table>
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>
+         <a name="Warnings_MALICIOUS_CODE">Malicious code vulnerability Warnings</a>
+      </h2>
+      <table class="warningtable"
+             width="100%"
+             cellspacing="2"
+             cellpadding="5">
+         <tr class="tableheader">
+            <th align="left">Warning</th>
+            <th align="left">Priority</th>
+            <th align="left">Details</th>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP">May expose internal representation by returning reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.PurchaseOrder.getItems() may expose internal representation by returning PurchaseOrder.items<br/>
+                  <br/>
+                  <br/>In file PurchaseOrder.java PurchaseOrder.java,
+					
+						line 149 149<br/>In class com.komeetta.model.PurchaseOrder<br/>In method com.komeetta.model.PurchaseOrder.getItems()<br/>Field com.komeetta.model.PurchaseOrder.items<br/>At PurchaseOrder.java:[line 149]<br/>At PurchaseOrder.java:[line 149]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP">May expose internal representation by returning reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.PurchaseOrder.getOrder_date() may expose internal representation by returning PurchaseOrder.orderDate<br/>
+                  <br/>
+                  <br/>In file PurchaseOrder.java PurchaseOrder.java,
+					
+						line 105 105<br/>In class com.komeetta.model.PurchaseOrder<br/>In method com.komeetta.model.PurchaseOrder.getOrder_date()<br/>Field com.komeetta.model.PurchaseOrder.orderDate<br/>At PurchaseOrder.java:[line 105]<br/>At PurchaseOrder.java:[line 105]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP">May expose internal representation by returning reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.PurchaseOrder.getSupplier() may expose internal representation by returning PurchaseOrder.supplier<br/>
+                  <br/>
+                  <br/>In file PurchaseOrder.java PurchaseOrder.java,
+					
+						line 91 91<br/>In class com.komeetta.model.PurchaseOrder<br/>In method com.komeetta.model.PurchaseOrder.getSupplier()<br/>Field com.komeetta.model.PurchaseOrder.supplier<br/>At PurchaseOrder.java:[line 91]<br/>At PurchaseOrder.java:[line 91]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP">May expose internal representation by returning reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.PurchaseOrderItem.getId() may expose internal representation by returning PurchaseOrderItem.id<br/>
+                  <br/>
+                  <br/>In file PurchaseOrderItem.java PurchaseOrderItem.java,
+					
+						line 78 78<br/>In class com.komeetta.model.PurchaseOrderItem<br/>In method com.komeetta.model.PurchaseOrderItem.getId()<br/>Field com.komeetta.model.PurchaseOrderItem.id<br/>At PurchaseOrderItem.java:[line 78]<br/>At PurchaseOrderItem.java:[line 78]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP">May expose internal representation by returning reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.PurchaseOrderItem.getProduct() may expose internal representation by returning PurchaseOrderItem.product<br/>
+                  <br/>
+                  <br/>In file PurchaseOrderItem.java PurchaseOrderItem.java,
+					
+						line 106 106<br/>In class com.komeetta.model.PurchaseOrderItem<br/>In method com.komeetta.model.PurchaseOrderItem.getProduct()<br/>Field com.komeetta.model.PurchaseOrderItem.product<br/>At PurchaseOrderItem.java:[line 106]<br/>At PurchaseOrderItem.java:[line 106]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP">May expose internal representation by returning reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.PurchaseOrderItem.getPurchaseOrder() may expose internal representation by returning PurchaseOrderItem.purchaseOrder<br/>
+                  <br/>
+                  <br/>In file PurchaseOrderItem.java PurchaseOrderItem.java,
+					
+						line 92 92<br/>In class com.komeetta.model.PurchaseOrderItem<br/>In method com.komeetta.model.PurchaseOrderItem.getPurchaseOrder()<br/>Field com.komeetta.model.PurchaseOrderItem.purchaseOrder<br/>At PurchaseOrderItem.java:[line 92]<br/>At PurchaseOrderItem.java:[line 92]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP">May expose internal representation by returning reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.SalesOrder.getCustomer() may expose internal representation by returning SalesOrder.customer<br/>
+                  <br/>
+                  <br/>In file SalesOrder.java SalesOrder.java,
+					
+						line 92 92<br/>In class com.komeetta.model.SalesOrder<br/>In method com.komeetta.model.SalesOrder.getCustomer()<br/>Field com.komeetta.model.SalesOrder.customer<br/>At SalesOrder.java:[line 92]<br/>At SalesOrder.java:[line 92]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP">May expose internal representation by returning reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.SalesOrder.getItems() may expose internal representation by returning SalesOrder.items<br/>
+                  <br/>
+                  <br/>In file SalesOrder.java SalesOrder.java,
+					
+						line 150 150<br/>In class com.komeetta.model.SalesOrder<br/>In method com.komeetta.model.SalesOrder.getItems()<br/>Field com.komeetta.model.SalesOrder.items<br/>At SalesOrder.java:[line 150]<br/>At SalesOrder.java:[line 150]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP">May expose internal representation by returning reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.SalesOrder.getOrderDate() may expose internal representation by returning SalesOrder.orderDate<br/>
+                  <br/>
+                  <br/>In file SalesOrder.java SalesOrder.java,
+					
+						line 108 108<br/>In class com.komeetta.model.SalesOrder<br/>In method com.komeetta.model.SalesOrder.getOrderDate()<br/>Field com.komeetta.model.SalesOrder.orderDate<br/>At SalesOrder.java:[line 108]<br/>At SalesOrder.java:[line 108]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP">May expose internal representation by returning reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.SalesOrderItem.getId() may expose internal representation by returning SalesOrderItem.id<br/>
+                  <br/>
+                  <br/>In file SalesOrderItem.java SalesOrderItem.java,
+					
+						line 78 78<br/>In class com.komeetta.model.SalesOrderItem<br/>In method com.komeetta.model.SalesOrderItem.getId()<br/>Field com.komeetta.model.SalesOrderItem.id<br/>At SalesOrderItem.java:[line 78]<br/>At SalesOrderItem.java:[line 78]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP">May expose internal representation by returning reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.SalesOrderItem.getProduct() may expose internal representation by returning SalesOrderItem.product<br/>
+                  <br/>
+                  <br/>In file SalesOrderItem.java SalesOrderItem.java,
+					
+						line 106 106<br/>In class com.komeetta.model.SalesOrderItem<br/>In method com.komeetta.model.SalesOrderItem.getProduct()<br/>Field com.komeetta.model.SalesOrderItem.product<br/>At SalesOrderItem.java:[line 106]<br/>At SalesOrderItem.java:[line 106]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP">May expose internal representation by returning reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.SalesOrderItem.getSalesOrder() may expose internal representation by returning SalesOrderItem.salesOrder<br/>
+                  <br/>
+                  <br/>In file SalesOrderItem.java SalesOrderItem.java,
+					
+						line 92 92<br/>In class com.komeetta.model.SalesOrderItem<br/>In method com.komeetta.model.SalesOrderItem.getSalesOrder()<br/>Field com.komeetta.model.SalesOrderItem.salesOrder<br/>At SalesOrderItem.java:[line 92]<br/>At SalesOrderItem.java:[line 92]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.controller.DashboardController.setInitialView(User) may expose internal representation by storing an externally mutable object into DashboardController.user<br/>
+                  <br/>
+                  <br/>In file DashboardController.java DashboardController.java,
+					
+						line 182 182<br/>In class com.komeetta.controller.DashboardController<br/>In method com.komeetta.controller.DashboardController.setInitialView(User)<br/>Field com.komeetta.controller.DashboardController.user<br/>Local variable named user<br/>At DashboardController.java:[line 182]<br/>At DashboardController.java:[line 182]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.controller.EditWindowController.showNeededForm(Object) may expose internal representation by storing an externally mutable object into EditWindowController.customerToEdit<br/>
+                  <br/>
+                  <br/>In file EditWindowController.java EditWindowController.java,
+					
+						line 178 178<br/>In class com.komeetta.controller.EditWindowController<br/>In method com.komeetta.controller.EditWindowController.showNeededForm(Object)<br/>Field com.komeetta.controller.EditWindowController.customerToEdit<br/>Local variable named object<br/>At EditWindowController.java:[line 178]<br/>At EditWindowController.java:[line 178]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.controller.EditWindowController.showNeededForm(Object) may expose internal representation by storing an externally mutable object into EditWindowController.productToEdit<br/>
+                  <br/>
+                  <br/>In file EditWindowController.java EditWindowController.java,
+					
+						line 170 170<br/>In class com.komeetta.controller.EditWindowController<br/>In method com.komeetta.controller.EditWindowController.showNeededForm(Object)<br/>Field com.komeetta.controller.EditWindowController.productToEdit<br/>Local variable named object<br/>At EditWindowController.java:[line 170]<br/>At EditWindowController.java:[line 170]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.controller.EditWindowController.showNeededForm(Object) may expose internal representation by storing an externally mutable object into EditWindowController.supplierToEdit<br/>
+                  <br/>
+                  <br/>In file EditWindowController.java EditWindowController.java,
+					
+						line 186 186<br/>In class com.komeetta.controller.EditWindowController<br/>In method com.komeetta.controller.EditWindowController.showNeededForm(Object)<br/>Field com.komeetta.controller.EditWindowController.supplierToEdit<br/>Local variable named object<br/>At EditWindowController.java:[line 186]<br/>At EditWindowController.java:[line 186]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>new com.komeetta.model.PurchaseOrder(Supplier) may expose internal representation by storing an externally mutable object into PurchaseOrder.supplier<br/>
+                  <br/>
+                  <br/>In file PurchaseOrder.java PurchaseOrder.java,
+					
+						line 65 65<br/>In class com.komeetta.model.PurchaseOrder<br/>In method new com.komeetta.model.PurchaseOrder(Supplier)<br/>Field com.komeetta.model.PurchaseOrder.supplier<br/>Local variable named supplier<br/>At PurchaseOrder.java:[line 65]<br/>At PurchaseOrder.java:[line 65]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>new com.komeetta.model.PurchaseOrder(Supplier, Date, OrderStatus, double) may expose internal representation by storing an externally mutable object into PurchaseOrder.orderDate<br/>
+                  <br/>
+                  <br/>In file PurchaseOrder.java PurchaseOrder.java,
+					
+						line 56 56<br/>In class com.komeetta.model.PurchaseOrder<br/>In method new com.komeetta.model.PurchaseOrder(Supplier, Date, OrderStatus, double)<br/>Field com.komeetta.model.PurchaseOrder.orderDate<br/>Local variable named orderDate<br/>At PurchaseOrder.java:[line 56]<br/>At PurchaseOrder.java:[line 56]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>new com.komeetta.model.PurchaseOrder(Supplier, Date, OrderStatus, double) may expose internal representation by storing an externally mutable object into PurchaseOrder.supplier<br/>
+                  <br/>
+                  <br/>In file PurchaseOrder.java PurchaseOrder.java,
+					
+						line 55 55<br/>In class com.komeetta.model.PurchaseOrder<br/>In method new com.komeetta.model.PurchaseOrder(Supplier, Date, OrderStatus, double)<br/>Field com.komeetta.model.PurchaseOrder.supplier<br/>Local variable named supplier<br/>At PurchaseOrder.java:[line 55]<br/>At PurchaseOrder.java:[line 55]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.PurchaseOrder.setOrder_date(Date) may expose internal representation by storing an externally mutable object into PurchaseOrder.orderDate<br/>
+                  <br/>
+                  <br/>In file PurchaseOrder.java PurchaseOrder.java,
+					
+						line 112 112<br/>In class com.komeetta.model.PurchaseOrder<br/>In method com.komeetta.model.PurchaseOrder.setOrder_date(Date)<br/>Field com.komeetta.model.PurchaseOrder.orderDate<br/>Local variable named orderDate<br/>At PurchaseOrder.java:[line 112]<br/>At PurchaseOrder.java:[line 112]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.PurchaseOrder.setSupplier(Supplier) may expose internal representation by storing an externally mutable object into PurchaseOrder.supplier<br/>
+                  <br/>
+                  <br/>In file PurchaseOrder.java PurchaseOrder.java,
+					
+						line 98 98<br/>In class com.komeetta.model.PurchaseOrder<br/>In method com.komeetta.model.PurchaseOrder.setSupplier(Supplier)<br/>Field com.komeetta.model.PurchaseOrder.supplier<br/>Local variable named supplier<br/>At PurchaseOrder.java:[line 98]<br/>At PurchaseOrder.java:[line 98]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>new com.komeetta.model.PurchaseOrderItem(PurchaseOrder, Product, int, double, double) may expose internal representation by storing an externally mutable object into PurchaseOrderItem.product<br/>
+                  <br/>
+                  <br/>In file PurchaseOrderItem.java PurchaseOrderItem.java,
+					
+						line 65 65<br/>In class com.komeetta.model.PurchaseOrderItem<br/>In method new com.komeetta.model.PurchaseOrderItem(PurchaseOrder, Product, int, double, double)<br/>Field com.komeetta.model.PurchaseOrderItem.product<br/>Local variable named product<br/>At PurchaseOrderItem.java:[line 65]<br/>At PurchaseOrderItem.java:[line 65]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>new com.komeetta.model.PurchaseOrderItem(PurchaseOrder, Product, int, double, double) may expose internal representation by storing an externally mutable object into PurchaseOrderItem.purchaseOrder<br/>
+                  <br/>
+                  <br/>In file PurchaseOrderItem.java PurchaseOrderItem.java,
+					
+						line 64 64<br/>In class com.komeetta.model.PurchaseOrderItem<br/>In method new com.komeetta.model.PurchaseOrderItem(PurchaseOrder, Product, int, double, double)<br/>Field com.komeetta.model.PurchaseOrderItem.purchaseOrder<br/>Local variable named purchaseOrder<br/>At PurchaseOrderItem.java:[line 64]<br/>At PurchaseOrderItem.java:[line 64]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.PurchaseOrderItem.setId(OrderItemId) may expose internal representation by storing an externally mutable object into PurchaseOrderItem.id<br/>
+                  <br/>
+                  <br/>In file PurchaseOrderItem.java PurchaseOrderItem.java,
+					
+						line 85 85<br/>In class com.komeetta.model.PurchaseOrderItem<br/>In method com.komeetta.model.PurchaseOrderItem.setId(OrderItemId)<br/>Field com.komeetta.model.PurchaseOrderItem.id<br/>Local variable named id<br/>At PurchaseOrderItem.java:[line 85]<br/>At PurchaseOrderItem.java:[line 85]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.PurchaseOrderItem.setProduct(Product) may expose internal representation by storing an externally mutable object into PurchaseOrderItem.product<br/>
+                  <br/>
+                  <br/>In file PurchaseOrderItem.java PurchaseOrderItem.java,
+					
+						line 113 113<br/>In class com.komeetta.model.PurchaseOrderItem<br/>In method com.komeetta.model.PurchaseOrderItem.setProduct(Product)<br/>Field com.komeetta.model.PurchaseOrderItem.product<br/>Local variable named product<br/>At PurchaseOrderItem.java:[line 113]<br/>At PurchaseOrderItem.java:[line 113]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.PurchaseOrderItem.setPurchaseOrder(PurchaseOrder) may expose internal representation by storing an externally mutable object into PurchaseOrderItem.purchaseOrder<br/>
+                  <br/>
+                  <br/>In file PurchaseOrderItem.java PurchaseOrderItem.java,
+					
+						line 99 99<br/>In class com.komeetta.model.PurchaseOrderItem<br/>In method com.komeetta.model.PurchaseOrderItem.setPurchaseOrder(PurchaseOrder)<br/>Field com.komeetta.model.PurchaseOrderItem.purchaseOrder<br/>Local variable named purchaseOrder<br/>At PurchaseOrderItem.java:[line 99]<br/>At PurchaseOrderItem.java:[line 99]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>new com.komeetta.model.SalesOrder(Customer) may expose internal representation by storing an externally mutable object into SalesOrder.customer<br/>
+                  <br/>
+                  <br/>In file SalesOrder.java SalesOrder.java,
+					
+						line 66 66<br/>In class com.komeetta.model.SalesOrder<br/>In method new com.komeetta.model.SalesOrder(Customer)<br/>Field com.komeetta.model.SalesOrder.customer<br/>Local variable named customer<br/>At SalesOrder.java:[line 66]<br/>At SalesOrder.java:[line 66]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>new com.komeetta.model.SalesOrder(Customer, Date, OrderStatus, double) may expose internal representation by storing an externally mutable object into SalesOrder.customer<br/>
+                  <br/>
+                  <br/>In file SalesOrder.java SalesOrder.java,
+					
+						line 56 56<br/>In class com.komeetta.model.SalesOrder<br/>In method new com.komeetta.model.SalesOrder(Customer, Date, OrderStatus, double)<br/>Field com.komeetta.model.SalesOrder.customer<br/>Local variable named customer<br/>At SalesOrder.java:[line 56]<br/>At SalesOrder.java:[line 56]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>new com.komeetta.model.SalesOrder(Customer, Date, OrderStatus, double) may expose internal representation by storing an externally mutable object into SalesOrder.orderDate<br/>
+                  <br/>
+                  <br/>In file SalesOrder.java SalesOrder.java,
+					
+						line 57 57<br/>In class com.komeetta.model.SalesOrder<br/>In method new com.komeetta.model.SalesOrder(Customer, Date, OrderStatus, double)<br/>Field com.komeetta.model.SalesOrder.orderDate<br/>Local variable named orderDate<br/>At SalesOrder.java:[line 57]<br/>At SalesOrder.java:[line 57]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.SalesOrder.setCustomer(Customer) may expose internal representation by storing an externally mutable object into SalesOrder.customer<br/>
+                  <br/>
+                  <br/>In file SalesOrder.java SalesOrder.java,
+					
+						line 101 101<br/>In class com.komeetta.model.SalesOrder<br/>In method com.komeetta.model.SalesOrder.setCustomer(Customer)<br/>Field com.komeetta.model.SalesOrder.customer<br/>Local variable named customer<br/>At SalesOrder.java:[line 101]<br/>At SalesOrder.java:[line 101]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.SalesOrder.setOrderDate(Date) may expose internal representation by storing an externally mutable object into SalesOrder.orderDate<br/>
+                  <br/>
+                  <br/>In file SalesOrder.java SalesOrder.java,
+					
+						line 115 115<br/>In class com.komeetta.model.SalesOrder<br/>In method com.komeetta.model.SalesOrder.setOrderDate(Date)<br/>Field com.komeetta.model.SalesOrder.orderDate<br/>Local variable named orderDate<br/>At SalesOrder.java:[line 115]<br/>At SalesOrder.java:[line 115]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>new com.komeetta.model.SalesOrderItem(SalesOrder, Product, int, double, double) may expose internal representation by storing an externally mutable object into SalesOrderItem.product<br/>
+                  <br/>
+                  <br/>In file SalesOrderItem.java SalesOrderItem.java,
+					
+						line 65 65<br/>In class com.komeetta.model.SalesOrderItem<br/>In method new com.komeetta.model.SalesOrderItem(SalesOrder, Product, int, double, double)<br/>Field com.komeetta.model.SalesOrderItem.product<br/>Local variable named product<br/>At SalesOrderItem.java:[line 65]<br/>At SalesOrderItem.java:[line 65]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>new com.komeetta.model.SalesOrderItem(SalesOrder, Product, int, double, double) may expose internal representation by storing an externally mutable object into SalesOrderItem.salesOrder<br/>
+                  <br/>
+                  <br/>In file SalesOrderItem.java SalesOrderItem.java,
+					
+						line 64 64<br/>In class com.komeetta.model.SalesOrderItem<br/>In method new com.komeetta.model.SalesOrderItem(SalesOrder, Product, int, double, double)<br/>Field com.komeetta.model.SalesOrderItem.salesOrder<br/>Local variable named salesOrder<br/>At SalesOrderItem.java:[line 64]<br/>At SalesOrderItem.java:[line 64]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.SalesOrderItem.setId(OrderItemId) may expose internal representation by storing an externally mutable object into SalesOrderItem.id<br/>
+                  <br/>
+                  <br/>In file SalesOrderItem.java SalesOrderItem.java,
+					
+						line 85 85<br/>In class com.komeetta.model.SalesOrderItem<br/>In method com.komeetta.model.SalesOrderItem.setId(OrderItemId)<br/>Field com.komeetta.model.SalesOrderItem.id<br/>Local variable named id<br/>At SalesOrderItem.java:[line 85]<br/>At SalesOrderItem.java:[line 85]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.SalesOrderItem.setProduct(Product) may expose internal representation by storing an externally mutable object into SalesOrderItem.product<br/>
+                  <br/>
+                  <br/>In file SalesOrderItem.java SalesOrderItem.java,
+					
+						line 113 113<br/>In class com.komeetta.model.SalesOrderItem<br/>In method com.komeetta.model.SalesOrderItem.setProduct(Product)<br/>Field com.komeetta.model.SalesOrderItem.product<br/>Local variable named product<br/>At SalesOrderItem.java:[line 113]<br/>At SalesOrderItem.java:[line 113]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>com.komeetta.model.SalesOrderItem.setSalesOrder(SalesOrder) may expose internal representation by storing an externally mutable object into SalesOrderItem.salesOrder<br/>
+                  <br/>
+                  <br/>In file SalesOrderItem.java SalesOrderItem.java,
+					
+						line 99 99<br/>In class com.komeetta.model.SalesOrderItem<br/>In method com.komeetta.model.SalesOrderItem.setSalesOrder(SalesOrder)<br/>Field com.komeetta.model.SalesOrderItem.salesOrder<br/>Local variable named salesOrder<br/>At SalesOrderItem.java:[line 99]<br/>At SalesOrderItem.java:[line 99]</p>
+            </td>
+         </tr>
+      </table>
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>
+         <a name="Warnings_PERFORMANCE">Performance Warnings</a>
+      </h2>
+      <table class="warningtable"
+             width="100%"
+             cellspacing="2"
+             cellpadding="5">
+         <tr class="tableheader">
+            <th align="left">Warning</th>
+            <th align="left">Priority</th>
+            <th align="left">Details</th>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#URF_UNREAD_FIELD">Unread field</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>Unread field: com.komeetta.controller.BulkController.dao<br/>
+                  <br/>
+                  <br/>In file BulkController.java,
+					
+						line 43<br/>In class com.komeetta.controller.BulkController<br/>Field com.komeetta.controller.BulkController.dao<br/>At BulkController.java:[line 43]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#URF_UNREAD_FIELD">Unread field</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>Unread field: com.komeetta.controller.DashboardController.user<br/>
+                  <br/>
+                  <br/>In file DashboardController.java,
+					
+						line 164<br/>In class com.komeetta.controller.DashboardController<br/>Field com.komeetta.controller.DashboardController.user<br/>At DashboardController.java:[line 164]</p>
+            </td>
+         </tr>
+      </table>
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>
+         <a name="Warnings_STYLE">Dodgy code Warnings</a>
+      </h2>
+      <table class="warningtable"
+             width="100%"
+             cellspacing="2"
+             cellpadding="5">
+         <tr class="tableheader">
+            <th align="left">Warning</th>
+            <th align="left">Priority</th>
+            <th align="left">Details</th>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#DLS_DEAD_LOCAL_STORE">Dead store to local variable</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>Dead store to bundle in statistics.DashboardStats.createCvsStatsFile(String)<br/>
+                  <br/>
+                  <br/>In file DashboardStats.java DashboardStats.java,
+					
+						line 96 96<br/>In class statistics.DashboardStats<br/>In method statistics.DashboardStats.createCvsStatsFile(String)<br/>Local variable named bundle<br/>At DashboardStats.java:[line 96]<br/>At DashboardStats.java:[line 96]</p>
+            </td>
+         </tr>
+      </table>
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <h1>
+         <a name="Details">Warning Types</a>
+      </h1>
+      <h2>
+         <a name="CT_CONSTRUCTOR_THROW">Be wary of letting constructors throw exceptions.</a>
+      </h2>
+      
+            <p>Classes that throw exceptions in their constructors are vulnerable to Finalizer attacks</p>
+
+            <p>A finalizer attack can be prevented, by declaring the class final, using an empty finalizer declared as final, or by a clever use of a private constructor.</p>
+
+            <p>See <a href="https://wiki.sei.cmu.edu/confluence/display/java/OBJ11-J.+Be+wary+of+letting+constructors+throw+exceptions"><code>SEI CERT Rule OBJ-11</code></a>
+            for more information.
+            </p>
+            
+    <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>
+         <a name="DLS_DEAD_LOCAL_STORE">Dead store to local variable</a>
+      </h2>
+
+<p>
+This instruction assigns a value to a local variable,
+but the value is not read or used in any subsequent instruction.
+Often, this indicates an error, because the value computed is never
+used.
+</p>
+<p>
+Note that Sun's javac compiler often generates dead stores for
+final local variables. Because SpotBugs is a bytecode-based tool,
+there is no easy way to eliminate these false positives.
+</p>
+
+    <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>
+         <a name="DM_DEFAULT_ENCODING">Reliance on default encoding</a>
+      </h2>
+
+<p> Found a call to a method which will perform a byte to String (or String to byte) conversion,
+and will assume that the default platform encoding is suitable. This will cause the application
+behavior to vary between platforms. Use an alternative API and specify a charset name or Charset
+object explicitly.</p>
+
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>
+         <a name="EI_EXPOSE_REP">May expose internal representation by returning reference to mutable object</a>
+      </h2>
+
+  <p> Returning a reference to a mutable object value stored in one of the object's fields
+  exposes the internal representation of the object.&nbsp;
+   If instances
+   are accessed by untrusted code, and unchecked changes to
+   the mutable object would compromise security or other
+   important properties, you will need to do something different.
+  Returning a new copy of the object is better approach in many situations.</p>
+
+    <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>
+         <a name="EI_EXPOSE_REP2">May expose internal representation by incorporating reference to mutable object</a>
+      </h2>
+
+  <p> This code stores a reference to an externally mutable object into the
+  internal representation of the object.&nbsp;
+   If instances
+   are accessed by untrusted code, and unchecked changes to
+   the mutable object would compromise security or other
+   important properties, you will need to do something different.
+  Storing a copy of the object is better approach in many situations.</p>
+
+    <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>
+         <a name="PA_PUBLIC_PRIMITIVE_ATTRIBUTE">Primitive field is public</a>
+      </h2>
+      
+    <p>
+    <a href="https://wiki.sei.cmu.edu/confluence/display/java/OBJ01-J.+Limit+accessibility+of+fields">SEI CERT rule OBJ01-J</a> requires that accessibility to fields must be limited.
+    Otherwise, the values of the fields may be manipulated from outside the class, which may be unexpected or
+    undesired behaviour.
+    In general, requiring that no fields are allowed to be public is overkill and unrealistic. Even
+    the rule mentions that final fields may be public. Besides final fields, there may be other
+    usages for public fields: some public fields may serve as "flags" that affect the behavior of
+    the class. Such flag fields are expected to be read by the current instance (or the current
+    class, in case of static fields), but written by others. If a field is both written by the
+    methods of the current instance (or the current class, in case of static fields) and from the
+    outside, the code is suspicious. Consider making these fields private and provide appropriate
+    setters, if necessary. Please note that constructors, initializers and finalizers are
+    exceptions, if only they write the field inside the class, the field is not considered as
+    written by the class itself.</p>
+    
+    <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>
+         <a name="URF_UNREAD_FIELD">Unread field</a>
+      </h2>
+
+  <p> This field is never read.&nbsp; Consider removing it from the class.</p>
+
+    <p>
+         <br/>
+         <br/>
+      </p>
+   </body>
+</html>
