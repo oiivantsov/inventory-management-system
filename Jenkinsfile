@@ -8,6 +8,9 @@ pipeline {
         TEST_JDBC_USER = credentials('TEST_JDBC_USER')
         TEST_JDBC_PASSWORD = credentials('TEST_JDBC_PASSWORD')
 
+        SONARQUBE_SERVER = 'SonarQubeServer'  // The name of the SonarQube server configured in Jenkins
+        SONAR_TOKEN = credentials('SONAR_TOKEN') // Store the token securely
+
         // Define Docker Hub credentials ID
         DOCKERHUB_CREDENTIALS_ID = '20b8aca5-01eb-4cd6-bc9e-7395f88da57b' // use your own credentials ID
         // Define Docker Hub repository name
@@ -16,11 +19,13 @@ pipeline {
         DOCKER_IMAGE_TAG = 'latest_v1'
     }
     stages {
+
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/oiivantsov/inventory-management-system.git'
             }
         }
+
         stage('Prepare .env') {
             steps {
                 bat '''
@@ -34,29 +39,50 @@ pipeline {
                 '''
             }
         }
+
         stage('Build') {
             steps {
                 bat 'mvn clean install -DskipTests'
             }
         }
+
         stage('Test') {
             steps {
                 bat 'mvn test'
             }
         }
+
         stage('Code Coverage') {
             steps {
                 bat 'mvn jacoco:report'
             }
         }
+
         stage('Publish Test Results') {
             steps {
                 junit '**/target/surefire-reports/*.xml'
             }
         }
+
         stage('Publish Coverage Report') {
             steps {
                 jacoco()
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQubeServer') {
+                    bat """
+                        sonar-scanner.bat ^
+                        -Dsonar.projectKey=komeetta ^
+                        -Dsonar.sources=src ^
+                        -Dsonar.projectName=inventory ^
+                        -Dsonar.host.url=http://localhost:9000 ^
+                        -Dsonar.login=${env.SONAR_TOKEN} ^
+                        -Dsonar.java.binaries=target/classes
+                    """
+                }
             }
         }
 
