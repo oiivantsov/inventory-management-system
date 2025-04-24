@@ -2,5 +2,5 @@ projectKey=komeetta
 serverUrl=http://localhost:9000
 serverVersion=25.4.0.105899
 dashboardUrl=http://localhost:9000/dashboard?id=komeetta
-ceTaskId=22d83254-df4e-4503-911c-426fc835f0ad
-ceTaskUrl=http://localhost:9000/api/ce/task?id=22d83254-df4e-4503-911c-426fc835f0ad
+ceTaskId=7f64d0c4-fc6b-47e9-90da-369efa612521
+ceTaskUrl=http://localhost:9000/api/ce/task?id=7f64d0c4-fc6b-47e9-90da-369efa612521
