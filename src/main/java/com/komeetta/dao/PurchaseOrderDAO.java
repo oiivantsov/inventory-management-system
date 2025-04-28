@@ -83,6 +83,35 @@ public class PurchaseOrderDAO {
     }
 
     /**
+     * Deletes a purchase order and its items from the database.
+     * @param purchaseOrder Purchase order to delete
+     */
+    public void deletePurchaseOrderWithItems(PurchaseOrder purchaseOrder) {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            em.getTransaction().begin();
+
+            em.createQuery("DELETE FROM PurchaseOrderItem p WHERE p.purchaseOrder.orderId = :orderId")
+                    .setParameter("orderId", purchaseOrder.getOrderId())
+                    .executeUpdate();
+
+            PurchaseOrder managedOrder = em.find(PurchaseOrder.class, purchaseOrder.getOrderId());
+            if (managedOrder != null) {
+                em.remove(managedOrder);
+            }
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to delete PurchaseOrder with items", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
      * Deletes all sales orders (for testing purposes)
      */
     public void deleteAll() {

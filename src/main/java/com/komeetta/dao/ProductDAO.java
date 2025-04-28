@@ -117,6 +117,27 @@ public class ProductDAO {
     }
 
     /**
+     * Deletes a product from the database
+     * @param product Product to delete
+     */
+    public void deleteProduct(Product product) {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            em.getTransaction().begin();
+            Product managedProduct = em.merge(product); // Make sure it’s managed
+            em.remove(managedProduct);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to delete product", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
      * Deletes all products (for testing purposes)
      */
     public void deleteAll() {

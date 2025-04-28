@@ -81,6 +81,35 @@ public class SalesOrderDAO {
         em.close();
     }
 
+    /**
+     * Deletes a sales order and its items from the database.
+     * @param salesOrder Sales order to delete
+     */
+    public void deleteSalesOrderWithItems(SalesOrder salesOrder) {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            em.getTransaction().begin();
+
+            em.createQuery("DELETE FROM SalesOrderItem s WHERE s.salesOrder.orderId = :orderId")
+                    .setParameter("orderId", salesOrder.getOrderId())
+                    .executeUpdate();
+
+            SalesOrder managedOrder = em.find(SalesOrder.class, salesOrder.getOrderId());
+            if (managedOrder != null) {
+                em.remove(managedOrder);
+            }
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to delete SalesOrder with items", e);
+        } finally {
+            em.close();
+        }
+    }
+
 
     /**
      * Deletes all sales orders (for testing purposes)

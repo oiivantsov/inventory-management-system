@@ -26,7 +26,7 @@ public class DashboardController {
     // UI components injected via FXML
     @FXML private StackPane contentArea;
     @FXML private VBox productVBox, customerVBox, supplierVBox, purchaseVBox, saleVBox, HomeVBox;
-    @FXML private Button buttonEdit, importButton;
+    @FXML private Button buttonEdit, importButton, buttonDelete;
     @FXML private TableView<Customer> customerTable;
     @FXML private TableColumn<Customer, Integer> colCustomerID;
     @FXML private TableColumn<Customer, String> colCustomerName, colCustomerMail, colCustomerAddr;
@@ -92,6 +92,7 @@ public class DashboardController {
             if (newSelection != null) {
                 selectedItem = newSelection;
                 buttonEdit.setDisable(false);
+                buttonDelete.setDisable(false);
             }
         });
     }
@@ -123,6 +124,10 @@ public class DashboardController {
         if (selectedItem instanceof Product) ViewRefresher.refreshProductView(productTable);
         else if (selectedItem instanceof Customer) ViewRefresher.refreshCustomerView(customerTable);
         else if (selectedItem instanceof Supplier) ViewRefresher.refreshSupplierView(supplierTable);
+
+        buttonEdit.setDisable(true);
+        buttonDelete.setDisable(true);
+        selectedItem = null;
     }
 
     /**
@@ -142,6 +147,34 @@ public class DashboardController {
             ViewRefresher.refreshSupplierView(supplierTable);
         }
     }
+
+    /**
+     * Opens confirmation dialog to delete selected item and refreshes relevant view.
+     */
+    @FXML
+    private void handleDeleteButtonAction() {
+        if (selectedItem == null) {
+            return;
+        }
+
+        if (selectedItem instanceof Product) {
+            DeleteConfirmationDialog.display("Product", "delete", productTable, (Product) selectedItem);
+        } else if (selectedItem instanceof Customer) {
+            DeleteConfirmationDialog.display("Customer", "delete", customerTable, (Customer) selectedItem);
+        } else if (selectedItem instanceof Supplier) {
+            DeleteConfirmationDialog.display("Supplier", "delete", supplierTable, (Supplier) selectedItem);
+        } else if (selectedItem instanceof PurchaseOrder) {
+            DeleteConfirmationDialog.display("Purchase Order", "delete", purchaseOrderTable, (PurchaseOrder) selectedItem);
+        } else if (selectedItem instanceof SalesOrder) {
+            DeleteConfirmationDialog.display("Sales Order", "delete", salesOrderTable, (SalesOrder) selectedItem);
+        }
+
+        buttonEdit.setDisable(true);
+        buttonDelete.setDisable(true);
+        selectedItem = null;
+    }
+
+
 
     /**
      * Opens a dialog to export statistics to a CSV file.
@@ -184,6 +217,7 @@ public class DashboardController {
 
         statsLabel.setText(LanguageUtil.getString("str_label_stats")+":");
         buttonEdit.setDisable(true);
+        buttonDelete.setDisable(true);
         showView(HomeVBox);
     }
 
