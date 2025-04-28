@@ -1,0 +1,11 @@
+name,category,brand,quantity,description
+Tuote A,Elektroniikka,Merkki1,50,Laadukas elektroniikkatuote
+Tuote B,Vaatteet,Merkki2,75,Mukava paita
+Tuote C,Koti,Merkki3,100,Hyvä kotituote
+Tuote D,Urheilu,Merkki4,125,Urheiluun sopiva
+Tuote E,Lelut,Merkki5,150,Hauska lelu
+Tuote F,Keittiö,Merkki6,175,Keittiön apuväline
+Tuote G,Puutarha,Merkki7,200,Puutarhatyökalu
+Tuote H,Autotarvikkeet,Merkki8,225,Auton lisävaruste
+Tuote I,Kirjat,Merkki9,250,Mielenkiintoinen kirja
+Tuote J,Terveys,Merkki10,275,Terveystuote
