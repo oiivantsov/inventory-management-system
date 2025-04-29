@@ -28,7 +28,7 @@ On the "Total Purchase Orders" page, the column names "ORDER ID" and "SUPPLIER I
 
 **Screenshot:**
 
-![alt text](image-1.png)
+![alt text](pictures/image-1.png)
 
 **Severity:**
 2 - Minor usability problem (might confuse non-technical users but doesn't block functionality).
@@ -46,9 +46,9 @@ On the "Total Purchase Orders" page, the column names "ORDER ID" and "SUPPLIER I
 The application supports multiple languages and correctly translates the main menu, table headers, and button labels based on the selected language (e.g., Finnish "FI" selected: "VALIKKO", "Tuote", "Muokkaa").
 
 **Screenshot:**
-![alt text](image.png)
+![alt text](pictures/image.png)
 
-![alt text](image-2.png)
+![alt text](pictures/image-2.png)
 
 **Severity:**
 0 - No usability problem
@@ -66,7 +66,7 @@ Additionally, on the Sales and Purchase Order pages, product names and related c
 
 **Screenshot:**
 
-![alt text](image-3.png)
+![alt text](pictures/image-3.png)
 
 
 **Severity:**
@@ -85,7 +85,7 @@ On the Sales Orders ("Myyntitilaukset") page, there are inconsistencies in the c
 - Column headers like "TILAUKSEN ID" and "ASIAKKAAN ID" are in all caps, while other columns like "Päivämäärä", "Tilauksen tila", and "Kokonais­hinta" use Title Case (capitalized first letter only).
 
 **Screenshot:**
-![alt text](image-5.png)
+![alt text](pictures/image-5.png)
 
 **Severity:**
 2 – Minor usability problem (affects user perception but not functionality).
@@ -109,9 +109,9 @@ However, the feedback could be made more precise:
 
 **Screenshot:**
 
-![alt text](image-6.png)
+![alt text](pictures/image-6.png)
 
-![alt text](image-7.png)
+![alt text](pictures/image-7.png)
 
 **Severity:**
 2 – Minor usability problem (good feedback exists, but it could be improved for clarity).
@@ -129,7 +129,7 @@ However, there is no visible option (such as a "Back to Login" button or link) t
 This limits user control and makes navigation less flexible, especially if a user changes their mind or selected the wrong option by mistake.
 
 **Screenshot:**
-![alt text](image-8.png)
+![alt text](pictures/image-8.png)
 
 **Severity:**
 2 – Minor usability problem (affects user control but does not block application functionality).
@@ -170,7 +170,7 @@ However, the message does not specify:
 As a result, the user is left guessing and has to manually investigate the situation, which can lead to confusion or errors.
 
 **Screenshot:**
-![alt text](image-9.png)
+![alt text](pictures/image-9.png)
 
 **Severity:**
 3 – Major usability problem (important to fix to guide the user correctly).
@@ -206,9 +206,9 @@ This allows invalid data entry during the form-filling phase and forces users to
 Not applicable
 
 ### Problem 2
-![alt text](image-10.png)
+![alt text](pictures/image-10.png)
 
-![alt text](image-11.png)
+![alt text](pictures/image-11.png)
 
 **Severity:**
 ### Problem 1
@@ -242,7 +242,7 @@ However, there is no additional help or documentation covering:
 Thus, users must rely on trial and error to fully understand the system beyond the initial Home page tip.
 
 **Screenshot:**
-![alt text](image-12.png)
+![alt text](pictures/image-12.png)
 
 **Severity:**
 2 – Minor usability problem (basic help is present but insufficient for full guidance).
