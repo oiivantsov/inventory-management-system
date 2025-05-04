@@ -164,4 +164,25 @@ public class SignupController {
         alert.showAndWait();
     }
 
+    /**
+     * Navigates back to the login screen.
+     * @param event the action event triggered by the button
+     */
+    @FXML
+    private void handleBackToLoginAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Login.fxml"));
+            loader.setResources(ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale()));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle(LanguageUtil.getString("str_signin_form"));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

@@ -61,11 +61,16 @@
             </PasswordField>
             <Line endX="100.0" startX="-300.0" startY="0.7928932309150696" stroke="WHITE" />
             <Button mnemonicParsing="false" onAction="#handleSignupAction" prefHeight="34.0" prefWidth="234.0" style="-fx-background-radius: 20px; -fx-background-color: lightblue;" text="%str_signup">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
                <VBox.margin>
                   <Insets top="25.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#handleBackToLoginAction"
+                    prefHeight="34.0" prefWidth="234.0"
+                    style="-fx-background-radius: 20px; -fx-background-color: #bbbbbb;"
+                    text="%str_back_to_login">
+               <VBox.margin>
+                  <Insets top="15.0" />
                </VBox.margin>
             </Button>
          </children>
