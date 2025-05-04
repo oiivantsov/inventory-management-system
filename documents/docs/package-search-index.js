@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.komeetta.application"},{"l":"com.komeetta.controller"},{"l":"com.komeetta.dao"},{"l":"com.komeetta.datasource"},{"l":"com.komeetta.model"},{"l":"com.komeetta.service"},{"l":"com.komeetta.util"},{"l":"com.komeetta.view"},{"l":"statistics"}];updateSearchResults();

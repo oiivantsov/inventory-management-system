@@ -1,0 +1,9 @@
+com.komeetta.application
+com.komeetta.controller
+com.komeetta.dao
+com.komeetta.datasource
+com.komeetta.model
+com.komeetta.service
+com.komeetta.util
+com.komeetta.view
+statistics
