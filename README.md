@@ -32,8 +32,8 @@ The system supports:
 * CI/CD pipeline with Jenkins, SonarQube integration, and Docker containerization
 
 Related Documents
-* [Project Vision](documents/komeetta_product_vision.pdf) – purpose, target users, and goals
-* [Project Plan](documents/komeetta_project_plan.pdf) – timeline, responsibilities, technologies, and risks
+* [Project Vision](documents/OTP1/komeetta_product_vision.pdf) – purpose, target users, and goals
+* [Project Plan](documents/OTP1/komeetta_project_plan.pdf) – timeline, responsibilities, technologies, and risks
 
 ---
 
@@ -253,7 +253,7 @@ cd inventory-management-system
 
 - You can also use the Docker Desktop GUI to manage containers within the `inventory-management-system` setup.
 
-  ![alt text](documents/docker_containers.png)
+  ![alt text](documents/OTP1/docker_containers.png)
 
 ### 3. Configure database credentials:
 Modify your `.env` file to match the container setup:
