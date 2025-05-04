@@ -7,6 +7,11 @@ package com.komeetta.util;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * LanguageUtil class provides methods to manage localization settings in the application.
+ * It allows setting the current locale, retrieving localized strings, and setting a callback
+ * for when the language changes.
+ */
 public class LanguageUtil {
 
     // Holds the current locale, defaults to English

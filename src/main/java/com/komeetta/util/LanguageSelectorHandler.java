@@ -17,6 +17,11 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * LanguageSelectorHandler class provides methods to set up and handle language selection
+ * in a JavaFX application. It populates a ComboBox with available languages, sets the current
+ * system language, and handles language change events to update the UI accordingly.
+ */
 public class LanguageSelectorHandler {
 
     /**

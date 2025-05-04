@@ -13,6 +13,10 @@ import javafx.stage.Stage;
 
 import java.util.ResourceBundle;
 
+/**
+ * LoginGUI class is responsible for displaying the login window of the application.
+ * It uses JavaFX to create the GUI and loads the FXML layout with localization support.
+ */
 public class LoginGUI extends Application {
 
     /**

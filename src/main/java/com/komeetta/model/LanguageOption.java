@@ -1,5 +1,11 @@
 package com.komeetta.model;
 
+/**
+ * Represents a language option for the application.
+ * It has the following attributes:
+ * - name: the name of the language
+ * - code: the code of the language
+ */
 public class LanguageOption {
     private final String name;
     private final String code;

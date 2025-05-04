@@ -12,8 +12,25 @@ import com.komeetta.dao.PurchaseOrderDAO;
 import com.komeetta.dao.SalesOrderDAO;
 import com.komeetta.model.*;
 
+/**
+ * DeleteConfirmationDialog class provides a method to display a confirmation dialog
+ * before deleting an item from the database and the table view.
+ * It has the following methods:
+ * - display: displays the confirmation dialog
+ * - deleteFromDatabase: deletes the selected item from the database
+ * - showDeletionErrorDialog: shows an error dialog if deletion fails
+ */
 public class DeleteConfirmationDialog {
 
+    /**
+     * Displays a confirmation dialog to the user before deleting an item.
+     *
+     * @param <T>         the type of the item
+     * @param itemType    the type of the item (e.g., "Customer", "Product", etc.)
+     * @param action      the action being performed (e.g., "delete")
+     * @param tableView   the TableView containing the items
+     * @param selectedItem the selected item to be deleted
+     */
     public static <T> void display(String itemType, String action, TableView<T> tableView, T selectedItem) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(LanguageUtil.getString("str_confirm_title"));
@@ -28,6 +45,12 @@ public class DeleteConfirmationDialog {
         }
     }
 
+    /**
+     * Deletes the selected item from the database.
+     *
+     * @param <T>         the type of the item
+     * @param selectedItem the selected item to be deleted
+     */
     private static <T> void deleteFromDatabase(T selectedItem) {
         try {
             if (selectedItem instanceof Customer) {
@@ -47,6 +70,9 @@ public class DeleteConfirmationDialog {
         }
     }
 
+    /**
+     * Shows an error dialog if deletion fails.
+     */
     private static void showDeletionErrorDialog() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(LanguageUtil.getString("str_delete_error_title"));

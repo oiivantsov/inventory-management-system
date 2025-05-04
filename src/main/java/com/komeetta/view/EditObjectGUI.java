@@ -16,6 +16,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+/**
+ * EditObjectGUI class provides a static method to display a modal form window
+ * for editing an existing entity (Customer, Supplier, etc.) in the JavaFX application.
+ * It uses FXML to load the form layout and handles localization using ResourceBundle.
+ */
 public class EditObjectGUI {
 
     /**

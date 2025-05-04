@@ -15,6 +15,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+/**
+ * SalesPurchaseGUI class is responsible for displaying a modal window
+ * for creating sales or purchase orders in the application. It uses JavaFX to create the GUI
+ * and loads the FXML layout with localization support.
+ */
 public class SalesPurchaseGUI {
 
     /**

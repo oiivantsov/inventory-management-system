@@ -14,6 +14,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+/**
+ * AddEntityGUI class provides a static method to display a modal form window
+ * for adding a new entity (Customer, Supplier, etc.) in the JavaFX application.
+ * It uses FXML to load the form layout and handles localization using ResourceBundle.
+ */
 public class AddEntityGUI {
 
     /**

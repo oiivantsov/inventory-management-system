@@ -10,6 +10,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * TableInitializer class provides methods to initialize columns for various tables
+ * in the JavaFX application. It uses PropertyValueFactory to bind data model properties
+ * to the UI table columns.
+ */
 public class TableInitializer {
 
     /**

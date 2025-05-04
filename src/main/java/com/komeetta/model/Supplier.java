@@ -7,7 +7,15 @@ import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
-// Supplier Entity
+/**
+ * Represents a supplier entity in the database.
+ * It has the following attributes:
+ * - supplierId: the unique identifier of the supplier
+ * - name: the name of the supplier
+ * - email: the email address of the supplier
+ * - phoneNumber: the phone number of the supplier
+ * - address: the address of the supplier
+ */
 @Entity
 @Table(name = "Supplier")
 public class Supplier {

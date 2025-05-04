@@ -7,6 +7,15 @@ import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
+/**
+ * Represents a customer entity in the database.
+ * It has the following attributes:
+ * - customerId: the unique identifier of the customer
+ * - name: the name of the customer
+ * - email: the email address of the customer
+ * - phoneNumber: the phone number of the customer
+ * - address: the address of the customer
+ */
 @Entity
 @Table(name = "Customer")
 public class Customer {

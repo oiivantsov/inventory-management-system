@@ -14,6 +14,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+/**
+ * MassImportGUI class is responsible for displaying a modal window
+ * for mass importing products in the application. It uses JavaFX to create the GUI
+ * and loads the FXML layout with localization support.
+ */
 public class MassImportGUI {
 
     /**
