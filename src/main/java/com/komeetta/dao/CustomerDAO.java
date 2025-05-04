@@ -89,4 +89,6 @@ public class CustomerDAO {
         em.getTransaction().commit();
         em.close();
     }
+
+
 }
