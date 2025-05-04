@@ -52,6 +52,7 @@ public class AddWindowController {
      */
     private void updateFormFields() {
         String selectedType = typeCBox.getValue();
+        if (selectedType == null) return;
         headlineLabel.setText(LanguageUtil.getString("str_add_new") + " " + selectedType);
 
         if (selectedType.equals(productLabel)) {
@@ -74,6 +75,11 @@ public class AddWindowController {
     @FXML
     private void handleAdd() {
         String selectedType = typeCBox.getValue();
+        if (selectedType == null || selectedType.isEmpty()) {
+            showAlert(LanguageUtil.getString("str_validation_error"), LanguageUtil.getString("str_select_type"));
+            return;
+        }
+
         String firstFieldV = firstTextField.getText().trim();
         String secondFieldV = secondTextField.getText().trim();
         String thirdFieldV = thirdTextField.getText().trim();
