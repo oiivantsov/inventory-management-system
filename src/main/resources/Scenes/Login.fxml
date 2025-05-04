@@ -60,7 +60,7 @@
             </HBox>
             <PasswordField fx:id="passwordField" promptText="%str_type_password" style="-fx-background-color: transparent; -fx-text-fill: ffffff;" />
             <Line endX="100.0" startX="-300.0" startY="0.7928932309150696" stroke="WHITE" />
-            <Button mnemonicParsing="false" onAction="#handleLoginButtonAction" prefHeight="34.0" prefWidth="234.0" style="-fx-background-radius: 20px; -fx-background-color: lightblue;" text="%str_login">
+            <Button mnemonicParsing="false" onAction="#handleLoginButtonAction" prefHeight="34.0" prefWidth="234.0" style="-fx-background-radius: 20px; -fx-background-color: lightblue;" text="%str_signin">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>

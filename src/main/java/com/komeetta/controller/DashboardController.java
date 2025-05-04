@@ -51,6 +51,8 @@ public class DashboardController {
     @FXML private Label greetingLabel, statsLabel;
     @FXML private ComboBox<LanguageOption> languageSelector;
 
+    ResourceBundle bundle = ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale());
+
     private Object selectedItem;
     private User user;
     private String currentView;
@@ -62,6 +64,7 @@ public class DashboardController {
      */
     @FXML
     public void initialize() {
+
         TableInitializer.initializeCustomerTable(customerTable, colCustomerID, colCustomerName, colCustomerMail, colCustomerNum, colCustomerAddr);
         TableInitializer.initializeSupplierTable(supplierTable, colSupplierID, colSupplierName, colSupplierMail, colSupplierNum, colSupplierAddr);
         TableInitializer.initializeProductTable(productTable, colProductID, colProductName, colProductCategory, colProductBrand, colProductStock, colProductDescription);
@@ -201,6 +204,7 @@ public class DashboardController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/Login.fxml"), ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale()));
             Stage newStage = new Stage();
             newStage.setScene(new Scene(loader.load(), 600, 400));
+            newStage.setTitle(bundle.getString("str_signin_form"));
             newStage.show();
         } catch (Exception e) {
             e.printStackTrace();

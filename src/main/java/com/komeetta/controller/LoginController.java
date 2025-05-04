@@ -89,7 +89,7 @@ public class LoginController {
 
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle(LanguageUtil.getString("str_login_form"));
+            stage.setTitle(LanguageUtil.getString("str_signin_form"));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
