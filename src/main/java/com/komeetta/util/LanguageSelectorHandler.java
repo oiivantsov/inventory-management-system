@@ -101,6 +101,7 @@ public class LanguageSelectorHandler {
             Parent root = loader.load();
 
             Stage stage = (Stage) languageSelector.getScene().getWindow();
+            stage.setTitle(bundle.getString("str_dashboard"));
             stage.setScene(new Scene(root, 1100, 570));
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package com.komeetta.controller;
 
 import com.komeetta.dao.ProductDAO;
+import com.komeetta.util.LanguageUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -9,6 +10,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ResourceBundle;
 
 /**
  * Controller for the Product Bulk Upload form
@@ -28,6 +30,11 @@ public class BulkController {
     @FXML
     private Button uploadFilesBtn;
 
+    @FXML
+    private Button cancelBtn;
+
+    private final ResourceBundle bundle = ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale());
+
     /**
      * Initializes the form
      * Sets up the event handlers for the buttons
@@ -35,11 +42,11 @@ public class BulkController {
      * Upload Files button uploads the selected file
      * dao is initialized with a new ProductDAO object
      */
-    // Initialize the form
     @FXML
     private void initialize() {
         browseFilesBtn.setOnAction(event -> browseFile());
         uploadFilesBtn.setOnAction(event -> uploadFile());
+        cancelBtn.setOnAction(event -> closeForm());
         dao = new ProductDAO();
     }
 
@@ -49,7 +56,7 @@ public class BulkController {
      */
     private void browseFile() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select File");
+        fileChooser.setTitle(bundle.getString("str_select_file"));
         File file = fileChooser.showOpenDialog(new Stage());
 
         if (file != null) {
@@ -68,7 +75,7 @@ public class BulkController {
         String filePath = filePathField.getText();
 
         if (filePath.isEmpty()) {
-            alert("Please select a file to upload.");
+            alert(bundle.getString("msg_select_file"));
             return;
         }
 
@@ -82,7 +89,6 @@ public class BulkController {
      * Closes the form
      * Called after the file is uploaded
      */
-    // Close the form after upload
     private void closeForm() {
         Stage stage = (Stage) uploadFilesBtn.getScene().getWindow();
         stage.close();
@@ -92,13 +98,11 @@ public class BulkController {
      * Displays an alert message
      * @param message The message to display
      */
-    // Display an alert message
     private void alert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
+        alert.setTitle(bundle.getString("str_error"));
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }

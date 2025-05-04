@@ -52,6 +52,7 @@ public class AddWindowController {
      */
     private void updateFormFields() {
         String selectedType = typeCBox.getValue();
+        if (selectedType == null) return;
         headlineLabel.setText(LanguageUtil.getString("str_add_new") + " " + selectedType);
 
         if (selectedType.equals(productLabel)) {
@@ -74,25 +75,30 @@ public class AddWindowController {
     @FXML
     private void handleAdd() {
         String selectedType = typeCBox.getValue();
+        if (selectedType == null || selectedType.isEmpty()) {
+            showAlert(LanguageUtil.getString("str_validation_error"), LanguageUtil.getString("str_select_type"));
+            return;
+        }
+
         String firstFieldV = firstTextField.getText().trim();
         String secondFieldV = secondTextField.getText().trim();
         String thirdFieldV = thirdTextField.getText().trim();
         String fourthFieldV = fourthTextField.getText().trim();
 
         if (firstFieldV.isEmpty() || secondFieldV.isEmpty() || thirdFieldV.isEmpty() || fourthFieldV.isEmpty()) {
-            showAlert("Validation Error", LanguageUtil.getString("str_fill_all_fields"));
+            showAlert(LanguageUtil.getString("str_validation_error"), LanguageUtil.getString("str_fill_all_fields"));
             return;
         }
 
         boolean isEntity = selectedType.equals(customerLabel) || selectedType.equals(supplierLabel);
 
         if (isEntity && !secondFieldV.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            showAlert("Invalid Email", LanguageUtil.getString("str_invalid_email"));
+            showAlert(LanguageUtil.getString("str_invalid_email_title"), LanguageUtil.getString("str_invalid_email"));
             return;
         }
 
         if (isEntity && !thirdFieldV.matches("^\\d{10,15}$")) {
-            showAlert("Invalid Phone Number", LanguageUtil.getString("str_invalid_phone"));
+            showAlert(LanguageUtil.getString("str_invalid_phone_title"), LanguageUtil.getString("str_invalid_phone"));
             return;
         }
 
@@ -103,7 +109,7 @@ public class AddWindowController {
             customer.setAddress(fourthFieldV);
             customer.setPhoneNumber(thirdFieldV);
             new CustomerDAO().addCustomer(customer);
-            showAlert("Success", LanguageUtil.getString("str_entity_added"));
+            showAlert(LanguageUtil.getString("str_success"), LanguageUtil.getString("str_entity_added"));
 
         } else if (selectedType.equals(supplierLabel)) {
             Supplier supplier = new Supplier();
@@ -112,7 +118,7 @@ public class AddWindowController {
             supplier.setAddress(fourthFieldV);
             supplier.setPhoneNumber(thirdFieldV);
             new SupplierDAO().addSupplier(supplier);
-            showAlert("Success", LanguageUtil.getString("str_entity_added"));
+            showAlert(LanguageUtil.getString("str_success"), LanguageUtil.getString("str_entity_added"));
 
         } else if (selectedType.equals(productLabel)) {
             try {
@@ -153,10 +159,10 @@ public class AddWindowController {
 
                 product.setBrand(thirdFieldV);
                 new ProductDAO().addProduct(product);
-                showAlert("Success", LanguageUtil.getString("str_entity_added"));
+                showAlert(LanguageUtil.getString("str_success"), LanguageUtil.getString("str_entity_added"));
 
             } catch (Exception e) {
-                showAlert("Failed to add product", LanguageUtil.getString("str_product_add_fail"));
+                showAlert(LanguageUtil.getString("str_error"), LanguageUtil.getString("str_product_add_fail"));
                 e.printStackTrace();
             }
         }
