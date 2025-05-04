@@ -15,10 +15,6 @@
 - [UML & System Diagrams](#uml--system-diagrams)
 - [API Documentation (Javadoc)](#api-documentation-javadoc)
 
-
-## Overview
-Вот улучшенная и более подробная версия **Overview** секции, которую ты можешь вставить в `README.md`:
-
 ---
 
 ## Overview
