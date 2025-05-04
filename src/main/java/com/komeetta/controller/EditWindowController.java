@@ -11,6 +11,7 @@ import com.komeetta.model.Customer;
 import com.komeetta.model.Product;
 import com.komeetta.model.Supplier;
 import com.komeetta.service.TranslateUtil;
+import com.komeetta.util.LanguageUtil;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -20,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 public class EditWindowController {
@@ -32,6 +34,8 @@ public class EditWindowController {
     @FXML private Label entityHeadlineLabel;
     @FXML private VBox entityVBox;
     @FXML private StackPane formArea;
+
+    ResourceBundle bundle = ResourceBundle.getBundle("UIMessages", LanguageUtil.getCurrentLocale());
 
     private Product productToEdit;
     private Customer customerToEdit;
@@ -52,15 +56,15 @@ public class EditWindowController {
         try {
             quantity = Integer.parseInt(quantityField.getText().trim());
         } catch (NumberFormatException e) {
-            showAlert("Invalid Input", "Quantity must be a valid number.");
+            showAlert(bundle.getString("str_invalid_input"), bundle.getString("msg_quantity_must_be_number"));
             return;
         }
 
         if (productName.isEmpty() || category.isEmpty() || brand.isEmpty() || description.isEmpty()) {
-            showAlert("Validation Error", "All fields must be filled before editing the product.");
+            showAlert(bundle.getString("str_validation_error"), bundle.getString("msg_fill_all_fields"));
             return;
         } else if (quantity < 0) {
-            showAlert("Invalid Input", "Quantity must be a positive number.");
+            showAlert(bundle.getString("str_invalid_input"), bundle.getString("msg_quantity_positive"));
             return;
         }
 
@@ -98,14 +102,14 @@ public class EditWindowController {
                         new ProductDAO().updateProduct(productToEdit);
 
                         javafx.application.Platform.runLater(() -> {
-                            showAlert("Success", "Product updated and translated!");
+                            showAlert(bundle.getString("str_success"), bundle.getString("msg_product_updated"));
                             Stage stage = (Stage) productVBox.getScene().getWindow();
                             stage.close();
                         });
                     } catch (Exception e) {
                         e.printStackTrace();
                         javafx.application.Platform.runLater(() ->
-                                showAlert("Error", "Failed to update product. Please try again.")
+                                showAlert(bundle.getString("str_error"), bundle.getString("msg_product_update_fail"))
                         );
                     }
                 });
@@ -121,11 +125,11 @@ public class EditWindowController {
         String entityAddress = entityAddressField.getText().trim();
 
         if (entityName.isEmpty() || entityEmail.isEmpty() || entityPhone.isEmpty() || entityAddress.isEmpty()) {
-            showAlert("Validation Error", "All fields must be filled before continuing.");
+            showAlert(bundle.getString("str_validation_error"), bundle.getString("msg_fill_all_fields"));
         }
 
         if (!entityPhone.matches("^\\d{10,15}$")) {
-            showAlert("Invalid Phone Number", "Phone number must be between 10-15 digits.");
+            showAlert(bundle.getString("str_invalid_input"), bundle.getString("msg_invalid_phone"));
             return;
         }
 
@@ -136,19 +140,19 @@ public class EditWindowController {
                 customerToEdit.setPhoneNumber(entityPhone);
                 customerToEdit.setAddress(entityAddress);
                 new CustomerDAO().updateCustomer(customerToEdit);
-                showAlert("Success", "Customer details updated successfully!");
+                showAlert(bundle.getString("str_success"), bundle.getString("msg_customer_updated"));
             } else {
                 supplierToEdit.setName(entityName);
                 supplierToEdit.setEmail(entityEmail);
                 supplierToEdit.setPhoneNumber(entityPhone);
                 supplierToEdit.setAddress(entityAddress);
                 new SupplierDAO().updateSupplier(supplierToEdit);
-                showAlert("Success", "Supplier details updated successfully!");
+                showAlert(bundle.getString("str_success"), bundle.getString("msg_supplier_updated"));
             }
             Stage stage = (Stage) entityVBox.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
-            showAlert("Something went wrong", "Please try again later.");
+            showAlert(bundle.getString("str_error"), bundle.getString("msg_try_again"));
         }
     }
 
@@ -176,7 +180,7 @@ public class EditWindowController {
             showView(productVBox);
         } else if (object instanceof Customer customer) {
             this.customerToEdit = customer;
-            entityHeadlineLabel.setText("Alter customer details");
+            entityHeadlineLabel.setText(bundle.getString("lbl_alter_customer"));
             entityNameField.setText(customer.getName());
             entityEmailField.setText(customer.getEmail());
             entityAddressField.setText(customer.getAddress());
@@ -184,7 +188,7 @@ public class EditWindowController {
             showView(entityVBox);
         } else if (object instanceof Supplier supplier) {
             this.supplierToEdit = supplier;
-            entityHeadlineLabel.setText("Alter supplier details");
+            entityHeadlineLabel.setText(bundle.getString("lbl_alter_supplier"));
             entityNameField.setText(supplier.getName());
             entityEmailField.setText(supplier.getEmail());
             entityPhoneField.setText(supplier.getPhoneNumber());
