@@ -36,7 +36,7 @@ public class LoginGUI extends Application {
 
         Scene scene = new Scene(root, 600, 400);
         primaryStage.setScene(scene);
-        primaryStage.setTitle(bundle.getString("str_login_form"));
+        primaryStage.setTitle(bundle.getString("str_signin_form"));
         primaryStage.show();
     }
 

@@ -55,7 +55,7 @@
                <Insets top="5.0" />
             </VBox.margin>
             </Button>
-            <Button onAction="#handleLogoutButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="%str_logout">
+            <Button onAction="#handleLogoutButtonAction" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 10;" text="%str_signout">
                 <cursor><Cursor fx:constant="HAND" /></cursor>
             <VBox.margin>
                <Insets top="5.0" />
