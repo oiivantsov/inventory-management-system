@@ -215,4 +215,37 @@ public class ProductDAO {
         }
     }
 
+    /**
+     * Fetches all product IDs from the database
+     * @return List of product IDs
+     */
+    public List<Integer> getSalesOrderIdsByProductId(int productId) {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            return em.createQuery(
+                            "SELECT DISTINCT soi.salesOrder.orderId FROM SalesOrderItem soi WHERE soi.product.productId = :productId", Integer.class)
+                    .setParameter("productId", productId)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Fetches all purchase order IDs from the database
+     * @return List of purchase order IDs
+     */
+    public List<Integer> getPurchaseOrderIdsByProductId(int productId) {
+        EntityManager em = MariaDbJpaConnection.getInstance();
+        try {
+            return em.createQuery(
+                            "SELECT DISTINCT poi.purchaseOrder.id FROM PurchaseOrderItem poi WHERE poi.product.productId = :productId", Integer.class)
+                    .setParameter("productId", productId)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+
 }
