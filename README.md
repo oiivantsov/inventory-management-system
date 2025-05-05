@@ -377,7 +377,7 @@ Each team member independently reviewed the application against Nielsen’s 10 u
 
 **Individual reports:**
 
-* [Heuristic Evaluation – Eetu](https://github.com/oiivantsov/inventory-management-system/blob/main/documents/usability_testing/heuristic_evaluation_report_eetu.md)
+* [Heuristic Evaluation – Eetu](https://github.com/oiivantsov/inventory-management-system/blob/main/documents/usability_testing/heuristic_evaluation_reports/heuristic_evaluation_report_eetu.md)
 * [Heuristic Evaluation – Oleg](https://github.com/oiivantsov/inventory-management-system/blob/main/documents/usability_testing/heuristic_evaluation_reports/heuristic_evaluation_report_oleg.md)
 
 Issues were categorized by severity and included suggested improvements. Several key issues were resolved during Sprint 8.
