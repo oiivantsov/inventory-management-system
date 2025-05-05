@@ -400,17 +400,10 @@ Bugs and usability issues discovered during UAT were logged, prioritized, and fi
 
 ## Future Improvements
 
-* Add real-time validation for product/customer forms
-* Fix capitalization inconsistencies in table headers
-* Localize window titles and all popup messages
-* Improve error messages for deletion (e.g., show linked transaction IDs)
-* Block deletion of entities linked to transactions unless those are removed first
-* Add keyboard shortcuts for common actions (e.g., Ctrl+N = Add)
-* Show validation errors inline (e.g., phone/email format)
-* Stop redirecting to Home after language change
+* Add real-time UI validation and feedback for better user experience
 * Add tooltips, labels, and better help messages
-* Include a visible **Cancel** button in import dialogs
-* Ensure consistent terminology across UI
+* Add keyboard shortcuts for common actions (e.g., Ctrl+N = Add)
+* Enable potential integration with company systems (e.g., ERP, external APIs) for real-world deployment and scalability
 
 ---
 
