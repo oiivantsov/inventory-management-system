@@ -180,7 +180,7 @@ public class EditWindowController {
             showView(productVBox);
         } else if (object instanceof Customer customer) {
             this.customerToEdit = customer;
-            entityHeadlineLabel.setText(bundle.getString("lbl_alter_customer"));
+            entityHeadlineLabel.setText(bundle.getString("str_alter_customer_details"));
             entityNameField.setText(customer.getName());
             entityEmailField.setText(customer.getEmail());
             entityAddressField.setText(customer.getAddress());
@@ -188,7 +188,7 @@ public class EditWindowController {
             showView(entityVBox);
         } else if (object instanceof Supplier supplier) {
             this.supplierToEdit = supplier;
-            entityHeadlineLabel.setText(bundle.getString("lbl_alter_supplier"));
+            entityHeadlineLabel.setText(bundle.getString("str_alter_supplier_details"));
             entityNameField.setText(supplier.getName());
             entityEmailField.setText(supplier.getEmail());
             entityPhoneField.setText(supplier.getPhoneNumber());
