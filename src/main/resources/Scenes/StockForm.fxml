@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane prefHeight="347.0" prefWidth="406.0" style="-fx-background-color: #222222;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.komeetta.controller.StockController">
    <center>
@@ -14,19 +19,19 @@
             <ComboBox fx:id="productComboBox" prefWidth="150.0" promptText="%str_product">
                <VBox.margin><Insets top="20.0" /></VBox.margin>
             </ComboBox>
-            <Label prefHeight="18.0" prefWidth="265.0" style="-fx-font-weight: bold;" text="%str_quantity" textFill="LIGHTBLUE">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="265.0" style="-fx-font-weight: bold;" text="%str_quantity" textFill="LIGHTBLUE">
                <VBox.margin><Insets top="20.0" /></VBox.margin>
             </Label>
             <TextField fx:id="quantityTextField" prefHeight="34.0" prefWidth="265.0" promptText="%str_quantity">
                <VBox.margin><Insets left="20.0" right="20.0" /></VBox.margin>
             </TextField>
-            <Label prefHeight="18.0" prefWidth="265.0" style="-fx-font-weight: bold;" text="%str_unit_price" textFill="LIGHTBLUE">
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="265.0" style="-fx-font-weight: bold;" text="%str_unit_price" textFill="LIGHTBLUE">
                <VBox.margin><Insets top="20.0" /></VBox.margin>
             </Label>
             <TextField fx:id="unitPriceTextField" prefHeight="28.0" prefWidth="265.0" promptText="%str_unit_price">
                <VBox.margin><Insets left="20.0" right="20.0" /></VBox.margin>
             </TextField>
-            <Label prefHeight="18.0" prefWidth="265.0" style="-fx-font-weight: bold;" text="%str_sale" textFill="LIGHTBLUE">
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="265.0" style="-fx-font-weight: bold;" text="%str_sale" textFill="LIGHTBLUE">
                <VBox.margin><Insets top="20.0" /></VBox.margin>
             </Label>
             <TextField fx:id="saleTextField" prefWidth="265.0" promptText="%str_sale">
@@ -34,10 +39,10 @@
             </TextField>
             <HBox fx:id="buttonBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="saveButton" onAction="#handleSave" prefHeight="26.0" prefWidth="62.0" style="-fx-background-color: lightblue;" text="%str_proceed">
+                  <Button fx:id="saveButton" onAction="#handleSave" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: lightblue; -fx-background-radius: 7px; -fx-font-weight: bold;" text="%str_proceed">
                      <HBox.margin><Insets bottom="5.0" left="5.0" right="5.0" top="10.0" /></HBox.margin>
                   </Button>
-                  <Button fx:id="cancelButton" onAction="#handleCancel" prefHeight="26.0" prefWidth="62.0" style="-fx-background-color: #FFFFFF;" text="%str_cancel">
+                  <Button fx:id="cancelButton" onAction="#handleCancel" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: #444444; -fx-background-radius: 7px; -fx-font-weight: bold; -fx-text-fill: #FFFFFF;" text="%str_cancel">
                      <HBox.margin><Insets bottom="5.0" left="5.0" right="5.0" top="10.0" /></HBox.margin>
                   </Button>
                </children>

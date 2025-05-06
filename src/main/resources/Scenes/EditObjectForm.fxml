@@ -37,8 +37,8 @@
                 </TextField>
 
                 <HBox alignment="CENTER" style="-fx-spacing: 8;">
-                    <Button fx:id="productEditButton" onAction="#handleProductEdit" prefHeight="28.0" prefWidth="60.0" style="-fx-background-color: lightblue; -fx-text-fill: black; -fx-background-radius: 7px; -fx-font-weight: bold;" text="%str_edit" />
-                    <Button fx:id="productCancelButton" onAction="#handleCancel" prefHeight="28.0" prefWidth="60.0" style="-fx-background-color: #444444; -fx-text-fill: #FFFFFF; -fx-background-radius: 7px; -fx-font-weight: bold;" text="%str_cancel" />
+                    <Button fx:id="productEditButton" onAction="#handleProductEdit" prefHeight="28.0" prefWidth="80.0" style="-fx-background-color: lightblue; -fx-text-fill: black; -fx-background-radius: 7px; -fx-font-weight: bold;" text="%str_edit" />
+                    <Button fx:id="productCancelButton" onAction="#handleCancel" prefHeight="28.0" prefWidth="80.0" style="-fx-background-color: #444444; -fx-text-fill: #FFFFFF; -fx-background-radius: 7px; -fx-font-weight: bold;" text="%str_cancel" />
                     <VBox.margin><Insets bottom="10.0" top="10.0" /></VBox.margin>
                 </HBox>
             </VBox>
@@ -66,11 +66,11 @@
                 </TextField>
 
                 <HBox alignment="CENTER" style="-fx-spacing: 8;">
-                    <Button onAction="#handleEntityEdit" prefHeight="28.0" prefWidth="80.0" style="-fx-background-color: lightblue; -fx-background-radius: 7px;" text="%str_add">
+                    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleEntityEdit" prefHeight="28.0" prefWidth="80.0" style="-fx-background-color: lightblue; -fx-background-radius: 7px;" text="%str_add">
                         <font><Font name="System Bold" size="12.0" /></font>
                     </Button>
 
-                    <Button onAction="#handleCancel" prefHeight="28.0" prefWidth="80.0" style="-fx-background-color: #444444; -fx-text-fill: #FFFFFF; -fx-background-radius: 7px; -fx-font-weight: bold;" text="%str_cancel" />
+                    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleCancel" prefHeight="28.0" prefWidth="80.0" style="-fx-background-color: #444444; -fx-text-fill: #FFFFFF; -fx-background-radius: 7px; -fx-font-weight: bold;" text="%str_cancel" />
                     <VBox.margin><Insets bottom="10.0" top="10.0" /></VBox.margin>
                 </HBox>
             </VBox>

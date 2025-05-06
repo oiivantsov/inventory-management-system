@@ -31,8 +31,8 @@ Each screen of the application was evaluated individually using Jakob Nielsen's 
 On the "Purchases" page, column headers such as "ORDER ID" and "SUPPLIER ID" use technical, database-oriented terminology. This may be unclear to non-technical users. Additionally, the "Date" column displays time down to milliseconds, which is excessive for typical users.
 
 **Screenshot:**
-![alt text](pictures/image-1.png)
-![alt text](pictures/Myyntitilaukset.png)
+![alt text](../pictures/image-1.png)
+![alt text](../pictures/Myyntitilaukset.png)
 
 **Severity:**
 2 – Minor usability issue
@@ -51,7 +51,7 @@ On the "Purchases" page, column headers such as "ORDER ID" and "SUPPLIER ID" use
 When editing a product, the confirmation message appears in English, even though Finnish is selected as the language.
 
 **Screenshots:**
-![alt text](pictures/Tuotteen%20muokkaaminen.png)
+![alt text](../pictures/Tuotteen%20muokkaaminen.png)
 
 **Severity:**
 2 – Minor usability issue
@@ -67,7 +67,7 @@ Ensure that all confirmation messages are localized based on the selected langua
 In the "Add Entity" form, the textareas lack labels, making it unclear what information should be entered without manually deleting placeholder text.
 
 **Screenshot:**
-![alt text](pictures/Olut%20lisääminen.png)
+![alt text](../pictures/Olut%20lisääminen.png)
 
 **Severity:**
 3 – Major usability issue
@@ -84,7 +84,7 @@ In the "Add Entity" form, the textareas lack labels, making it unclear what info
 On the sign-in page, the window title reads "Login form," whereas error messages use "Sign in failed." This inconsistency in terminology may confuse users.
 
 **Screenshot:**
-![alt text](pictures/Sign%20in%20failed.png)
+![alt text](../pictures/Sign%20in%20failed.png)
 
 **Severity:**
 1 – Cosmetic issue
@@ -105,9 +105,9 @@ The system gives basic feedback for key actions, such as confirming deletions or
 * Failed sign-in attempts display an informational blue icon rather than an error-specific red one.
 
 **Screenshots:**
-![alt text](pictures/image-6.png)
-![alt text](pictures/image-7.png)
-![alt text](pictures/Sign%20in%20failed.png)
+![alt text](../pictures/image-6.png)
+![alt text](../pictures/image-7.png)
+![alt text](../pictures/Sign%20in%20failed.png)
 
 **Severity:**
 2 – Minor usability issue
@@ -126,7 +126,7 @@ The system gives basic feedback for key actions, such as confirming deletions or
 When initiating a CSV import from the Home screen, the user is shown a popup without any visible option to cancel the operation besides the window's close button.
 
 **Screenshot:**
-![alt text](pictures/Massatuonti.png)
+![alt text](../pictures/Massatuonti.png)
 
 **Severity:**
 2 – Minor usability issue
@@ -163,7 +163,7 @@ Add keyboard shortcuts, such as:
 Attempting to delete a product tied to transactions yields a generic error message: "Product participates in a transaction." This lacks specifics and doesn't offer next steps.
 
 **Screenshot:**
-![alt text](pictures/image-9.png)
+![alt text](../pictures/image-9.png)
 
 **Severity:**
 3 – Major usability issue
@@ -182,8 +182,8 @@ Attempting to delete a product tied to transactions yields a generic error messa
 **Problem 2:** Validation for phone numbers and emails occurs only after form submission, not during input.
 
 **Screenshots:**
-![alt text](pictures/ENG%20-%20Hallintapaneeli.png)
-![alt text](pictures/image-11.png)
+![alt text](../pictures/ENG%20-%20Hallintapaneeli.png)
+![alt text](../pictures/image-11.png)
 
 **Severity:**
 
@@ -203,7 +203,7 @@ Attempting to delete a product tied to transactions yields a generic error messa
 The Home page provides a brief instruction, but there's no comprehensive documentation to guide users through core tasks or validation rules.
 
 **Screenshot:**
-![alt text](pictures/image-12.png)
+![alt text](../pictures/image-12.png)
 
 **Severity:**
 2 – Minor usability issue
