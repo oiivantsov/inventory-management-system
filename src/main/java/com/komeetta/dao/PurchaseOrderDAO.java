@@ -18,7 +18,7 @@ public class PurchaseOrderDAO {
 
     /**
      * Adds a new purchase order to the database
-     * @param purchaseOrder A new purchase order
+     * @param purchaseOrder  A new purchase order
      */
     public void addPurchaseOrder(PurchaseOrder purchaseOrder) {
         EntityManager em = MariaDbJpaConnection.getInstance();
@@ -31,7 +31,7 @@ public class PurchaseOrderDAO {
     }
 
     /**
-     * Fetches a purchase order by purchase order ID
+     * Fetches a purchase  order by purchase order ID
      * @param purchaseOrderId Purchase order ID
      * @return Purchase order object
      */
@@ -62,7 +62,7 @@ public class PurchaseOrderDAO {
     }
 
     /**
-     * Deletes a purchase order from the database
+     * Deletes a purchase order from  the database
      * @param purchaseOrder Purchase order to delete
      */
 
@@ -141,7 +141,7 @@ public class PurchaseOrderDAO {
 
     /**
      * Sum of all purchase orders
-     * @return Total purchase orders
+     * @return Total purhcase orders
      */
     public double getTotalPurchaseOrders() {
         EntityManager em = MariaDbJpaConnection.getInstance();

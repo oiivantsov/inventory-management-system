@@ -37,30 +37,14 @@ public class LanguageUtil {
         }
     }
 
-    /**
-     * Retrieves the localized string for the given key from the resource bundle.
-     *
-     * @param key the key to look up
-     * @return the localized string
-     */
     public static String getString(String key) {
         return bundle.getString(key);
     }
 
-    /**
-     * Returns the currently set locale.
-     *
-     * @return the current Locale
-     */
     public static Locale getCurrentLocale() {
         return currentLocale;
     }
 
-    /**
-     * Sets a callback to be run when the locale changes.
-     *
-     * @param callback a Runnable to execute on language change
-     */
     public static void setOnLanguageChange(Runnable callback) {
         onLanguageChange = callback;
     }

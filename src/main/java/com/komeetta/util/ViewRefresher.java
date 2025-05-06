@@ -40,7 +40,6 @@ public class ViewRefresher {
     /**
      * Refreshes the product table with localized product data.
      * Handles localization of name, category, and description fields.
-     * @param productTable the TableView to update
      */
     public static void refreshProductView(TableView<Product> productTable) {
         productTable.getItems().clear();
@@ -88,7 +87,6 @@ public class ViewRefresher {
 
     /**
      * Refreshes the purchase order table with data from the database.
-     * @param purchaseOrderTable the TableView to update
      */
     public static void refreshPurchaseView(TableView<PurchaseOrder> purchaseOrderTable) {
         purchaseOrderTable.getItems().clear();
@@ -99,7 +97,6 @@ public class ViewRefresher {
 
     /**
      * Refreshes the sales order table with data from the database.
-     * @param salesOrderTable the TableView to update
      */
     public static void refreshSaleView(TableView<SalesOrder> salesOrderTable) {
         salesOrderTable.getItems().clear();

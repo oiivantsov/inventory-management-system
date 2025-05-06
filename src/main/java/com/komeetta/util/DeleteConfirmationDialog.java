@@ -26,12 +26,6 @@ public class DeleteConfirmationDialog {
 
     /**
      * Displays a confirmation dialog to the user before deleting an item.
-     *
-     * @param <T>         the type of the item
-     * @param itemType    the type of the item (e.g., "Customer", "Product", etc.)
-     * @param action      the action being performed (e.g., "delete")
-     * @param tableView   the TableView containing the items
-     * @param selectedItem the selected item to be deleted
      */
     public static <T> void display(String itemType, String action, TableView<T> tableView, T selectedItem) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -50,9 +44,6 @@ public class DeleteConfirmationDialog {
 
     /**
      * Deletes the selected item from the database.
-     *
-     * @param <T>         the type of the item
-     * @param selectedItem the selected item to be deleted
      */
     private static <T> boolean deleteFromDatabase(T selectedItem) {
         try {
@@ -117,8 +108,6 @@ public class DeleteConfirmationDialog {
 
     /**
      * Shows a localized warning dialog if the product is used in existing orders.
-     *
-     * @param details the details of the orders using the product
      */
     private static void showProductUsedInOrdersDialog(String details) {
         Alert alert = new Alert(Alert.AlertType.WARNING);

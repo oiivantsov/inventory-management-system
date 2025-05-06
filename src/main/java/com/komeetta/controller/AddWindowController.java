@@ -92,11 +92,13 @@ public class AddWindowController {
 
         boolean isEntity = selectedType.equals(customerLabel) || selectedType.equals(supplierLabel);
 
+        // to validate email, use regex where ^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$ is used to match a valid email format
         if (isEntity && !secondFieldV.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
             showAlert(LanguageUtil.getString("str_invalid_email_title"), LanguageUtil.getString("str_invalid_email"));
             return;
         }
 
+        // to validate phone number, use regex where \\ is used to escape the backslash then \d{10,15} is used to match 10 to 15 digits
         if (isEntity && !thirdFieldV.matches("^\\d{10,15}$")) {
             showAlert(LanguageUtil.getString("str_invalid_phone_title"), LanguageUtil.getString("str_invalid_phone"));
             return;
